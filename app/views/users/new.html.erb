@@ -1,0 +1,27 @@
+
+<% provide(:title, 'Sign up') %>
+
+
+  <div class="col-sm-6 col-sm-offset-3 signUp">
+  <h1>가입하기</h1><br><br>
+
+
+    <%= form_for(@user) do |f| %>
+      <%= render 'shared/error_messages' %>
+
+      <%= f.label :'별명' %> (강의평가시 사용할 별명입니다. 학번은 쓰지말아주세요!)
+      <%= f.text_field :nickname, class: 'form-control' %>
+
+      <%= f.label :'아이디' %> (로그인시 사용됩니다)
+      <%= f.text_field :email, class: 'form-control' %>
+
+      <%= f.label :'암호' %> (6자 이상)
+      <%= f.password_field :password, class: 'form-control' %>
+
+      <%= f.label :password_confirmation, "암호 한번 더" %> (똑같이)
+      <%= f.password_field :password_confirmation, class: 'form-control' %>
+
+      <%= f.submit "계정 만들기", class: "btn btn-primary btn_attr" %>
+    <% end %>
+  </div>
+</div>

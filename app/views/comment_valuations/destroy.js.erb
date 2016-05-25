@@ -1,0 +1,6 @@
+$("#<%=@comment.id%>-liked_num").html('<%= @comment.likedcount %>')
+$('#<%=@comment.id%>-comment_valuation').html("<%= escape_javascript(render('comment_valuations/also', :comment => @comment)) %>")
+
+<% if @comment.likedcount <= 0 %>
+	$("#<%=@comment.id%>-liked_num").remove()
+<% end %>

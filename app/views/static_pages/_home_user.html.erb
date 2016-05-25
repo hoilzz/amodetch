@@ -1,0 +1,10 @@
+<div class="sort_paginate_ajax" id="valuationlists">
+  <% @valuations.each do |v| %>
+
+    <%= render 'static_pages/display_lectures', :v => v %>
+
+
+
+  <% end %> 
+  <%= will_paginate @valuations %>
+</div>

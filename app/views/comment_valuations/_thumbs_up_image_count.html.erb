@@ -1,0 +1,4 @@
+<span class ="color-orange" id = "<%=comment.id%>-liked_num">
+					<%=image_tag("thumbs-up.png", alt: "옳소", height: "15px", class: "thumbs_margin") %>
+					<%= comment.likedcount.to_s %>
+				</span>

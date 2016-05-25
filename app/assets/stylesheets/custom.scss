@@ -1,0 +1,935 @@
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+@media all and (max-width:600px){
+  .row
+  {   background-color:white}
+}
+
+
+
+
+@font-face{font-family:'Nanum_Gothic'; src:url('nanum_gothic.ttf')}
+
+
+body{
+  font-family: Nanum_Gothic;
+  background-color : white;
+  font-size:100%;
+
+  .alert-container{
+    position : fixed;
+    top:12px;
+    right:12px;
+    .alert{
+      width:300px;
+      padding: 10px 10px;
+    }
+  }
+
+}
+
+.navbar{
+  width:100%;
+  background-color:#009ce6;
+}
+.btn-log{
+  margin-top:10px;
+}
+#topMenu{
+  height:40px;
+  width:100%;
+}
+#topMenu ul {
+  list-style-type:none;
+  margin:0px;
+  padding:0px;
+}
+#topMenu > ul >.topMenuLi {
+  color: white;
+  float: left;
+  vertical-align: middle;
+  text-align: center;
+  position: relative;
+  padding: 10px;  
+}
+#topMenu li a:hover, #topMenu li a:focus{
+  color:black;
+  text-decoration:none;
+
+}
+
+#logo{
+  padding-top: 4px !important;
+  font-size:20px;
+  font-weight:bold;
+  margin-right:10px;
+}
+.topMenuLog{
+  vertical-align: middle;
+  text-align: center;
+  float: right;
+  padding: 10px;
+  padding-right: 20px;
+}
+.topMenuLog:after{
+  clear:both;
+}
+
+
+aside{
+  display:inline;
+
+  margin-right:5%;
+
+
+
+}
+#notice{
+  
+  border:3px solid #eeeeee;
+  width: 150%; 
+  p{
+    padding:10%;
+  }
+}
+
+
+#forcinglecturelist{
+   max-width: 80%;
+   margin-left: auto;
+   margin-right: auto;
+}
+
+.btn_look{
+   background-color:#93DAFF;
+  color:white;
+  font-weight:bold;
+  
+}
+
+
+.btn_valuation{
+   background-color:#E6749D;
+   color:white;
+   font-weight:bold;
+}
+
+
+
+
+
+/* fancybox */
+.fancybox{
+  display:none;
+}
+
+
+div{
+  li{
+    padding-left : 0px;
+  } 
+}
+
+
+
+.login_box{  
+  .content_box{
+    border-bottom: 1px solid #e8e8e8;
+  }
+}
+
+/* 댓글 입력폼 설정 */
+#login_comment{
+  resize:none;
+}
+#comment_content{
+  resize:none;
+}
+
+
+
+#grade_text{
+  display: inline;
+  margin-left:10px;
+}
+
+#workload_text{
+  display: inline;
+  margin-left:10px;
+}
+#achievement_text{
+  display: inline;
+  margin-left:10px;
+}
+#level_text{
+  display: inline;
+  margin-left:10px;
+}
+#homework_text{
+  display: inline;
+  margin-left:10px;
+}
+#total_text{
+  display: inline;
+  margin-left:10px; 
+}
+
+.row{
+  padding-top: 30px;
+}
+.fb-login-button{
+  padding-top: 15px;
+}
+h1{
+  display: inline;
+}
+
+#sejonglogo{
+  padding-top: 5px;
+}
+
+
+
+.row_padding_reduction{
+  padding-top:10px;
+}
+.zero-padding-right{
+  padding-right:0;
+}
+.zero-padding-left{
+  padding-left:0;
+}
+
+
+@mixin box_sizing {
+
+  -moz-box-sizing:    border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing:         border-box;
+}
+
+
+/* header */
+
+
+
+
+
+/* miscellaneous */
+
+.debug_dump { 
+  /*margin-left: 140px;*/
+  clear: both;
+  float: left;
+  width: 82.5%;
+  margin-top: 45px;
+  @include box_sizing; 
+}
+
+
+tr.lovelyrow:hover{
+  background-color: #CEF6EC;
+  cursor: pointer;
+  font-weight:bold;
+}
+
+table.nogap{
+  border-collapse: collapse;
+}
+
+.navbar{
+  padding-top:5px;
+
+
+  .container{
+    margin-left:20px;
+  }
+
+  .navbar-brand{
+    font-size:25px;
+    color:white;
+    font-weight:bold;
+  }
+  border-bottom: 1px solid #e8e8e8;
+  a{
+    color : white;
+    font-weight:120;
+  }
+ .activate{
+    background-color:#2db1ee;
+    height:100%;
+    color : white;
+  }
+  .navbar-nav a:hover{
+  text-decoration:none;
+    color : black;
+    font-size:14.5px;
+    font-weight:bold;
+    background-color: white;
+  }
+  .navbar-nav .activate{
+    color : white;
+    font-size:14.5px;
+    font-weight : bold;
+  }
+}
+
+.nav.navbar-nav.navbar-right
+{
+  margin-right: 10%;
+}
+
+#navbar_margin_top{
+  margin-top:15px;
+}
+#navbar_padding_lr{
+  padding-left:0%;
+  padding-right:0%;
+}
+
+#navbar_hello_color{
+  color : gray;
+  
+}
+
+#navbar_logout{
+  color:gray;
+}
+
+
+.inline-blk {
+  display: inline-block;
+}
+
+.align-center{
+  text-align:center;
+  margin : 0 auto;
+}
+
+.textarea {
+  width : 50%;
+  height : 50px;
+}
+
+
+
+
+
+/* comment */
+
+.comments {
+  list-style: none;
+  padding : 0;
+  margin-top: 10px;
+  li {
+    /*border-top : 1px solid #e8e8e8;*/
+    list-style: none;
+    padding: 10px 40px;
+    /*border-bottom: 1px solid #e8e8e8;*/
+  }
+  .user {
+    color:$gray-light;
+    padding-top: 0;
+  }
+  .content {
+    display: block;
+    margin-left: 60px;
+  }
+  .timestamp {
+    color: $gray-light;
+    text-align : right;
+  }
+  .thumbs_margin{
+    margin-left:8px;
+    margin-right:5px;
+    margin-bottom:3px;
+  }
+  .color-orange{
+    color:red;
+    margin-right: 5px;
+  }
+}
+
+
+
+
+
+/* comment-form */ 
+
+.comment-box {
+  
+  .user_form {
+    margin-left : 40px;
+  }
+  .comment_submit_btn {
+    margin-left: 0px;
+  }
+}
+
+#comments_border_top {
+  border-top : 1px solid #e8e8e8;
+}
+
+#new_comment{
+  float:left;
+}
+
+
+
+
+/* comment_valuation */
+
+.new_comment_valuation {
+  float:left;
+}
+.edit_comment_valuation {
+  float:left;
+}
+.also_unalso_btn {
+  padding : 0;
+  border : 0;
+}
+
+
+
+
+
+.progress-bar{
+  border-right:2px solid white
+}
+#evaluate_progress{
+  margin-left:0;
+  margin-top:5px;
+  float:left;
+}
+
+
+
+/* side bar */
+
+aside {
+  display:inline-block;
+  float:right;
+  width:150px;
+
+}
+#side_bar_pro {
+  display :inline-block;
+  float : right;
+  
+}
+#side_bar_sub {
+  display :inline-block;
+  float : right;
+  
+}
+
+/* xtachi_form */
+
+#xtachi_count{
+  text-align: center;
+
+}
+
+.btn_half {
+  margin:0;
+  width:50%;
+}
+
+.xtachi_num{
+  font-size:22px;
+  display:block;
+  text-align: center
+}
+
+#uptachi_form{
+ margin: 1em;
+  margin-left: 20%;
+  float:left;
+  display:inline-block;
+}
+
+#hatachi_form{
+float:left;
+ margin-right: 25%;
+  margin: 1em;
+  display:inline-block;
+}
+.hatachi{
+  font-size:18px;
+}
+.uptachi{
+  font-size:18px;
+}
+
+
+/* lecture */
+.border-box {
+  border : 1px solid #e8e8e8;
+  padding-bottom: 25px;
+}
+
+.border-left-right{
+    border-left : 1px solid #e8e8e8;
+    border-right : 1px solid #e8e8e8;
+}
+
+
+/* timetable */
+#time_table{
+  height: 600px;
+  table-layout: fixed;
+  font-weight:bold;
+  border-collapse: collapse; 
+
+
+  
+}
+
+#timetable_td{
+
+    border: 1px solid;
+
+    text-align: center;
+     vertical-align: middle;
+     font-size:9px;
+      height:25px;
+     /* background-color:lightblue;*/
+ }
+ #timetable_th{
+   
+    border: 1px solid;
+    text-align: center;
+     vertical-align: middle;
+     width: 150;
+     font-size:15px;
+
+ }
+ #timetable_th_time{
+    height: 50px;    
+    width: 100px;    
+    text-align:center;      
+    vertical-align: middle;     
+    font-size:15px;
+    border-bottom:1px solid;
+ } 
+ #timetable_td_time{     
+    height: 50px;     
+    width: 80px;    
+    text-align:center;
+    vertical-align: middle;     
+    font-size:15px;
+    border-bottom:1px solid;
+   
+}
+#timetable_tr{
+    border: 1px solid;
+
+    text-align: center;
+  vertical-align: middle;
+
+
+}
+
+#lecturelist{
+   max-width: 100%;
+   margin-left: auto;
+   margin-right: auto;
+}
+#forcinglecturelist{
+   margin-top:-4%;
+   max-width: 80%;
+   margin-left: auto;
+   margin-right: auto;
+}
+.dropdown_box
+{
+  background:#FFFFFF;
+  padding-left:10%;
+  padding-bottom:10%;
+  padding-right: -1px;
+  margin-right: 0px;
+  width: 200px;
+  padding-left: 20px;
+  padding-bottom: 20px;
+  padding-top: 10px;
+  margin-top: 10px;
+
+}
+
+.btn_look{
+
+  background-color:#93DAFF;
+  color:white;
+  font-weight:bold;
+  
+}
+
+.btn_valuation{
+   background-color:#E6749D;
+   color:white;
+   font-weight:bold;
+}
+/* users index */
+.users {
+  list-style: none;
+  margin: 0;
+  li {
+    overflow: auto;
+    padding: 10px 0;
+    border-bottom: 1px solid $gray-lighter;
+  }
+}
+
+
+
+/* home */
+#border-none{
+  border-color:white;
+}
+
+
+
+
+.row_pd_top {
+  padding-top:5px;
+}
+
+.user_section{
+  border-bottom : 1.8px solid $gray-lighter;
+  padding-bottom : 10px;
+  margin-bottom : 15px;
+  .nickname_attr {
+    font-weight : bold;
+    display : inline;
+  }
+  .nickname_mgn {
+    padding-left: 5px;
+    color : #AAA;
+    font-weight: 160;
+  }
+
+}
+
+.valuation_star {
+  margin-top: 5px;
+  height : 40px;
+  width : 100%;
+  display:inline;
+  span {
+    /*margin-right:10px;*/
+    float:left;
+    height : 27px;
+    width : 26px;
+    background : url("unactivated_star.png");
+    display : inline;
+    background-repeat: no-repeat;
+  }
+  .active{
+    float:left;
+    width : 27px;
+    height : 26px;
+    background : url("activated_star.png");
+    display : inline;
+    background-repeat: no-repeat;
+  }
+}
+.valuation_box{
+  width : 100%;
+  display : inline;
+  height: 35px;
+  float:left;
+  .left {
+    float:left;
+    width : 15%;
+    color : #AAA;
+    font-weight:140;
+  }
+  .right{
+    float : right;
+    width:25%;
+    text-align: left;
+  }
+  /*.progress{
+    margin-top:5px;
+    height : 10px;
+    width : 50%;
+    margin-left : 50px;
+    cursor : pointer;
+  }*/
+  .total_subject{
+    margin-top:10px;
+    font-size:15px;
+  }
+  #total{
+    font-size:15px;
+    margin-top:10px;
+  }
+}
+.total{
+  height : 40px;
+  vertical-align: middle;
+  .total_text{
+    text-align: right;
+    padding-top :5px;
+  }
+}
+
+.show_comment{
+  float : none;
+}
+
+
+/* 강제 강의평가 박스 */
+.writtingform_box
+{
+  background: white;
+  border: 3px solid $gray-lighter;
+}
+
+.message{
+  display : block;
+  width: 500px;
+}
+
+
+.row_padding_zero{
+  padding-top:0;
+}
+
+
+/*search_box */
+
+
+
+
+/* 세부강의 */
+
+
+
+
+
+/* daemoon */
+.daemoon_login_text{
+  padding-top:10px;
+  
+  border-top: 2px solid $gray-lighter;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* form */
+input, textarea, select, .uneditable-input {
+  border: 1px solid #bbb;
+  width: 100%;
+  margin-bottom: 15px;
+  @include box_sizing;
+}
+
+input {
+  height: auto !important;
+
+}
+
+
+
+.fb_btn{
+  margin-top:15px;
+  width : 100%;
+}
+.email_btn{
+  margin-top:15px;
+  width : 100%;
+}
+.login_btn{
+  margin-top:15px;
+  width : 100%;
+}
+.btn_wd_100{
+  font-size:18px;
+}
+
+.field_with_errors {
+  @extend .has-error;
+  .form-control {
+    color: $state-danger-text;
+  }
+}
+
+
+
+#cssmenu,
+#cssmenu ul,
+#cssmenu ul li,
+#cssmenu ul li a {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  list-style: none;
+  line-height: 1;
+  display: block;
+  position: relative;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+#cssmenu {
+  width: 180px;
+  z-index: 10;
+}
+#cssmenu ul {
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  background: #ffffff;
+  background: -moz-linear-gradient(bottom, #f0f0f0, #ffffff);
+  background: -webkit-linear-gradient(bottom, #f0f0f0, #ffffff);
+  background: -o-linear-gradient(bottom, #f0f0f0, #ffffff);
+  background: -ms-linear-gradient(bottom, #f0f0f0, #ffffff);
+  background: linear-gradient(to top, #f0f0f0, #ffffff);
+}
+#cssmenu ul li {
+  display: block;
+  border-bottom: 1px solid #cccccc;
+}
+#cssmenu ul li.active {
+  border-bottom: 0;
+}
+#cssmenu ul li:last-child {
+  border-bottom: 0;
+}
+#cssmenu ul li a {
+  display: block;
+  padding: 14px 12px;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #444444;
+}
+#cssmenu ul li.active {
+  left: -8px;
+  width: 194px;
+  padding: 2px;
+  background: #ce4c4a;
+  background: -moz-linear-gradient(bottom, #c43735, #d56462);
+  background: -webkit-linear-gradient(bottom, #c43735, #d56462);
+  background: -o-linear-gradient(bottom, #c43735, #d56462);
+  background: -ms-linear-gradient(bottom, #c43735, #d56462);
+  background: linear-gradient(to top, #c43735, #d56462);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+}
+#cssmenu ul li.active > a {
+  padding: 12px 12px 12px 16px;
+  border-left: 1px dashed #de8886;
+  border-top: 1px dashed #de8886;
+  border-bottom: 1px dashed #de8886;
+  color: #ffffff;
+  text-shadow: 0 1px 1px #8c2726;
+}
+#cssmenu ul li.active:after {
+  position: absolute;
+  right: -16px;
+  top: 7px;
+  width: 31.526911934581186px;
+  height: 31.526911934581186px;
+  background: #ce4c4a;
+  background: -moz-linear-gradient(-45deg, #c43735, #d56462);
+  background: -webkit-linear-gradient(-45deg, #c43735, #d56462);
+  background: -o-linear-gradient(-45deg, #c43735, #d56462);
+  background: -ms-linear-gradient(-45deg, #c43735, #d56462);
+  background: linear-gradient(-45deg, #c43735, #d56462);
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+  content: "";
+}
+#cssmenu ul li.active:before {
+  position: absolute;
+  right: -12px;
+  top: 9px;
+  z-index: 10;
+  width: 28.526911934581186px;
+  height: 28.526911934581186px;
+  border-right: 1px dashed #e9afae;
+  border-top: 1px dashed #e9afae;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+  content: "";
+}
+#cssmenu ul li.active a:after {
+  position: absolute;
+  bottom: -7px;
+  left: -11px;
+  z-index: -1;
+  width: 0;
+  height: 0;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-left: 8px solid transparent;
+  border-right: 8px solid #982b29;
+  content: "";
+}
+
+.tr_style{
+  border-top: 3px solid $gray-lighter;
+}
+.th_style{
+  border-bottom: 2px ;
+}
+
+
+/* daemoon */
+.logo_bg{
+  float:left;
+  height : 25px;
+  width : 26px;
+  background : url("logo3.png");
+  display : inline;
+  background-repeat: no-repeat;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

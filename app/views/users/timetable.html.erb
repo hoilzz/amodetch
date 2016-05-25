@@ -1,0 +1,478 @@
+
+   <div class="row">
+        <div class="col-md-3">
+          <div id="form1">
+    <%= form_tag timetable_user_path, :method => 'get', remote: true do %>
+     
+	    <%= text_field_tag :search, params[:search], placeholder: :"강의명 혹은 학과명을 입력해주세요." %>
+	    <%= submit_tag "찾아줘!", :subejct => nil %>
+     
+    <% end %>
+        </div>
+        	<div class="table-responsive sort_paginate_ajax" id="lecturetables">
+        	<%=render 'shared/lecturetables'%>
+
+    		</div>	
+    			
+		</div> 	
+			<%=render 'shared/timetable'%>
+
+
+		<button id="save_image_locally">
+		 시간표 다운로드
+		 </button>
+
+    </div>
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+var global_row=0;
+var global_col=0;
+var global_col2=0;
+var global_size=0;
+/*search hover 할 때 timetable 호버로 보여줌*/
+function OnMouseIn(table_row)
+{
+
+	var color="rgba(0,0,255,0.1)"; // 블루 색 + 투명도 
+	var searchtable=document.getElementById("search_table");
+	var timetable=document.getElementById("time_table");
+	var lecture_time=table_row.cells[2].firstChild.data;
+	/* 요일 하루일 때에 대한 hover*/
+	if(checkhowoften(lecture_time.substr(0,2)))
+	{		
+		var day=lecture_time.substr(0,1);
+		var begin_time=lecture_time.substr(1,5);
+		var end_time=lecture_time.substr(7,5);
+		var size=calsize(begin_time,end_time);
+		var day_n=calculateDay(day);
+		
+		for(var i=1;i<timetable.rows.length;i++)
+			{
+
+				if(begin_time==timetable.rows[i].cells[0].innerHTML.substr(0,5))
+				{	
+							global_row=i;
+							global_col=day_n;
+							global_size=size;
+							for(j=0;j<size;j++)
+							{	
+								if(timetable.rows[i+j].cells[day_n].innerHTML=="")
+								{timetable.rows[i+j].cells[day_n].style.backgroundColor=color;}
+							}
+					}
+			}
+		
+	}
+
+	
+	/* 요일 2일 일때에 대한 hover*/
+	else 
+	{	
+		var day=lecture_time.substr(0,1);
+		var day2=lecture_time.substr(1,1);
+		var begin_time=lecture_time.substr(2,5);
+		var end_time=lecture_time.substr(8,5);
+		var size=calsize(begin_time,end_time);
+		var day_n=calculateDay(day);
+		var day_n2=calculateDay(day2);
+		
+			for(var i=1;i<timetable.rows.length;i++)
+			{
+						if(begin_time==timetable.rows[i].cells[0].innerHTML.substr(0,5))
+						{	
+							global_row=i;
+							global_col=day_n;
+							global_col2=day_n2;
+							global_size=size;
+							for(j=0;j<size;j++)
+							{
+								if(timetable.rows[i+j].cells[day_n].innerHTML=="")
+								{timetable.rows[i+j].cells[day_n].style.backgroundColor=color;}
+								if(timetable.rows[i+j].cells[day_n2].innerHTML=="")
+								{timetable.rows[i+j].cells[day_n2].style.backgroundColor=color;}
+							}
+						}	
+			}
+	}
+}
+/*써치 테이블에서 마우스가 나가면 타임테이블 호버 지움 */
+function OnMouseOut(table_row)
+{
+
+	var timetable=document.getElementById('time_table');
+		if(global_col2==0)
+		{
+			
+				for(var i=0; i<global_size;i++)
+				{
+					if(timetable.rows[i+global_row].cells[global_col].innerHTML=="")
+					{timetable.rows[i+global_row].cells[global_col].style.backgroundColor="white";}
+				}
+		}
+		else
+		{
+				for(var i=0; i<global_size;i++)
+				{
+					if(timetable.rows[i+global_row].cells[global_col].innerHTML=="")
+					{timetable.rows[i+global_row].cells[global_col].style.backgroundColor="white";}
+					if(timetable.rows[i+global_row].cells[global_col2].innerHTML=="")
+					{timetable.rows[i+global_row].cells[global_col2].style.backgroundColor="white";}
+				}
+		}
+		/*글로벌 변수 초기화*/
+		global_size=0;
+		global_col=0;
+		global_col2=0;
+		global_row=0;
+
+}
+/* 해당요일에 대한 열(col) 숫자로 바꿈 */
+function calculateDay(day)
+{
+	var day_n;
+	switch(day)
+			{		
+				case "월":
+				day_n=1;
+				break;
+				case "화":
+				day_n=2;
+				break;
+				case "수":
+				day_n=3;
+				break;
+				case "목":
+				day_n=4;
+				break;
+				case "금":
+				day_n=5;
+				break;
+			}
+	return day_n;
+}
+/* 강의 일수가 하루인 강의를 넣을 때 중복 체크
+   중복이 있다면 true 반환                  */
+function checkDuplicationOne(day,begin_time,size)
+{
+	var day_n=calculateDay(day);
+	var timetable=document.getElementById('time_table');
+	for(var i=1;i<timetable.rows.length;i++){
+		if(begin_time==timetable.rows[i].cells[0].innerHTML.substr(0,5))
+			{
+				for(var j=0;j<size;j++)
+				{
+					if(timetable.rows[i+j].cells[day_n].innerHTML!="")
+					{
+						return true;
+					}
+				}
+				return false;
+			}
+	}
+
+}
+/* 강의 일수가 2일인 강의를 넣을 때 중복 체크*/
+function checkDuplicationTwo(day,day2,begin_time,size)
+{
+	var day_n=calculateDay(day);
+	var day_n2=calculateDay(day2);
+	var timetable=document.getElementById('time_table');
+	for(var i=1;i<timetable.rows.length;i++){
+		if(begin_time==timetable.rows[i].cells[0].innerHTML.substr(0,5))
+			{
+				for(var j=0;j<size;j++)
+				{
+					if(timetable.rows[i+j].cells[day_n].innerHTML!=""||timetable.rows[i+j].cells[day_n2].innerHTML!="")
+					{
+						return true;
+					}
+				}
+				return false;
+			}
+	}
+}
+/* seach 테이블 누르면 timetable에 시간표 색칠하고, 
+   DB에 저장합니다.                             */
+function painttable(table_row)
+{
+	var searchtable = document.getElementById('search_table');
+	var lecture_time=table_row.cells[2].firstChild.data;
+	var lecture_subject=table_row.cells[0].firstChild.data;
+	var lecture_professor=table_row.cells[1].firstChild.data;
+
+	/*요일 하루일 때 페인트테이블 */
+	if(checkhowoften(lecture_time.substr(0,2)))
+	{
+		var day=lecture_time.substr(0,1);
+		var begin_time=lecture_time.substr(1,5);
+		var end_time=lecture_time.substr(7,5);
+		var size=calsize(begin_time,end_time);
+	    /*alert(begin_time.substr(0,2)=="10");*/
+	    /*alert(begin_time.substr(3,2)=="00");*/
+	    if(checkDuplicationOne(day,begin_time,size))
+	    {
+	    	alert('시간표가 겹칩니닷ㅠㅠ');
+	    }
+		else
+		{
+			    $.ajax({
+						url:'/add_timetable',
+						type:'post',
+						data:{
+							'lecture_subject':lecture_subject,'lecture_professor':lecture_professor,
+							'lecture_time':lecture_time,'begin_time':begin_time,
+							'end_time':end_time,'size':size, 'howoften':1, 'day':day
+							},
+						success: function(){
+						window.location="<%=timetable_user_path(current_user.id)%>";
+						},
+						error:function(){
+										alert('같은 과목은 담기 안되세연ㅠㅠ')
+									}
+					});
+		}
+	}
+	/*요일 2일 일 때 페인트 테이블 */
+	else 
+	{
+		var day=lecture_time.substr(0,1);
+		var day2=lecture_time.substr(1,1);
+		var begin_time=lecture_time.substr(2,5);
+		var end_time=lecture_time.substr(8,5);
+		var size=calsize(begin_time,end_time);
+		if(checkDuplicationTwo(day,day2,begin_time,size))
+		{
+			alert('시간표가 겹칩니닷ㅠㅠ');
+		}
+		else
+		{
+		 $.ajax({
+				url:'/add_timetable',
+				type:'post',
+				data:{
+					'lecture_subject':lecture_subject,'lecture_professor':lecture_professor,
+					'lecture_time':lecture_time,'begin_time':begin_time,
+					'end_time':end_time,'size':size, 'howoften':2, 'day':day, 'day2':day2
+					},
+				success: function(){
+				window.location="<%=timetable_user_path(current_user.id)%>";
+				},
+				error:function(){
+								alert('같은 과목은 담기 안되세연ㅠㅠ')
+							}
+			});
+		}
+	}
+}
+/* 강의 시간을 계산합니다. 반환값은 칠할 칸 수 (강의 시간이 1시간 30분이면 3이 반환)  */
+function calsize(begin_time,end_time)
+{
+	var begin_hour=parseInt(begin_time.substr(0,2));
+	var begin_minute=parseInt(begin_time.substr(3,2));
+	var end_hour=parseInt(end_time.substr(0,2));
+	var end_minute=parseInt(end_time.substr(3,2));
+	if(end_minute>begin_minute)
+	{
+		return (end_hour-begin_hour)*2+1
+	}
+	else
+	{
+		return ((end_hour-1)-begin_hour)*2+1
+	}
+}
+/* true 반환시 숫자가 있음=> 강의가 한 주에 하루 있는 강의,
+   false 반환시 숫자가 없음 => 강의가 한 주에 2일 있는 강의*/
+function checkhowoften(time)
+{
+	var digitCheck=/\d/;
+	return digitCheck.test(time)
+}
+/* 강의가 담겨 있는 timetable에 대하여 마우스 포인터를 누르는 커서로 바꿈 */
+function onMounseInTimetable(table_td)
+{
+	if(table_td.innerHTML!="")
+	{
+		table_td.style.cursor='pointer';
+	}
+}
+
+/*timetable 클릭하여 삭제 할 때 */
+function TimetableClick(table_td)
+{
+	if(table_td.innerHTML!="")
+	{
+		var answer = confirm(table_td.innerHTML+" 시간표를 지우시겠어요?");
+		if(answer)
+		{	
+			var splitstring=table_td.innerHTML.split('-')
+			var subject=splitstring[0]
+			
+			$.ajax({
+				url:'/delete_timetable',
+				type:'post',
+				data:{
+					'lecture_subject':subject
+					},
+				success: function(){
+				window.location="<%=timetable_user_path(current_user.id)%>";
+				},
+				error:function(){
+								alert('error')
+							}
+			});
+
+
+		}
+		else
+		{
+
+		}
+	}
+}
+/*DB에 저장된 유저의 타임테이블 뿌려주기*/
+$(document).ready(function()
+{
+		var timetable=document.getElementById('time_table')
+		/*해당 유저가 담고있는 타임테이블 강의 개수 */
+		var timeTableNumber= <%= @timetables.count %>;
+
+		var color = new Array();
+		color[0]="blue";
+		color[1]="yellow";
+		color[2]="orange";
+		color[3]="green";
+		color[4]="red";
+		color[5]="brown";
+		color[6]="purple";
+		color[7]="navy";
+
+		var begin_time= new Array();
+		var day= new Array();
+		var day2= new Array();
+		var size= new Array();
+		var howoften = new Array();
+		var subject = new Array();
+		var professor = new Array();
+		<% @timetables.each_with_index do |time, i| %>
+		 	begin_time[<%=i%>]="<%=time.begin_time%>";
+		 	day[<%=i%>]="<%=time.day%>";
+		 	size[<%=i%>]=<%=time.size%>;
+		 	howoften[<%=i%>]=<%=time.howoften%>;
+		 	subject[<%=i%>]="<%=Lecture.where(id: time.lecture_id).first.subject%>"
+		 	professor[<%=i%>]="<%=Lecture.where(id: time.lecture_id).first.professor%>"
+		 	<%unless time.day2.nil? %>  /*한주에 2번 수업일 경우에 */
+		 	day2[<%=i%>]="<%=time.day2%>";
+		 	<%end%> 
+
+		<%end%> 
+
+		var day_n= new Array();
+		var day_n2= new Array();
+		/* 요일 계산 */
+		for (var i=0; i<timeTableNumber;i++){
+			switch(day[i])
+			{	
+				
+				case "월":
+				day_n[i]=1;
+				break;
+				case "화":
+				day_n[i]=2;
+				break;
+				case "수":
+				day_n[i]=3;
+				break;
+				case "목":
+				day_n[i]=4;
+				break;
+				case "금":
+				day_n[i]=5;
+				break;
+			}
+		}
+		/* 요일 계산 */
+		for (var i=0; i<timeTableNumber;i++){
+			switch(day2[i])
+			{	
+				
+				case "월":
+				day_n2[i]=1;
+				break;
+				case "화":
+				day_n2[i]=2;
+				break;
+				case "수":
+				day_n2[i]=3;
+				break;
+				case "목":
+				day_n2[i]=4;
+				break;
+				case "금":
+				day_n2[i]=5;
+				break;
+			}
+		}
+
+
+		/* 타임 테이블을 색칠하는 코드*/
+		for(var count=0;count<timeTableNumber;count++)
+		{
+
+			for(var i=1;i<timetable.rows.length;i++)
+			{
+
+				if(begin_time[count]==timetable.rows[i].cells[0].innerHTML.substr(0,5))
+				{	
+					if(howoften[count]==1){
+							for(j=0;j<size[count];j++)
+							{	
+								
+								timetable.rows[i+j].cells[day_n[count]].style.backgroundColor=color[count];
+								timetable.rows[i+j].cells[day_n[count]].innerHTML=subject[count]+"-"+professor[count];
+								
+
+							}
+					}
+					else if(howoften[count]==2){
+
+							for(j=0;j<size[count];j++)
+							{
+								timetable.rows[i+j].cells[day_n[count]].style.backgroundColor=color[count];
+								timetable.rows[i+j].cells[day_n[count]].innerHTML=subject[count]+"-"+professor[count];
+								timetable.rows[i+j].cells[day_n2[count]].style.backgroundColor=color[count];
+								timetable.rows[i+j].cells[day_n2[count]].innerHTML=subject[count]+"-"+professor[count];
+							}
+
+
+					}
+				}
+		
+			}
+		}
+		
+});
+
+$('#save_image_locally').click(function() {
+
+	html2canvas($('#target'),
+			 {
+			 	 letterRendering:true,
+			 	 logging:true, 
+				 background:"white",
+				  onrendered: function(canvas) {
+				  	 var a = document.createElement('a');
+				    a.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
+				     a.download = '아뭐듣지시간표.jpg';
+				     a.click();
+				  }
+
+			});
+});
+   //pagination using ajax
+   $(function() {
+$("#lecturetables").on("click", ".pagination a", function(){
+    $.getScript(this.href);
+    return false;
+  });
+});
+</script>

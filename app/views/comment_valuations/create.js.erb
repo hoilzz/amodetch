@@ -1,0 +1,6 @@
+$("#<%=@comment.id%>-liked_num").html('<%= @comment.likedcount %>')
+$('#<%=@comment.id%>-comment_valuation').html("<%= escape_javascript(render('comment_valuations/unalso', :comment => @comment)) %>")
+//$("#comment-<%=@comment.id%>").html("<%= escape_javascript(render(@comment))%>")
+//$('.btn', '.new_comment_valuation').prop('value', '좋아요 취소요')
+
+$("#<%=@comment.id%>_like_box").html("<%= escape_javascript(render('comment_valuations/thumbs_up_image_count', :comment => @comment)) %>")

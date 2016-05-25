@@ -1,0 +1,13 @@
+<% if logged_in_user? %>
+
+	<%= form_for @comment, class: "comment_submit_btn", remote: true do |f| %>
+		<div class="field comment_submit_btn">
+			<%= f.text_area :content, cols: 80, rows: 3, placeholder: @comment.content %>
+		</div>
+		<%= hidden_field_tag :lecture_id, @lecture.id %>
+
+		<%= f.submit "수정하기", class: "btn btn-primary comment_submit_btn" %>
+
+	<% end %>
+
+<% end %>

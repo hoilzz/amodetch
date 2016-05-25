@@ -1,0 +1,27 @@
+<%= form_for @lecture.valuations.build, html: { class: "inline-blk" }, remote: true do |f|  %>
+	<%= hidden_field_tag :lecture_id, @lecture.id %>
+	<%= hidden_field_tag :hatachi, 1 %>
+	<span id = "testing"><%= f.submit '별로에요', class: "btn btn-deafult hatachi" %></span>
+<% end %>
+
+
+
+
+<% if logged_in_user? %>
+	<% if current_user.valuations.find_by(lecture_id: @lecture.id)%>
+		<% if current_user.valuations.find_by(lecture_id: @lecture.id).up == 1 %>
+			<script>
+				$('.hatachi').click(function(){
+					alert('<%= @lecture.professor %>교수님을 이미 Up으로 평가하셨습니다. 그만해!!');
+				});
+			</script>
+
+		<% elsif current_user.valuations.find_by(lecture_id: @lecture.id).down == 1 %>
+			<script>
+				$('.hatachi').click(function(){
+					alert('<%= @lecture.professor %>교수님을 이미 down으로 평가하셨습니다. 그만해!!');
+				});
+			</script>
+		<% end %>
+	<% end %>
+<% end %>

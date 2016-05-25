@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  lectureTime: MyString
+  place: MyString
+
+two:
+  lectureTime: MyString
+  place: MyString

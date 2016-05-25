@@ -1,0 +1,7 @@
+<%if @menual_num==1%>
+$('#menual1').html('<%= escape_javascript(render("menual1")) %>');
+$('a').attr('data-remote', 'true');
+<%else %>
+$('#menual2').html('<%= escape_javascript(render("menual2")) %>');
+$('a').attr('data-remote', 'true');
+<%end%> 

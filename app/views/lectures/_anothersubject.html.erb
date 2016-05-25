@@ -1,0 +1,25 @@
+<table id= "side_bar_sub">
+    <thead>
+      
+         <tr class> 
+
+           <th>이 교수님의 다른 과목</th>
+         
+         </tr>
+
+    </thead>
+       <tbody>    
+  
+       <% @AnotherSubjects.each do |sub| %>
+
+         <!-- lecture와 같은 교수는 제외 -->
+       <% if sub.subject == @lecture.subject %>
+           <% next  %> 
+        <% end %>   
+        <tr class="lovelyrow" onclick="location.href='<%=lecture_url(sub)%>'" >
+         <td> <%= sub.subject %>  </td>     
+
+         </tr>
+         <% end %>
+        </tbody>
+    </table>

@@ -1,0 +1,35 @@
+<div class="dropdown">
+  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    ...
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+    <li><a href="#" id = "save_image_locally"> 다운로드</a> </li>
+    <li>
+      <%= link_to "현재 시간표 삭제", delete_timetable_path(current_timetable.id), method: :delete %>
+    </li>
+  </ul>
+</div>
+
+
+
+<!-- <div> -->
+  
+  <!--%= button_to copy_path, method: :get, class: 'btn btn-default copy_btn', :type => 'button' do %-->
+    <!--%= hidden_field_tag :id, @current_timetable.id %-->
+    <!-- <i class="glyphicon glyphicon-file" style="color:white;"><B> 복사 </B></i> -->
+  <!--% end %-->
+
+<!-- </div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+

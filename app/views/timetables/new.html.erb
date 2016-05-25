@@ -1,0 +1,33 @@
+
+<% provide(:title, '시간표 만들기') %>
+
+  <div class = "timetable_new_container">
+    <div class = "add_form_box">
+      <h1>시간표 만들기</h1>
+      <br><br>
+        <%= form_for(@timetable) do |f| %>
+          <%= render 'shared/error_messages_timetable' %>
+          <div class = "form-group">
+            <%= f.label :'시간표 이름' %> 
+            <%= f.text_field :name, class: 'form-control',
+                :placeholder => '시간표 이름을 입력해주세요!' %>
+          </div>
+          <!--%= f.label :'학기' %> (로그인시 사용됩니다)
+          <!%= f.text_field :email, class: 'form-control' %-->
+          <div class = "form-group">
+            <%= f.label :'시간표 학기' %> 
+            <%= f.select :semester, "<option class = 'form-control'>2016년 1학기</option>
+                                     <option class = 'form-control'>2015년 2학기</option>".html_safe,
+                                     :class => "form-control"%>
+            <!-- <select class="form-ediecontrol">
+              <option>16-1학기</option>
+              <option>16-2학기</option>
+              <option>계절 학기</option>
+            </select> -->
+          </div>
+      
+        <%= f.submit "만들기 !", class: "btn btn-primary btn_attr" %>
+      
+        <% end %>
+    </div>
+  </div>

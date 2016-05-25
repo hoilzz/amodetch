@@ -1,0 +1,18 @@
+<%if valuation %> 
+<div class ="row">
+	<div class ="col-md-2 zero-padding-right">
+		<span class = "user"> <%= valuation.user.nickname %> </span>
+	</div>
+	<div class ="col-md-10 zero-padding-left" id = "comment-<%=valuation.id%>">
+		<span class = "comment"> <%= valuation.content %> </span>
+	</div>
+</div>
+
+
+
+<div class="col-md-9 zero-padding-left">
+		 <span class = "timestamp"> 
+					<%= valuation.timestamp_division%>
+		</span>
+</div>
+<%end %> 

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html >
+<head >
+
+ <meta http-equiv="contentType" type="text/html" charset="euc-kr" />
+  <%= favicon_link_tag 'favicon.ico'%>
+  <%= favicon_link_tag 'favicon.ico', rel: 'apple-touch-icon', type: 'image/png'%>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <title >아뭐듣지</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  <!-- Test -->
+  <script>
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+      }
+    });
+  </script>
+</head>
+
+<body>
+  <%= render 'layouts/header' %>
+  <div class = "alert-container" style = "z-index : 9999"></div>
+    <div>
+       <%= yield %>
+    </div>
+  <aside>
+  </aside>
+  <div class = "footer">
+      <%= render 'layouts/footer' %>
+  </div>
+</body>
+
+</html>

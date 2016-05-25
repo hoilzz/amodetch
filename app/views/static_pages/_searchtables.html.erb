@@ -1,0 +1,73 @@
+<%unless @lectures.nil?%> 
+
+ 
+<font color="blue"><%=@lectures.count %>개 </font> 검색결과
+<div style = "text-align:center;" >
+  <table class="table nogap table-striped" style= "font-size:1em;">
+    <thead>
+      <tr align="center" class = "tr_style">
+        <th width="24%" class = "text_head">과목명</th>
+        <th width="20%" class = "text_head">교수</th>
+        <th width="30%" class = "text_head">평균평점</th>
+        <%if current_page? controller: 'static_pages', action:'newsfeed' %>
+          <th witdh="10%" class = "text_head">열람하기</th>
+        <%elsif current_page? controller: 'static_pages', action:'forcingwritting'%>
+          <th witdh="10%" class = "text_head">평가하기</th>
+        <%end%>
+      </tr>
+    </thead>
+    <tbody></tbody>   
+
+
+    <% @lectures.each do |lec| %>
+    <%if current_page? controller: 'static_pages', action:'newsfeed' %>
+      <tr class="search_table_row" onclick="showLecture(<%=lec.id%>)" >
+    <%elsif current_page? controller: 'static_pages', action:'forcingwritting'%>
+      <tr class="search_table_row" onclick="window.location='<%=writtingform_lecture_url(lec)%>'">
+    <%end%>     
+
+      <td class="table_subject">
+        <%= lec.subject%>
+      </td>
+      <td class="tb_unspot" >
+        <%=lec.professor%> 
+      </td>  
+      <td class="total_spot" style = "text-align:center">
+        <!-- <div class="div_total"> -->
+          <% if lec.acc_total==0 %>
+            평가없음
+          <% else %> 
+            <%= render 'shared/show_average_star',:var=> lec.acc_total%>
+            <div class = "total_text">
+             <%= lec.acc_total.round(1) %>
+            </div>
+        <!-- </div> -->
+          <% end %> 
+      </td>
+
+      <%if current_page? controller: 'static_pages', action:'newsfeed' %>
+        <td witdh="10%">열람하기</th>
+      <%elsif current_page? controller: 'static_pages', action:'forcingwritting'%>
+        <td witdh="10%">평가하기</th>
+      <%end%>
+      </td></td></tr>
+
+
+    <% end %>
+    </tbody>
+
+  </table>
+
+</div>      
+<% if @lectures.count ==0 %> 
+<font color="gray"><h3>검색 결과가 없습니다. </h3></font>
+<%end %>
+
+
+
+
+<div align='center'>   
+  <%= will_paginate @lectures%>
+</div>
+
+<%end%> 

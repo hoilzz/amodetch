@@ -1,0 +1,80 @@
+<div class = "row row_padding_zero">
+    <div class = "col-xs-9 col-xs-offset-2">
+        <div class = "row row_padding_zero">
+            <div class="col-xs-8 writtingform_box">
+                <div style = "background : white;">
+                <h3> 아뭐듣지! </h3>
+                <p>
+                    아뭐듣지는 학우 여러분께 보다 많은 강의평가를 제공하기 위한 서비스입니다.
+                </p>
+                <p>
+                    강의평가 3개 이상 작성해주셔야, 다른 학우들의 강의 평가를 열람할 수 있습니다.
+                </p>
+                <p>
+                    학우 여러분의 솔직하고, 성실한 평가만이 강의를 개선할 수 있습니다.
+                </p>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class = "row row_padding_zero">
+    <div class = "col-xs-9 col-xs-offset-2">
+        <div class = "row">
+    		<div class="col-xs-8 writtingform_box"  style = "padding-bottom:25px;">
+
+    			<h2 class="inline-blk"> 
+                    <%= @lecture.subject %> 
+                </h2> 
+                <span><%= @lecture.professor %></span>
+                
+                <div class = "row">
+                    <div class = "col-xs-2">
+                        강의평가
+                    </div>
+                    <div class = "col-xs-10">
+                        <%= render 'static_pages/progress_bar' %>
+                    </div>
+                    
+    		</div><!-- /.col-md-8 -->
+        </div>      
+    </div>
+</div>
+
+
+
+<script>
+$(document).ready(function() {
+	var text_length=0;
+    var text_max = 500;
+
+    document.getElementById('showremain').style.color="red"
+    
+    
+    $('#showremain').html('0'+'/'+text_max);
+
+    $('.message').keyup(function() {
+        text_length = $('.message').val().length;
+        var text_remaining = text_max - text_length;
+        $('#showremain').html(text_length.toString()+'/'+text_max.toString() );
+    /*글자가 40자 이상시 파란색*/
+    if (text_length>39)
+        {
+        	document.getElementById('showremain').style.color="blue"
+       
+        }
+    /*글자가 40자 미만시 빨간색*/    
+    else
+        {
+        	document.getElementById('showremain').style.color="red"
+        	
+        }
+    });
+
+});
+
+
+
+</script>

@@ -1,0 +1,81 @@
+<div class="btn-group">
+  <button class="btn btn-default btn-lg dropdown-toggle major-btn" id = "border-none" data-toggle="dropdown">
+    학과 선택 <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="
+  height : 400%; overflow:scroll;">
+    <li><%= link_to '모든학과', home_path(:lecture_name => '모든학과'), remote: true %></li>
+    <li><%= link_to '컴퓨터공학과', home_path(:lecture_name => '컴퓨터공학과'), remote: true %></li>
+
+    <li><%= link_to '전자공학과', home_path(:lecture_name => '전자공학과'), remote: true  %></li>
+    <li><%= link_to '광전자공학과', home_path(:lecture_name => '광전자공학과'), remote: true  %></li>
+    <li><%= link_to '디지털콘텐츠학과', home_path(:lecture_name => '디지털콘텐츠학과'), remote: true  %></li>
+    <li><%= link_to '정보보호학과', home_path(:lecture_name => '정보보호학과'), remote: true  %></li>
+
+    <li role="separator" class="divider"></li>
+
+    <li> <%= link_to '국어국문학과', home_path(:lecture_name => '국어국문학과'), remote: true  %> </li>
+    <li> <%= link_to '국제학부', home_path(:lecture_name => '국제학부'), remote: true  %> </li>
+    <li> <%= link_to '영어영문학과', home_path(:lecture_name => '영어영문학과'), remote: true  %> </li>
+    <li> <%= link_to '일어영문학과', home_path(:lecture_name => '일어영문학과'), remote: true  %> </li>
+    <li> <%= link_to '역사학과', home_path(:lecture_name => '역사학과'), remote: true  %> </li>
+    <li> <%= link_to '교육학과', home_path(:lecture_name => '교육학과'), remote: true  %> </li>
+
+    <li role="separator" class="divider"></li>
+    <li> <%= link_to '경제통상학과', home_path(:lecture_name => '경제통상학과'), remote: true  %> </li>
+    <li> <%= link_to '행정학과', home_path(:lecture_name => '행정학과'), remote: true  %> </li>
+    <li> <%= link_to '신문방송학과', home_path(:lecture_name => '신문방송학과'), remote: true  %> </li>
+    <li> <%= link_to '중국통상학과', home_path(:lecture_name => '중국통상학과'), remote: true  %> </li>
+
+    <li role="separator" class="divider"></li>
+    <li> <%= link_to '경영학전공', home_path(:lecture_name => '경영학부 경영학전공'), remote: true  %> </li>
+
+    <li role="separator" class="divider"></li>
+    <li> <%= link_to '관광경영학과', home_path(:lecture_name => '호텔관광외식경영학부 관광경영전공'), remote: true  %> </li>
+    <li> <%= link_to '외식경영학', home_path(:lecture_name => '호텔관광외식경영학부 외식경영학전공'), remote: true  %> </li>
+    <li> <%= link_to '호텔경영학과', home_path(:lecture_name => '호텔관광외식경영학부 호텔경영전공'), remote: true  %> </li>
+    <li> <%= link_to '호텔외식비즈니스학과', home_path(:lecture_name => '호텔외식비즈니스학과'), remote: true  %> </li>
+    <li> <%= link_to '수학전공', home_path(:lecture_name => '수학통계학부 수학전공'), remote: true  %> </li>
+    <li> <%= link_to '응용통계학전공', home_path(:lecture_name => '수학통계학부 응용통계학전공'), remote: true  %> </li>
+    <li> <%= link_to '응용통계학학과', home_path(:lecture_name => '경제통상학과'), remote: true  %> </li>
+    <li> <%= link_to '물리학과', home_path(:lecture_name => '물리학과'), remote: true  %> </li>
+    <li> <%= link_to '천문우주학과', home_path(:lecture_name => '천문우주학과'), remote: true  %> </li>
+    <li> <%= link_to '화학과', home_path(:lecture_name => '화학과'), remote: true  %> </li>
+    
+    <li role="separator" class="divider"></li>
+    <li> <%= link_to '바이오융합공학과', home_path(:lecture_name => '바이오융합공학과'), remote: true  %> </li>
+    <li> <%= link_to '분자생물학과', home_path(:lecture_name => '분자생물학과'), remote: true  %> </li>
+    <li> <%= link_to '바이오자원공학과', home_path(:lecture_name => '바이오자원공학과'), remote: true  %> </li>
+    
+    <li role="separator" class="divider"></li>
+    <li> <%= link_to '건축공학전공', home_path(:lecture_name => '건축공학부 건축공학전공'), remote: true  %> </li>
+    <li> <%= link_to '건축공학부', home_path(:lecture_name => '건축학전공'), remote: true  %> </li>
+건설환경
+    <li> <%= link_to '건설환경공학과', home_path(:lecture_name => '건설환경공학과'), remote: true  %> </li>
+    <li> <%= link_to '환경에너지융합학과', home_path(:lecture_name => '환경에너지공간융합학과'), remote: true  %> </li>
+    <li> <%= link_to '공간정보학과', home_path(:lecture_name => '공간정보학과'), remote: true  %> </li>
+    <li> <%= link_to '에너지자원학과', home_path(:lecture_name => '에너지자원공학과'), remote: true  %> </li>
+    <li> <%= link_to '기계공학학과', home_path(:lecture_name => '기계항공우주공학부 기계공학전공'), remote: true  %> </li>
+    <li> <%= link_to '항공우주공학과', home_path(:lecture_name => '기계항공우주공학부 항공우주공학전공'), remote: true  %> </li>
+    <li> <%= link_to '나노신소재공학과', home_path(:lecture_name => '나노신소재공학과') , remote: true %> </li>
+    
+    <li> <%= link_to '국방시스템학과', home_path(:lecture_name => '경제통상학과'), remote: true  %> </li>
+    <li> <%= link_to '항공시스템학과', home_path(:lecture_name => '항공시스템공학과'), remote: true  %> </li>
+    
+    <li role="separator" class="divider"></li>
+    <li> <%= link_to '회화과', home_path(:lecture_name => '회화과'), remote: true  %> </li>
+    <li> <%= link_to '산업디자인학과', home_path(:lecture_name => '산업디자인학과'), remote: true  %> </li>
+    <li> <%= link_to '패션디자인학과', home_path(:lecture_name => '패션디자인학과'), remote: true  %> </li>
+    <li> <%= link_to '음악학과', home_path(:lecture_name => '경제통상학과'), remote: true  %> </li>
+    <li> <%= link_to '체육학과', home_path(:lecture_name => '경제통상학과'), remote: true  %> </li>
+    <li> <%= link_to '무용학과', home_path(:lecture_name => '경제통상학과'), remote: true  %> </li>
+    <li> <%= link_to '만화애니메이션학과', home_path(:lecture_name => '경제통상학과'), remote: true  %> </li>
+    <li> <%= link_to '영화예술학과', home_path(:lecture_name => '경제통상학과'), remote: true  %> </li>
+    <li> <%= link_to '항장뷰티산업학과', home_path(:lecture_name => '경제통상학과'), remote: true  %> </li>
+
+
+    <li role="separator" class="divider"></li>
+    <li><%= link_to '자유교양', home_path(:lecture_name => '교양학부'), remote: true  %></li>
+
+  </ul>
+</div>

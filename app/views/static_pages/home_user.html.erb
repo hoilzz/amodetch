@@ -1,0 +1,59 @@
+<div class="row">
+	<div class="col-md-2"></div>   
+	<div class="col-md-8" align="left">
+		<h1> 최근 강의 평가</h1>
+	 <div id="form1">
+		<%= form_tag root_path, :method => 'get' do %>
+		 
+    강의명 <%= text_field_tag :search, params[:search] %>
+    	   <%= submit_tag "Search", :subejct => nil %>
+		 
+		<% end %>
+     </div>
+     <br><br>
+      <div class="table-responsive">
+        <table class="table nogap">
+         <thead>
+      
+         <tr class> 
+
+           <th>강의</th>
+           <th>교수명</th>
+           <th>개설학과</th>
+           <th>댓글</th>
+           <th>up&down</th>
+           
+         </tr>
+         </thead>
+    	 <tbody>     
+		<% @lectures.each do |lec| %>
+	
+         <tr class="lovelyrow" onclick="location.href='<%=lecture_url(lec)%>'" >
+    <td><%= lec.subject%></td> <td><%=lec.professor%> </td>
+    <td><%= lec.major%></td>
+		</tr>
+
+   	   <% end %>
+   	   	</tbody>
+   	   	</table>
+   	   	</div>
+   	   	</div>
+ 	 
+
+  	</div> 
+ 
+	<div class="col-md-2"></div >	 
+
+   
+
+</div>    
+
+<div class="row">
+	
+	<div class="col-md-12" align="center">
+	
+	</div>
+	
+	</div>
+
+	

@@ -1,0 +1,26 @@
+<table id= "side_bar_pro">
+  	<thead>
+      
+         <tr class> 
+
+           <th>동일 과목 다른 교수님</th>
+         
+         </tr>
+
+    </thead>
+    	 <tbody>    
+  
+       <% @AnotherProfessors.each do |pro| %>
+       
+       <!-- lecture와 같은 교수는 제외 -->
+       <% if pro.professor == @lecture.professor %>
+           <% next  %> 
+
+       <% end %>
+        <tr class="lovelyrow" onclick="location.href='<%=lecture_url(pro)%>'" >
+    	   <td> <%= pro.professor %>	</td>     
+
+         </tr>
+         <% end %>
+    	  </tbody>
+    </table>

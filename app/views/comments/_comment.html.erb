@@ -1,0 +1,53 @@
+
+<% if comment %>
+<div class ="row">
+	<div class ="col-md-2 zero-padding-right">
+		<span class = "user"> <%= comment.user.nickname %> </span>
+	</div>
+	<div class ="col-md-10 zero-padding-left" id = "comment-<%=comment.id%>">
+		<span class = "comment"> <%= comment.content %> </span>
+	</div>
+</div>
+
+<div class ="row row_padding_reduction">
+	<div class="col-md-2">
+		<% if current_user?(comment.user) %>
+		<%= link_to '편집', edit_comment_path(comment.id), remote: true, class: 'comment_edit_btn' %>
+		<%= link_to '삭제', comment_path(comment.id), method: :delete, remote: true, data:
+		{confirm: "댓글 지울꺼에요?"}, class: 'comment_edit_btn' %>
+	<% end %>
+
+	</div>
+
+	<div class="col-md-9 zero-padding-left">
+
+		<li id="<%=comment.id%>-comment_valuation" style ="padding:0px">
+			<% unless logged_in_user? %>
+					<%= render 'comment_valuations/also', :comment => comment %>
+			<% else %>
+				<% if current_user.comment_valuations.find_by(comment_id: comment.id) %>
+					<%= render 'comment_valuations/unalso', :comment => comment%>
+				<% else %>
+					<%= render 'comment_valuations/also', :comment => comment %>
+				<% end %>
+			<% end %>
+		</li>			
+		
+		<div class ="inline-blk" id = "<%=comment.id%>_like_box">
+			<% unless comment.likedcount == 0 %>
+				<%= render 'comment_valuations/thumbs_up_image_count', :comment => comment%>
+			<% end %>
+		</div>
+
+		<span class = "timestamp"> 
+			<%= comment.timestamp_division%>
+		</span>
+
+	</div>
+</div>
+	
+
+<% end %>
+
+
+

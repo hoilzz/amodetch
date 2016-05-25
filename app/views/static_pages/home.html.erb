@@ -1,0 +1,71 @@
+<div class = "home_box">
+  <img src="assets/homeview_withbtn.png" usemap="#button"/>
+<map name="button">
+  <area shape="rect" coords="660,260,859,302" href="/timetables/new" />
+</map>
+
+
+</div> <!-- home_box -->
+<h1 class="footerSubject">
+  아뭐듣지
+</h1>
+<hr class="footerSubjectHr" size="50" />
+<p class="footerSubject">세종대 강의 시간표를 가장 편하게 작성할 수 있는 곳입니다. </p>
+
+
+
+<script>
+  // jQuery( document ).ready(function( $ )
+  // {
+  //   var agent = navigator.userAgent.toLowerCase();
+  //   if ( (navigator.appName == 'Netscape' && navigator.userAgent.search('Trident') != -1) || (agent.indexOf("msie") != -1) || /msie|trident/i.test(agent) ) {
+  //     swal({   title: "chrome 이용 부탁드립니다!",   text: "아뭐듣지를 internet explorer로 이용시 시간표 짜기 기능이 안됩니다..",   type: "error",   confirmButtonText: "Okay" });
+  //   }
+  // });
+
+   //pagination using ajax
+  $(function() {
+    $("#searchtables").on("click", ".pagination a", function(){
+        $.getScript(this.href);
+        return false;
+      });
+  });
+   //pagination using ajax
+  $(function() {
+    $("#valuationlists").on("click", ".pagination a", function(){
+        $.getScript(this.href);
+        return false;
+      });
+  });
+ 
+ 
+
+  <% if !@lecture_name.nil? %>
+    $('.dropdown-toggle').dropdown().html('<%=@lecture_name%>');
+  <% end %>
+
+  $(function(){
+    $(".dropdown-menu").on('click', 'li a', function(){
+      $("#border-none:first-child").text($(this).text());
+      $("#border-none:first-child").val($(this).text());
+  });
+
+});
+
+
+function showLecture(lec_num)
+  {
+      <% if user_login? %>
+        <% if current_user.valuations.count>=2 %>
+          window.location="/lectures/"+lec_num.toString()
+         <% else %>
+         window.location="<%=forcingwritting_url%>"
+         <% end %>  
+       <% else %>
+          window.location="<%=root_url%>"
+      <% end %>        
+  }
+
+
+
+</script>

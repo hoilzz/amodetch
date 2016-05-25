@@ -1,0 +1,597 @@
+// Place all the styles related to the Static_pages controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+$bg_red       : #e5cfcf;
+$bg_orange    : #fef1e6;
+$bg_yellow    : #fefae7;
+$bg_green     : #edf6e9;
+$bg_blue      : #e6f5fc;
+$bg_navy      : #e6eff8;
+
+$ft_red       : #9c0d0d;
+$ft_orange    : #f47700;
+$ft_yellow    : #f7c90d;
+$ft_green     : #48a024;
+$ft_blue      : #009ce6;
+$ft_navy      : #095fb5;
+
+
+
+
+.row_pd_top{
+	.row_half_star{
+		height : 40px;
+	}	
+}
+
+/* 						        	  */
+/*      staticpages # home            */
+/*      첫화면(검색창)입니다.			      */
+/*   						  		  */
+.home_box{
+  background-color: #73767D;
+  width:100%;
+  margin-top:-20px !important;
+  margin-bottom: -200px;
+}
+.home_box > img{
+	margin: auto;
+	display:block;
+
+}
+.home_box{
+
+	margin : 10px auto;
+	
+	.search_box{
+		width:720px;
+		margin : 10px auto;
+		text-align : center;
+		display: block;
+		margin-bottom: 10px;
+		border-bottom: 1px solid #EEE;margin-top:3%;
+		padding-bottom : 15px;
+
+		.popular_words{
+			margin-top:5px;
+		}
+	}
+	.search_result_box{
+		width:720px;
+		margin : 30px auto;
+
+		tr.search_table_row:hover{
+			background-color: #CEF6EC;
+			cursor: pointer;
+			font-weight:900;
+		}
+		
+		.text_head{
+				text-align:center;
+				color:gray;
+				padding-left:0px;
+				padding-right:0px;
+		}
+		#div_total
+		{
+  			float:left;
+		}
+
+		.tb_unspot{
+			vertical-align:middle;
+			color: gray;
+		}
+		.table_subject, .total_spot{
+			vertical-align:middle;
+		}
+		.total_spot span {
+		    /*margin-right:10px;*/
+		    width : 27px;
+		    height : 26px;
+		    background : url("unactivated_star.png");
+		    display : inline-block;
+		    background-repeat: no-repeat;
+		    margin-right:-4px;
+  		}
+	    .total_spot .active{
+		    width : 27px;
+		    height : 26px;
+		    background : url("activated_star.png");
+		    display : inline-block;
+		    background-repeat: no-repeat;
+		    margin-right:-4px;
+	    }
+
+	    .total_text{
+	    	float: right;
+		    margin-right : 20px;
+		    margin-top: 3px;
+		    font-size: 16px;
+	    }
+	}
+}
+
+
+
+
+
+
+/* writting_form.html.erb */
+
+.writting_form_box
+{
+	height:4290px;
+	width:1000px;
+	margin-left : auto;
+	margin-right : auto;
+
+	.notice{
+		width :720px;
+		margin : 0 auto;
+	}
+
+	.form_box{
+		width:720px;
+		margin : 0 auto;
+		.v_row{
+			height:45px;
+			.progress{
+				height : 20px;
+				width : 300px;
+				margin-left : 50px;
+				cursor : pointer;
+			}
+		}
+		.v_textarea{
+			margin-top:25px;
+		}
+		.valuation_text_box{
+			width:500px;
+		}
+		#showremain{
+			text-align: right;
+		}
+	}
+}
+
+
+
+
+/* _forcingwritting.html.erb */
+
+.forcing_writting_box
+{
+	width:1000px;
+	margin-left:auto;
+	margin-right:auto;
+
+	background:white;
+	.h_inline{
+		display:inline;
+	}
+	.search_box{
+		width:720px;
+		margin : 10px auto;
+		text-align : center;
+		display: block;
+		margin-bottom: 10px;
+		.search	
+		{
+			background:white;
+			margin :10px;
+			display : inline-block;
+			width:60%;
+		}
+		.dropdown_box
+		{
+			width : 20%;
+			display	:	inline-block;
+		}
+	}
+
+	.forcing_writting_search{
+		width:100%;   
+		text-align:center; 
+		margin-right:auto;
+		margin:0 auto;
+	}
+
+	.search_result_box {
+		width:720px;
+		height:500px;
+		margin:30px auto;
+
+		tr.search_table_row:hover{
+			background-color: #CEF6EC;
+			cursor: pointer;
+			font-weight:900;
+		}
+		
+		.text_head{
+				text-align:center;
+				color:gray;
+				padding-left:0px;
+				padding-right:0px;
+		}
+		#div_total
+		{
+  			float:left;
+		}
+
+		.tb_unspot{
+			vertical-align:middle;
+			color: gray;
+		}
+		.table_subject, .total_spot{
+			vertical-align:middle;
+		}
+
+		.total_spot span {
+		    /*margin-right:10px;*/
+		    width : 27px;
+		    height : 26px;
+		    background : url("unactivated_star.png");
+		    display : inline-block;
+		    background-repeat: no-repeat;
+		    margin-right:-4px;
+  		}
+	    .total_spot .active{
+		    width : 27px;
+		    height : 26px;
+		    background : url("activated_star.png");
+		    display : inline-block;
+		    background-repeat: no-repeat;
+		    margin-right:-4px;
+	    }
+
+	    .total_text{
+	    	float: right;
+		    margin-right : 20px;
+		    margin-top: 3px;
+		    font-size: 16px;
+	    }
+
+	}
+}
+
+
+/* _progress_bar.html.erb */
+.valuation_text_box{
+	.h_size{
+		font-size:16px;
+	}
+}
+
+/* progress_bars.html.erb */
+
+.valuation_item {
+	width:10%;
+	text-align:right;
+	float:left;
+	margin-right:20px;
+	margin-top:5px
+}
+
+/* 						        	  */
+/*      staticpages # newsfeed        */
+/*      뉴스피드 뷰 입니다. 			      */
+/*   						  		  */
+.newsfeed_container
+{
+	margin : 10px auto;
+	
+	.search_row{
+		margin : 15px 30px;
+		text-align : right;
+		display: block;
+		/*position:absolute;*/
+		right:100px;
+		margin-bottom: 10px;
+		/*border-bottom: 1px solid #EEE;margin-top:3%;*/
+		padding-bottom : 15px;
+
+		.btn_group
+		{
+			display	: inline-block;
+			.btn-sm, .btn-group-sm > .btn
+			{
+				font-size : 14px;
+			}
+		}
+
+		.search_box
+		{
+
+			text-align:right;
+			display : inline;
+			.search_word
+			{
+				/*display:inline; */
+				width: 220px;
+			}
+			.search_btn
+			{
+				/*display:inline;*/
+				width : 65px;
+			}
+		}
+	}
+	.search_result_box{
+		width:720px;
+		margin : 30px auto;
+
+		tr.search_table_row:hover{
+			background-color: #CEF6EC;
+			cursor: pointer;
+			font-weight:900;
+		}
+		
+		.text_head{
+				text-align:center;
+				color:gray;
+				padding-left:0px;
+				padding-right:0px;
+		}
+		#div_total
+		{
+  			float:left;
+		}
+
+		.tb_unspot{
+			vertical-align:middle;
+			color: gray;
+		}
+		.table_subject, .total_spot{
+			vertical-align:middle;
+		}
+		.total_spot span {
+		    /*margin-right:10px;*/
+		    width : 27px;
+		    height : 26px;
+		    background : url("unactivated_star.png");
+		    display : inline-block;
+		    background-repeat: no-repeat;
+		    margin-right:-4px;
+  		}
+	    .total_spot .active{
+		    width : 27px;
+		    height : 26px;
+		    background : url("activated_star.png");
+		    display : inline-block;
+		    background-repeat: no-repeat;
+		    margin-right:-4px;
+	    }
+
+	    .total_text{
+	    	float: right;
+		    margin-right : 20px;
+		    margin-top: 3px;
+		    font-size: 16px;
+	    }
+	}
+}
+
+
+.newsfeed_box{
+	width:1000px;
+	margin-left : auto;
+	margin-right : auto;
+	
+	.recent_valuations{
+		width:720px;
+		margin-left : auto;
+		margin-right : auto;
+		#recent{
+			margin-left:0;
+			margin-right:0;
+			height:220px;
+			padding-top:60px;
+			border-bottom:2px solid #eeeeee;
+			.jumbotron{
+				margin-bottom :0;
+				padding : 10px;
+				background-color:white;
+				.v_text{
+					display:inline-block;
+					margin-left:30px;
+					font-size:17px
+				}
+
+			}
+		}
+		.valuation_contents{
+			margin-bottom: 30px;
+		}
+	}
+
+	.valuation_subject{
+		margin : 50px 0;
+	}
+
+	.valuation_section{
+			width : 50%;
+			float:left; 
+			display:inline; 
+			height : 50px;
+
+			.left{
+				width:40px;
+				float:left; 
+				margin-right : 5px; 
+				margin-top:15px;
+			}
+			.right{
+				font-size: 18px;
+				float:right;
+				width: 20%; 
+				text-align:left; 
+				margin-top:10px;
+			}
+			#acc_progress{
+				width : 60%;
+				margin-top:15px;
+			}
+		}
+		.valuation_text_section{
+  		display:inline-block;
+  		width:300px;
+  		vertical-align: top;
+  		margin-right:40px;
+  	}
+  	.valuation_progress_section{
+  		display:inline-block;
+  		width:350px;
+  	}
+}
+
+
+
+
+.valuation_box{
+	.progress{
+		height : 10px;
+		width : 200px;
+		margin-left : 50px;
+		cursor : pointer;
+	}
+}
+
+
+
+
+
+
+
+
+/* 						        	  */
+/*      staticpages # search_table    */
+/*      검색 뷰 입니다. 			      */
+/*   						  		  */
+
+.list-group:hover{
+	cursor:pointer;
+}
+
+.my_cart_container{
+
+	width : 100%; 
+	margin-top : 10px;
+	float:right;
+	/*padding-left:30px;*/
+	font-size:90%;
+
+	#my_cart_table {
+		.t_head th{
+			text-align:center;
+		}
+		.t_contents {
+			.professor, , .isu, .del_btn {
+				text-align : center;	
+			}
+			.del_btn {
+				.glyphicon-remove:hover{
+					cursor:pointer;
+				}
+			}
+		}
+	}
+
+}
+
+
+.c1{
+
+}
+.c2{
+
+}
+
+
+
+
+/* footer 입니다. */
+
+.footer{
+
+	clear:both;
+}
+
+.footerSubject
+{
+	display:block;
+	text-align:center;
+}
+span> ul
+{
+	text-align:right;
+	display:inline;
+}
+span >ul >li
+{
+	display: inline;
+	list-style:none;
+	text-align:right;
+	padding-right:5px;
+}
+span> ul> li:last-child {
+
+	margin-right:50px;
+}
+span >ul>li>a
+{
+	color: #009ce6;
+}
+.pageList{
+	float:right;
+}
+
+
+.footerSubjectHr
+{
+	width:10%;
+
+   border-top-width: 5px;
+    border-color: black;
+}
+
+.support{
+	margin-left: 3%;
+	margin-bottom:35%;
+}
+
+
+
+.footerSpan{
+
+	margin-left: 3%;
+}
+
+
+.feedback{
+	margin-bottom:35%;
+	margin-left: 3%;
+}
+
+.noheader{
+
+	clear:both;
+}
+
+
+.signUp{
+	margin-bottom:15%;
+}
+
+
+
+
+
+
+
+
+
+
+
+

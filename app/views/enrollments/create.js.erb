@@ -1,0 +1,11 @@
+// 현상황
+// 아래 문법 자체는 틀린게 없다.
+// 변수값 (params[:lecture_id], @place모두 가진다.)
+
+// 예상 문제
+
+// 1 DOM객체를 못찾는다.
+// 2 
+
+var a = $('.lec_' + '<%= params[:lecture_id] %>').find('div').find('.lec_place').html('<%= @place %>');
+//$('lec).find('span').html(a + '<%= @place %>');

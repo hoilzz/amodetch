@@ -1,0 +1,53 @@
+e
+
+<% if !lectures.nil? %>
+    <% if lectures.nil? %>
+      <div> 검색결과가 없습니다.. </div>
+
+    <% else %>
+
+        
+       
+      <!--%= will_paginate lectures, :class=>'paginate', :previous_label=>'«', :next_label=>'»',:inner_window=>'3', :outer_window=>'-1'%-->
+    <% end %>
+<% end %>
+<% if plural_attrs %>
+  <% plural_attrs.each do |p| %>
+    <div class="list-group lec_<%= p.lecture.id %>">
+      <h4 class = "subject"><%= p.lecture.subject %></h4>
+      <span class = "professor"><%= p.lecture.professor %></span>
+      <span class = "place" style = "display : none"> <%= p.place %></span>
+      <span class = "lecture_time"><%= p.lectureTime %></span>
+      <span class = "credit" style = "display : none"><%= p.lecture.credit %> </span>
+      <span class = "isu" style = "display : none"><%= p.lecture.isu %> </span>
+
+      <div class = "send_lec" style = "position : absolute; right:4px; top : 4px">
+
+      <%= button_to lecture_path(p.lecture), method: :get, class: 'btn btn-default btn_info', :type => 'button', form: {target: '_blank'}, dataid: p.lecture.id, style: 'display:none' do %>
+        <i class="icon-info"></i>
+      <% end %>
+      </div>
+
+      <div class = "department_open">
+        <span><%= p.lecture.open_department %></span>
+      </div>
+    </div>
+  <% end %>
+  <%= will_paginate plural_attrs, :class=>'paginate', :previous_label=>'«', :next_label=>'»',:inner_window=>'3', :outer_window=>'-1'%>
+<% end %>
+
+<script>
+
+$(document).ready(function(){
+      $("a.tooltipLink").tooltip();
+      $(".disabled").hide();
+});
+   
+
+
+
+
+
+
+
+</script>

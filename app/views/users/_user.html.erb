@@ -1,0 +1,11 @@
+
+<li>
+	<%= user.name %>
+	<%= user.nickname %>
+	<%= user.email %> 
+	<% if current_user.admin? %>
+		<%= link_to "delete", user, method: :delete, data: {confirm: "Are you sure?"} %>
+	<% end %>
+	<%= user.created_at %>
+	
+</li>

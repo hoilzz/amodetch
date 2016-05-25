@@ -1,0 +1,96 @@
+<%= link_to "Show mah Fancybox!", "#hello", class: "fancybox" %>
+
+  <div style="display:none">
+    <div id="hello">
+      <div class = "row">
+        <div class = "col-sm-2 col-sm-offset-1">
+          <span style ="font-size:18px;">아 뭐듣지 </span>
+        </div>
+      </div>
+
+      <div class = "row" style = "margin-top:80px;">
+        
+        <div class = "col-sm-4 col-sm-offset-2">
+          <h1 style = "font-size:95px;">
+            <%=User.count+130%></h1>
+          <span style = "font-size:20px;">
+            명
+          </span>
+          <p style = "font-size:18px;">
+            학우가
+          </p>
+        </div>
+
+        <div class = "col-sm-4">
+          <h1 style = "font-size:95px;">
+            <%=Comment.count+120%></h1>
+          <span style = "font-size:20px">
+          개
+          </span>
+          <p style = "font-size:18px;">
+            강의평가를 공유하고
+            <br> 있습니다.</br>
+          </p>
+        </div>
+
+      </div> <!-- row -->
+
+      <div class = "daemoon_login_text" style = "
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+        font-size: 16px;
+        margin-top: 20px;
+        border-top-width: 1px;">
+        더 많은 강의평가를 보려면 로그인이 필요합니다 !
+      </div>
+
+      <div class = "row" style = "margin-left : auto; 
+      margin-right: auto ">      
+
+        <div class = "col-sm-4 col-sm-offset-4">
+          <div>
+            <%=link_to "아뭐듣지 10초만에 가입하기", signup_path, target: "_parent",
+              class: "btn btn-success email_btn" %>
+          </div>
+                      
+          <div>
+            <%=link_to "Facebook으로 1초만에 로그인하기","/auth/facebook", target: "_parent", class: "btn btn-primary fb_btn"%>
+          </div>
+        </div>
+      </div>
+  
+    </div>
+  </div>
+
+ 
+
+
+
+    <script>
+
+    $(document).ready(function() {
+      var visited = $.cookie('visited');
+      if ( visited =='yes')
+          { 
+            return false;
+          }
+      else { 
+          $.cookie('visited','yes'); //반나절 뒤에 쿠키삭제됨.
+          $("a.fancybox").fancybox({
+
+            'padding' : 20,
+            'width'   :800,
+            'height'  :550,
+            'transitionIn'    :    'none',
+            'transitionOut'    :    'none',
+            'speedIn'        :    400,
+            'speedOut'        :    200,
+            'autoDimensions'  : false,
+            'overlayShow'    :    true
+          });
+      }
+    });
+
+    </script>

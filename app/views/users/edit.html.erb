@@ -1,0 +1,25 @@
+
+
+<div class="row">
+	<div class="col-sm-6 col-sm-offset-3">
+	
+		<h2> 강의평가할 때 사용할 별명을 정해주세요 ! </h2>
+
+		<%= form_for @user do |f|%>
+
+			<%= f.label :"별명" %>
+			<%= f.text_field :nickname %> <br><br>
+
+
+		<%= f.submit :"확인" , class: "btn"%>
+
+
+		<!--<div><a href="/signout" class ="btn btn-default" id ="navbar_logout"> 로그아웃 </a></div>-->
+
+<% end %>
+
+
+	
+</div>
+	
+	</div>

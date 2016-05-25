@@ -1,0 +1,36 @@
+<% if @user.errors.any? %>
+  <div id="error_explanation">
+    <div class="alert alert-danger">
+    
+    <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+          <% if msg.include?("Email can't be blank") %>
+            <li> 아이디를 입력하지 않았습니다. </li>
+
+          <% elsif msg.include?("Nickname can't be blank") %>
+            <li> 닉네임을 입력하지 않았습니다. </li>
+
+          <% elsif msg.include?("Password can't be blank") %>
+            <li> 암호를 입력하지 않았습니다. </li>
+
+          <% elsif msg.include?("Password is too short") %>
+            <li> 비밀번호는 6자 이상 입력해야 합니다. </li>
+
+          <% elsif msg.include?("Password confirmation doesn't match") %>
+            <li> 비밀번호가 일치 하지 않습니다. </li>
+
+          <% elsif msg.include?("Nickname has already been") %>
+            <li> 입력하신 닉네임은 이용중입니다. 다른 닉네임을 입력하세요. </li>  
+
+          <% elsif msg.include?("Email has already been") %>
+            <li> 입력하신 아이디는 이용중입니다. 다른 아이디를 입력하세요. </li>  
+          <% end %>
+      <% end %>
+    </ul>
+
+    </div>
+    
+  </div>
+<% end %>
+
+

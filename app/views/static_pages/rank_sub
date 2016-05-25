@@ -1,0 +1,496 @@
+
+<div style = "width:1000px;
+  margin-left:auto;
+  margin-right:auto;">
+
+  <div style = "width:840px;
+    margin : 10px auto;">
+    <%= render 'timetables/table_form' %>
+    
+    <div class = "search_box" style = "margin : 20px 0">
+      <%= form_tag rank_path, :method => 'get', :class =>'form-inline',
+        :style => 'text-align:center;' do %>
+          <%= text_field_tag :search,params[:search], placeholder: :"과목 또는 교수님명을 입력해주세요!", :class => 'form-control  form-group', :style => "width:40%" %>
+          <%= submit_tag "Search", :name => nil, :class =>'btn btn-success', :style =>"width:15%;" %>
+      <% end %>
+    </div>
+
+    <div class = "table_search" style = "text-align:center; width:500px; margin : 0 auto">
+      <table class="table table-striped" style= "font-size:1em;">
+        <thead>
+          <tr align="center" class = "tr_style">
+            <th class = "text_head">과목명</th>
+            <th class = "text_head">교수</th>
+            <th class = "text_head">평균평점</th>
+            <th class = "text_head">시간</th>
+          </tr>
+        </thead>
+        <% if @lectures.nil? %>
+
+        </table>
+        <div> 검색결과가 없습니다.. </div>
+        <% else %>
+          <% @lectures.each do |lec| %>
+            <tr class = "lec_<%= lec.id%>"> 
+              <td class="table_subject subject">
+                <%= lec.subject%>
+              </td>
+              <td class="tb_unspot professor">
+                <%=lec.professor%> 
+              </td>  
+              <td class="total_spot" style = "text-align:center">
+                <% if lec.acc_total==0 %>
+                평가없음
+                <% else %> 
+                <%= render 'shared/show_average_star',:var=> lec.acc_total%>
+                <div class = "total_text">
+                 <%= lec.acc_total.round(1) %>
+                </div>
+                <% end %> 
+              </td>
+              <td class = "lecture_time"><%= lec.lecturetime %></td>
+            </tr>
+          <% end %>
+        </table>
+        <%= will_paginate @lectures %>
+      <% end %>
+    </div>  <!-- 검색 결과 -->
+  </div>
+</div>
+
+<script>
+  timetable = $('#timetable');
+
+  function duplicate_lecture(s_row, e_row, col)
+  {
+    var tf_var;
+    for (h=0; h<col.length; h++){
+      col_num = col[h]+")";
+      for(i=s_row; i<=e_row; i++)
+      {
+        row_num = i+")";
+        time_row = timetable.find('tbody tr:nth-child('+row_num);
+        lecture_cell = time_row.find('td:nth-child('+col_num);
+        
+        var tester = $(lecture_cell).hasClass('lec');
+        if(tester == true)
+        {
+          break;
+        }
+        // a = lecture_cell.find('span').html();
+        // if (a == null) continue;
+        // if(a.length >= 2)    
+        // {
+        //   tf_var = true;
+        //   break;
+        // }
+      }
+      if (tester == true) break;
+    }
+    return tester;
+  }
+  // 시간표에 담을 강의를 클릭하면, timetable에서 해당 강의가
+  // 속한 행과 열을 결정한다.
+	$(".table_search tr").click(function(){
+    $(this).off('mouseout');
+    $(this).off('hover');
+		var data = $(this).find('.lecture_time').html();
+		
+    data = split_text(data);
+
+    // d_col | 요일 저장하는 배열 
+    // s_row | 시작시간 
+    // e_row | 종료시간 
+    var d_col = find_day_td(data[0]);
+    var s_row = find_begin_time_row(data[1]);
+    var e_row = find_end_time_row(data[2]);
+    
+    var lec_id = $(this).attr('class').split('_')[1];
+    var lec_name = $(this).find('.subject').html();
+    var lec_professor = $(this).find('.professor').html();
+
+    var duplicate_var = duplicate_lecture(s_row, e_row, d_col);
+    
+    // DB 저장을 위한 ajax 전송
+    if (duplicate_var == true)
+    {
+      alert('중복된 강의시간표 입니다..ㅠㅠ');
+    }
+    else
+    {
+      send_lecture_to_timetable(s_row,e_row,d_col,lec_id);
+      click_fill_cell(s_row, e_row, d_col, lec_id, lec_name, lec_professor);
+    }
+	});
+
+
+  $(".table_search tbody tr").mouseenter(function(){
+    
+    var data = $(this).find('.lecture_time').html();
+        data = split_text(data);
+
+    var d_col = find_day_td(data[0]);
+    var s_row = find_begin_time_row(data[1]);
+    var e_row = find_end_time_row(data[2]);
+        
+    var lec_id = $(this).attr('class').split('_')[1];
+    var lec_name = ""; 
+    var lec_professor = ""; 
+    
+    hover_fill_cell(s_row, e_row, d_col, lec_id, lec_name, lec_professor);
+  });
+
+
+  $(".table_search tbody tr").mouseleave(function(){
+    del_class = $(this).attr('class');
+    delete_timetable_cell_background(del_class);
+  });
+
+  // 강의시간을 요일/시작시간/끝시간 배열 3개로 쪼개서 return
+  function split_text(data) 
+  {
+    // replace에서의 day를 1개 요일 vs 2개 요일로 비교해서 값을 따로 줘야한다.
+    // 요일이 1개 ex)화 인경우
+    if (data.length <= 12)
+    {
+      day = data[0];
+    }
+    // 요일이 2개 ex)화목 인 경우
+    else if (data.length <= 13)
+    {
+      day = data[0]+data[1];
+    }
+    else{}
+
+    data = data.replace(day,day+"-");
+    data = data.split('-');   
+    // data[0] 요일, data[1] 시작시간, data[2] 끝시간.
+    return data;
+  }
+
+
+  // timetable에서 강의 시간(행)을 찾습니다.
+  function find_begin_time_row(s_time)
+  { 
+    var rows = timetable.find('tbody th');
+    var refined_time = s_time.split(":");
+    var row_num;
+
+    rows.each(function(){
+      var row_each_time = $(this).find('div').html();
+      
+      if( refined_time[0] == row_each_time ){
+        row_num = rows.index(this);
+        return;
+      }
+      else {      }
+    });
+    if (refined_time[1] == '30') return row_num+2;
+    else return row_num+1;
+  }
+
+  function find_end_time_row (e_time)
+  {
+    var rows = timetable.find('tbody th');
+    var refined_time = e_time.split(":");
+    var row_num;
+
+    rows.each(function(){
+      var row_each_time = $(this).find('div').html();
+      
+      if( refined_time[0] == row_each_time ){
+        row_num = rows.index(this);
+        return;
+      }
+      else {      }
+    });
+    if (refined_time[1] == '30') return row_num+1;
+    else return row_num;
+  }
+
+  // 요일을 기준으로 몇열에 해당하는지 찾아 열값을 리턴.
+  function find_day_td(day)
+  {
+    t_datas = timetable.find('thead th'); 
+    var td_num = [];
+
+    for (i=0; i<day.length; i++){
+      t_datas.each(function() {
+        td_each_data = $(this).html();
+        
+        if (td_each_data == day[i]){
+          td_num.push(t_datas.index(this)+1);
+        } 
+        else{}
+      });
+    }
+    // nth:child 때문에 열값에 +1을 해야됨.
+    return td_num;
+  }
+
+  // 인자로 받은 시간/요일을 기준으로 background 채웁니다.
+  function hover_fill_cell(s_row, e_row, col, lec_id, lec_name, lec_professor)
+  {
+    for (h=0; h<col.length; h++)
+    {
+      col_num = col[h]+")";
+      for(i=s_row; i<=e_row; i++)
+      {
+        row_num = i+")";
+        time_row = timetable.find('tbody tr:nth-child('+row_num);
+        lecture_cell = time_row.find('td:nth-child('+col_num);
+        var tester = $(lecture_cell).hasClass('lec');
+        // span 태그 내에 텍스트가 있다면 = 테이블 셀 내에 강의가 추가되있다면 css 적용
+        if(tester == true)  
+        {
+          if (lecture_cell.css('display') == 'none')
+          {
+            lecture_cell.attr('class');
+            var class_arr = lecture_cell.attr('class');
+            var specific_class = class_arr.split(' ');
+            if ( $('td.'+specific_class[0]).css('display') == 'table-cell' ) 
+              { 
+                $('td.'+specific_class[0]).css('background','#fff3f2').css('outline','1px solid #ec4e2c');
+                $('td.'+specific_class[0]).addClass('lec_'+lec_id); 
+              }
+            if ( $('td.'+specific_class[1]).css('display') == 'table-cell' ) 
+            {
+                $('td.'+specific_class[1]).css('background','#fff3f2').css('outline','1px solid #ec4e2c');
+                $('td.'+specific_class[1]).addClass('lec_'+lec_id); 
+            }
+          }
+        }
+        // 테이블 셀 내부에 강의가 추가되있지 않을 때 css 적용
+        else
+        {
+          lecture_cell.css('background','#fffae5');
+          lecture_cell.addClass('lec_'+lec_id); 
+        }
+      }
+    }
+  }
+
+  function default_fill_cell(s_row, e_row, col, lec_id, lec_name, lec_professor)
+  {
+    // 클릭(빈셀, 채워진 셀)과 첫 로드 구분
+    for (h=0; h<col.length; h++)
+    {
+      col_num = col[h]+")";
+      //for(i=s_row; i<=e_row; i++)
+      //{
+        // rowspan용 for문
+        for (i=s_row+1; i<=e_row; i++)
+        {
+          row_num = i+")";
+          time_row = timetable.find('tbody tr:nth-child('+row_num);
+          lecture_cell = time_row.find('td:nth-child('+col_num);
+          $(lecture_cell).css('display', 'none');
+          lecture_cell.addClass('lec_'+lec_id);
+          lecture_cell.addClass('lec');
+        }
+        var i = s_row;
+        row_num = i+")";
+        time_row = timetable.find('tbody tr:nth-child('+row_num);
+        
+        lecture_cell = time_row.find('td:nth-child('+col_num);
+
+        lecture_cell.attr('rowspan', e_row - s_row + 1);
+
+        lecture_cell.css('border', '1px solid white');
+        lecture_cell.css('background','#cfe5e4');
+        lecture_cell.addClass('lec_'+lec_id); 
+        lecture_cell.addClass('lec');
+
+
+        if(lecture_cell.find('span').length >= 1)
+        {
+          existed_text = lecture_cell.html() + "<br>";
+          lecture_cell.html(existed_text + mix_cell_text(lec_id,lec_name, lec_professor));
+        }
+        else
+        {
+          lecture_cell.html(mix_cell_text(lec_id,lec_name,lec_professor));  
+        }
+      //}
+    }
+  }
+//onclick = del_btn_click();
+  function mix_cell_text(lec_id, lec_name, lec_professor)
+  {
+    var  del_btn = "<a > X </a>";
+    completed_content = "<span class = lec_" + lec_id + ">" + lec_name + " <br>"
+                          + lec_professor + " " + del_btn + "</span>";
+
+    return completed_content;
+  }
+
+  function click_fill_cell(s_row, e_row, col, lec_id, lec_name, lec_professor)
+  {
+    for (h=0; h<col.length; h++){
+      col_num = col[h]+")";
+
+        for (i=s_row+1; i<=e_row; i++)
+        {
+          row_num = i+")";
+          time_row = timetable.find('tbody tr:nth-child('+row_num);
+          lecture_cell = time_row.find('td:nth-child('+col_num);
+          $(lecture_cell).css('display', 'none');
+          $(lecture_cell).addClass('lec');
+        }
+        var i = s_row;
+        row_num = i+")";
+        time_row = timetable.find('tbody tr:nth-child('+row_num);
+        lecture_cell = time_row.find('td:nth-child('+col_num);
+        lecture_cell.attr('rowspan', e_row - s_row + 1);
+        // if(lecture_cell.find('span').length >= 1)  
+        // {
+        //   lecture_cell.css('background','#cfe5e4');
+        //   lecture_cell.addClass('lec_'+lec_id);
+
+        //   existed_text = lecture_cell.html() + "<br>";
+
+        //   lecture_cell.html(existed_text + mix_cell_text(lec_id, lec_name, lec_professor));
+
+        // }
+        // else
+        // {
+          lecture_cell.css('background','#0d9c90');
+          lecture_cell.addClass('lec_'+lec_id); 
+          lecture_cell.addClass('lec');
+          lecture_cell.html(mix_cell_text(lec_id,lec_name, lec_professor));
+        // }
+        lecture_cell.css('border', '1px solid white');
+    }
+  }
+
+  
+  function send_lecture_to_timetable(s_row,e_row,d_col,lec_id) {
+    $.ajax({
+        url:'<%= add_timetable_url %>',
+        type:'post',
+        data:{'begin_time':s_row, 'end_time':e_row, 'days':d_col,
+              'lecture_id':lec_id},
+        success:function()
+        {
+          
+        },
+        error:function()
+        {
+          alert('이미 등록된 강의입니다.');
+        }
+
+    });
+  }
+  $('body').on('click','.lessons > .table-striped > tbody > tr > td > span > a' ,function(event){
+    del_class = $(this).parent().attr('class');
+
+      delete_timetable_cell(del_class);
+
+      del_id = del_class.split('_');
+
+      $.ajax({
+          url:'<%= delete_timetable_url %>',
+          type:'delete',
+          data:{'lecture_id':del_id[1]}
+      });
+  })
+  // function del_btn_click() {
+  //   //$('.lessons > .table-striped > tbody > tr > td > span > a')//.click(function()
+  //   //{
+  //     // 1 선택한 객체 지우기
+  //     // 2 선택한 객체와 같은 클래스명(lec_id)을 가진 cell도 똑같이 적용.
+  //     del_class = $(this).parent().attr('class');
+
+  //     delete_timetable_cell(del_class);
+
+  //     del_id = del_class.split('_');
+
+  //     $.ajax({
+  //         url:'<%= delete_timetable_url %>',
+  //         type:'delete',
+  //         data:{'lecture_id':del_id[1]}
+  //     });
+  //   //});
+  // }
+
+  function delete_timetable_cell_background(del_class_name)
+  {
+    // lec_id 는 지워질 cell의 클래스 이름 
+    del_cell = $('.lessons').find('.'+del_class_name);
+    
+    del_cell.each (function(){
+      // 만약, span태그가 있으면 (=해당 시간에 강의가 등록되있다.) backgroud green
+      if ( $(this).find('span').length >= 1 ) 
+      {
+        $(this).css('background', '#cfe5e4')
+        $(this).css('outline','0'); 
+      }
+      else
+      {
+        $(this).css('background', '');
+        $(this).css('outline','0');
+      }
+      $(this).removeClass(''+del_class_name);
+    });
+  }
+
+  function delete_timetable_cell(del_class_name){
+    // lec_id 는 지워질 cell의 클래스 이름 
+    del_cell = $('.lessons').find('td.'+del_class_name);
+
+    del_cell.each (function(){
+      if ( $(this).find('span').length >= 1 )
+      {
+        $(this).css('background', '');
+        $(this).find('span.'+del_class_name).html(''); 
+        $(this).attr('rowspan', '0');
+      }
+      else
+      {
+        $(this).css('background', '');
+        $(this).css('display', 'table-cell');
+      }
+      $(this).html('');
+      $(this).css('border', '0');
+      $(this).removeClass('lec');
+      $(this).removeClass(''+del_class_name);
+      // 만약, span태그가 있으면 (=해당 시간에 강의가 등록되있다.) backgroud green
+    });
+  }
+  // 웹페이지 로드시, 현재 유저가 등록한 강의를 시간표에 보여준다.
+  jQuery( document ).ready(function( $ )
+  {   
+    // s_row | 강의 시작시간
+    // e_row | 강의 종료시간
+    <% @lectures_in_timetable.each do |lec_in_timetable| %>
+      
+      s_row = <%= lec_in_timetable.begin_time %>;
+      e_row = <%= lec_in_timetable.end_time %>;
+      
+      d_col = [];
+      // 강의 시간이 하루인 경우
+      if (<%= lec_in_timetable.days.length%> <= 1){
+        d_col.push("<%= lec_in_timetable.days[0] %>");
+      }
+      // 강의 시간이 이틀인 경우 (화,목 / 수,금)
+      else if (<%= lec_in_timetable.days.length%> <= 2){
+        d_col.push("<%= lec_in_timetable.days[0] %>");
+        d_col.push("<%= lec_in_timetable.days[1] %>");
+      }
+
+      <% l = Lecture.find(lec_in_timetable.lecture_id) %>
+      lec_id = <%= l.id %>;
+      lec_name = "<%= l.subject %>";
+      lec_professor = "<%= l.professor %>";
+
+      // 처음 html 로드시, 사용자가 시간표에 등록한 강의들을 timetable cell에 채우는 함수 
+      default_fill_cell(s_row, e_row, d_col, lec_id, lec_name, lec_professor);
+    <% end %>
+  }); 
+</script>
+
+
+
+
+
+

@@ -1,0 +1,39 @@
+  <table class="table nogap" style= "font-size:1em;">
+    <thead>
+      <tr align="center" class = "tr_style">
+        <th class = "text_head">과목명</th>
+        <th class = "text_head">교수</th>
+        <th class = "text_head">평균평점</th>
+        <th class = "text_head">시간</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% unless lectures.nil? %>
+        <% lectures.each do |lec| %>
+    	    <tr class = "lec_<%= lec.id%>">	
+      			<td class="table_subject subject">
+      				<%= lec.subject%>
+      			</td>
+      			<td class="tb_unspot professor">
+      				<%=lec.professor%> 
+      			</td>  
+      			<td class="total_spot" style = "text-align:center">
+      				<% if lec.acc_total==0 %>
+      				평가없음
+      				<% else %> 
+      				<%= render 'shared/show_average_star',:var=> lec.acc_total%>
+      				<div class = "total_text">
+      				 <%= lec.acc_total.round(1) %>
+      				</div>
+      				<% end %> 
+      			</td>
+      			<td class = "lecture_time"><%= lec.lecturetime %></td>
+    		  </tr>
+        <% end %> <!-- each do --> 
+
+      <% else %>
+          검색결과가 없슴다.
+      <% end %> <!-- unless -->
+    </tbody>
+  </table>
+  <!--%= will_paginate lectures %-->

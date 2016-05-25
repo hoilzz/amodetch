@@ -1,0 +1,41 @@
+<div class="row">
+	<div class="col-xs-9 col-xs-offset-2">
+	  	<div class="table-responsive">
+	        <table class="table nogap table-striped table-hover">
+	         	<thead>
+	      
+	        	<tr class> 
+
+
+	           <th></th>
+	           <th></th>
+	           <th></th>
+		        </tr>	
+		        </thead>
+				         
+	    	 		<tbody>     
+					<% @lectures.each do |lec| %>
+		
+	    				<tr class="lovelyrow" onclick="location.href='<%=writtingform_lecture_url(lec)%>'" >
+				    		<td id="tb_unspot" width="20%"><%=lec.professor%> </td>
+				    		<td id="tb_spot" width="30%"><%= lec.subject%></td>
+							<td id="tb_unspot" witdh="40%" ><div id="div_total"><%=lec.acc_total.round(2)  %></div>
+							   <%= render 'shared/show_average_star',:var=> lec.acc_total%></td>
+						</tr>
+
+	   	   			<% end %>
+	   	   			</tbody>
+ 				   	   	
+	   	   	</table>
+	   	</div>
+	</div>	 
+</div> 
+		 
+
+		<div class="row">
+			<div class="col-xs-8 col-xs-offset-2" align="center">
+				<%= will_paginate @lectures %>
+			</div>
+		</div>
+  
+</div>

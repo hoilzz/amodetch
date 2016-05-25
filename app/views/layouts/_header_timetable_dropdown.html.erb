@@ -1,0 +1,40 @@
+<li class = "dropdown topMenuLi">
+  <a href= "#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="time">시간표짜기 <span class="caret"></span>
+  </a>    
+
+  <ul class="dropdown-menu">
+    <!-- timetables.each문 통해 timetable개수만큼 li문 만들기 -->
+  <% if current_user %>
+    <% if current_user.timetables %>
+        <% current_user.timetables.each do |timetable| %>
+
+        	<li>
+            <% if timetable.id %>
+          		<a href="<%= timetable_path(timetable) %>"> 
+          			<%= timetable.name %> 
+          		</a>
+            <% end %>
+
+        <% end %>
+        	</li>
+
+    <% end %>
+
+    <li role="separator" class="divider"></li>
+          <li>		
+          	<%= link_to "시간표 추가하기", new_timetable_path, method: :get %>
+      	  </li>
+  <% end %>
+
+  </ul>
+
+</li> 
+<script type="text/javascript">
+ $(document).ready(function(){
+    $("#time").click(function(){
+        <% unless current_user%>
+          window.location="<%= new_timetable_path %>";
+        <%end%>
+    });
+});
+</script>

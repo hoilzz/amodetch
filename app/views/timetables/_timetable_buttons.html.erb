@@ -1,0 +1,9 @@
+<div class="btn-group-vertical" role="group" aria-label="...">
+
+	<% timetables.each do |t| %>
+		<%= button_to t.name, timetable_path(t), method: :get, :class => "btn btn-default", :type => "button"%>
+		<!-- <button type="button" class="btn btn-default"><%= t.name %></button> -->
+	<% end %>
+		<%= button_to "시간표 추가하기", new_timetable_path, :class => "btn btn-default", :type => "button"%>
+		<!-- <button type="button" class="btn btn-default">시간표 추가하기</button> -->
+</div>

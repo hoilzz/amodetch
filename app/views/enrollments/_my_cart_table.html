@@ -1,0 +1,30 @@
+<table class="table table-striped" id = "my_cart_table">
+  <thead>
+    <tr class = "t_head">
+      <th>강의명</th>
+      <th>교수명</th>
+      <th>이수구분</th>
+      <th>삭제</th>
+    </tr>   
+  </thead>
+
+  <tbody>
+    <% @lectures_in_timetable.each do |lec_in_timetable| %>
+      <% l = Lecture.find(lec_in_timetable.lecture_id) %>
+      
+      <tr class = "t_contents l<%= lec_in_timetable.begin_time %>-<%= lec_in_timetable.end_time %>_<%= l.id%>">
+        <td> <%= l.subject %> </td>
+        <td class = "professor"> <%= l.professor %> </td>
+        <td class = "isu"> <%= l.isu %> </td>
+        <td class = "del_btn"> 
+          <span class = "glyphicon glyphicon-remove">
+            <span class = "lec_credit" style = "display:none">
+              <%= l.credit %>
+            </span>
+          </span> 
+        </td>
+      </tr>
+
+    <% end %>
+  </tbody>
+</table>

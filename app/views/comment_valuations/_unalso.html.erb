@@ -1,0 +1,5 @@
+<%= form_for current_user.comment_valuations.find_by(comment_id: comment.id), html: {method: :delete}, remote: true do |f| %>
+			<%= hidden_field_tag :lecture_id, comment.lecture_id %>
+			<%= hidden_field_tag :comment_id, comment.id %>
+			<%= f.submit "옳소 취소", class: "btn btn-link also_unalso_btn"%>
+		<% end %>

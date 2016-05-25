@@ -1,0 +1,56 @@
+<div class="col-md-9" >
+        			 <div class="table-responsive" id="target" >
+        		<table id="time_table" class="table nogap" bgcolor="white"  >
+         			<thead>
+      
+       				  <tr id="timetable_tr">
+       				  <th id="timetable_th_time">시간</th> 
+       				  <th id="timetable_th"> 월 </th>
+       				  <th id="timetable_th"> 화 </th>
+       				  <th id="timetable_th"> 수 </th>
+       				  <th id="timetable_th"> 목 </th>
+       				  <th id="timetable_th"> 금 </th>
+       				  </tr>
+   				   </thead>
+   				  <tbody>
+       				  <% for i in 8..19 %>
+       				  		<% for j in 1..2 %>
+       				  			<%if i<10%>
+			       				   <tr id="timetable_tr">
+			       				   <%if j%2==1%>
+			       				   <td id="timetable_time_td">0<%=i%>:00~0<%=i%>:30</td>
+			       				   <%else%>
+				       				   <%if i!=9%>
+				       				   	<td id="timetable_time_td">0<%=i%>:30~0<%=i+1%>:00</td>
+				       				   <%else %> 
+				       				   	<td id="timetable_time_td">0<%=i%>:30~<%=i+1%>:00</td>
+				       				   <%end%> 
+			       				   <%end%>
+			       				   <td id="timetable_td" onclick="TimetableClick(this)" onmouseover="onMounseInTimetable(this)"></td>
+			       				   <td id="timetable_td" onclick="TimetableClick(this)" onmouseover="onMounseInTimetable(this)"></td>
+			       				   <td id="timetable_td" onclick="TimetableClick(this)" onmouseover="onMounseInTimetable(this)"></td>
+			       				   <td id="timetable_td" onclick="TimetableClick(this)" onmouseover="onMounseInTimetable(this)"></td>
+			       				   <td id="timetable_td" onclick="TimetableClick(this)" onmouseover="onMounseInTimetable(this)"></td>
+			       				   </tr>
+			       				<%else %>
+			       				   <tr id="timetable_tr">
+			       				   <%if j%2==1%>
+			       				   <td id="timetable_time_td"><%=i%>:00~<%=i%>:30</td>
+			       				   <%else%>
+			       				   <td id="timetable_time_td"><%=i%>:30~<%=i+1%>:00</td>
+			       				   <%end%>
+			       				   <td id="timetable_td" onclick="TimetableClick(this)" onmouseover="onMounseInTimetable(this)"></td>
+			       				   <td id="timetable_td" onclick="TimetableClick(this)" onmouseover="onMounseInTimetable(this)"></td>
+			       				   <td id="timetable_td" onclick="TimetableClick(this)" onmouseover="onMounseInTimetable(this)"></td>
+			       				   <td id="timetable_td" onclick="TimetableClick(this)" onmouseover="onMounseInTimetable(this)"></td>
+			       				   <td id="timetable_td" onclick="TimetableClick(this)" onmouseover="onMounseInTimetable(this)"></td>
+			       				   </tr>
+			       				<%end%>
+			       				   
+			       			<%end%> <!-- for j -->	
+			       	 <%end%> <!-- for i -->	
+   				   </tbody>
+			   </table>
+
+		</div>
+

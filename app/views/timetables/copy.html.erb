@@ -1,0 +1,19 @@
+
+
+<div class = "timetable_new_container">
+	<div class = "add_form_box">
+      <h1>시간표 복사하기</h1>
+      <br><br>
+
+		<%= form_for(@existed_timetable, url: paste_path, method: :post) do |f|%>
+			<div class = "form-group">
+	            <%= f.label :'시간표 이름' %> 
+	            <%= f.text_field :name, class: 'form-control', :placeholder => "새 #{@existed_timetable.name}", :value => "새 #{@existed_timetable.name}" %>
+            </div>
+            	<%= f.hidden_field :id %>
+
+        <%= f.submit "복사하기 !", class: "btn btn-primary btn_attr" %>
+
+		<% end %>
+	</div>
+</div>

@@ -1,0 +1,113 @@
+
+<div class = "writting_form_box">
+    <div class="notice">
+        <div style = "background : white;">
+        <h3> 아뭐듣지! </h3>
+        <p>
+            아뭐듣지는 학우 여러분께 보다 많은 강의정보를 제공하기 위한 서비스입니다.
+        </p>
+        <p>
+            강의평가 2개 이상 작성해주셔야, 다른 학우들의 강의 평가를 열람할 수 있습니다.
+        </p>
+        </div>
+    </div>
+    
+    <%= render 'lectures/sidebar' %>
+
+    <div class = "form_box">
+		<h2 class="inline-blk"> 
+            <%= @lecture.subject %> 
+        </h2> 
+        <span><%= @lecture.professor %></span>
+        
+        <div>
+            <div>
+                강의평가
+            </div>
+            <div>
+                <%= render 'static_pages/progress_bar' %>
+            </div>
+        </div> 
+    </div>     
+</div>
+
+
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-72706618-1', 'auto');
+    ga('send', 'pageview');
+</script>
+
+
+<script>
+$(document).ready(function() {
+    $('.message').html('');
+    //  textarea의 string 총 길이 값 
+	var text_length;
+    var text_criteria_quantity = " ";
+    var text_max = 1000;
+    var click_textarea=0;
+    // var example_text1="1 수업방식은 ? (일반강의형, 토론형, 참여형 등) ";
+    // var example_text2="2 중간고사, 기말고사 시험방식은 ? (서술형, 객관식 등 구체적일수록 좋아요) ";
+    // var example_text3="3 과제는 어떤 방식인가요 ? ";
+    // var example_text4="4 성적 잘받기 위한 이 강의만의 팁이 있나요 ? ";
+    // var example_text5="5 불만 및 개선사항은?"
+
+    document.getElementById('showremain').style.color="red"
+    
+    $('.message').click(function()
+    {
+        // if(click_textarea==0)
+        //     {   // message 클래스네임을 가진 textarea에 기본 텍스트값 추가.
+        //         $('.message').html(
+        //             example_text1+'\n\n\n'+example_text2+'\n\n\n'+
+        //             example_text3+'\n\n\n'+example_text4+'\n\n\n'+
+        //             example_text5+'\n');
+
+        //         text_length=$('.message').val().length-146;
+        //          $('#showremain').html(text_length + text_criteria_quantity);
+        //     }
+    });
+
+    
+    
+    $('.message').keyup(function() {
+        text_length = $('.message').val().length;
+        //var text_remaining = text_max - text_length;
+        
+        
+        if (text_length >= 10) 
+
+        {
+            // showremain이라는 id 값을 가진 span 엘리먼트에 동적으로 텍스트 길이 / 텍스트 맥스값 출력.
+            $('#showremain').html('');
+        }
+        else
+        {
+            $('#showremain').html(text_length.toString() + text_criteria_quantity);
+        }
+
+
+
+
+        if (text_length>10)
+            {
+            	document.getElementById('showremain').style.color="blue"
+           
+            }
+        else
+            {
+            	document.getElementById('showremain').style.color="red"
+            	
+            }
+    });
+
+});
+
+
+
+</script>

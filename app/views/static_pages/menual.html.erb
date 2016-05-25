@@ -1,0 +1,18 @@
+<%= link_to "강의평가 하러가기!", forcingwritting_path %>
+
+<div id ="menual1">
+
+</div>
+<div id ="menual2">
+</div>
+
+<%@menual_num=1%>
+
+
+<%= link_to "다음", usage_path, id: "menualbtn", :remote => true, :onclick => 'hide()'%>
+
+<script>
+	function hide() {
+		document.getElementById('menualbtn').style.display= 'none';
+	}
+</script>

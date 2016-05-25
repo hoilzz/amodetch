@@ -1,0 +1,10 @@
+/*form_for text_area 다시 생성 
+Edit link -> update submit 버튼*/
+
+// 삭제된 comment를 id 값으로 찾아내어, 편집하려는 댓글 바로 아래에 edit form을 append
+$('#comment-<%=@comment.id%>').append("<%= escape_javascript(render('comments/edit_form')) %>")
+
+$('.comment', '#comment-<%=@comment.id%>').remove();
+$('.timestamp', '#comment-<%=@comment.id%>').remove();
+$('.comment_edit_btn', '#comment-<%=@comment.id%>').remove();
+

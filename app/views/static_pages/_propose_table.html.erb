@@ -1,0 +1,47 @@
+<% if !locals[:lectures].nil? %>
+<table class="table table-striped" style= "font-size:1em;">
+        <thead>
+          <tr align="center" class = "tr_style">
+            <th class = "text_head">과목명</th>
+            <th class = "text_head">교수</th>
+            <th class = "text_head">예상별점</th>
+            <th class = "text_head">평균평점</th>
+            <th class = "text_head">시간</th>
+          </tr>
+        </thead>
+        <% if locals[:lectures].nil? %>
+
+          </table>
+        <div> 검색결과가 없습니다.. </div>
+        <% else %>
+
+          <% locals[:lectures].each_with_index do |lec, i| %>
+          <%if !lec.nil? %>
+              <tr class = "lec_<%= lec.id%>"> 
+                <td class="table_subject subject">
+                  <%= lec.subject%>
+                </td>
+                <td class="tb_unspot professor">
+                  <%=lec.professor%> 
+                </td>  
+                <td class = "total_spot">
+                  <%= 5.0 - locals[:decimal_arr][i]%>
+                </td>
+                <td class="total_spot" style = "text-align:center">
+                  <% if lec.acc_total==0 %>
+                  평가없음
+                  <% else %> 
+                  <%= render 'shared/show_average_star',:var=> lec.acc_total%>
+                  <div class = "total_text">
+                   <%= lec.acc_total.round(1) %>
+                  </div>
+                  <% end %> 
+                </td>
+                <td class = "lecture_time"><%= lec.lecturetime %></td>
+              </tr>
+            
+          <% end %>
+        <% end %>
+        </table>
+      <% end %>
+            <% end %>
