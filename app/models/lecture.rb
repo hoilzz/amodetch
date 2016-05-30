@@ -6,9 +6,9 @@ class Lecture < ActiveRecord::Base
   validates :professor, length: {maximum: 40}
   validates :major, presence:true
   serialize :lecturetime
-  
+
   has_many :plural_attrs, dependent: :destroy
-  has_many :comments 
+  has_many :comments
   has_many :valuations, dependent: :destroy
   has_many :comment_valuations, dependent: :destroy
   has_many :enrollment
@@ -25,7 +25,7 @@ class Lecture < ActiveRecord::Base
   # 1  새로운 강의 추가                       #
   # 2  DB에 있는 강의에 몇가지 COLUMN 업데이트   #
 
-  # 1 기존에 없던 강의 추가 
+  # 1 기존에 없던 강의 추가
 
   def self.import(file)
     lec = Lecture.where('semester = "2016년 1학기"')
@@ -44,18 +44,14 @@ class Lecture < ActiveRecord::Base
       lecture = find_by(subject: row["subject"], professor: row["professor"])
 
       if lecture
-        # isu, semester, credit , opendepartment, major
         lecture.update_attributes(isu: row["isu"], semester: row["semester"], credit: row["credit"],
                                   open_department: row["open_department"], major: row["major"])
       else
-        # + subject, professor
         lecture = Lecture.new
         lecture.update_attributes(isu: row["isu"], semester: row["semester"], credit: row["credit"],
                                   open_department: row["open_department"], major: row["major"],
                                   subject: row["subject"], professor: row["professor"])
       end
-
-
 
       lec_plural_attrs = lecture.plural_attrs.build(lectureTime: row["lectureTime"], place: row["place"])
       lec_plural_attrs.save
@@ -68,7 +64,7 @@ class Lecture < ActiveRecord::Base
 
 
 
-  # 2 DB에 있는 강의에 몇가지 COLUMN 업데이트 
+  # 2 DB에 있는 강의에 몇가지 COLUMN 업데이트
   # def self.import(file)
   #   spreadsheet = open_spreadsheet(file)
   #   header = spreadsheet.row(1)
@@ -88,7 +84,7 @@ class Lecture < ActiveRecord::Base
   #     end
   #   end
   # end
-  
+
 
 
   # 3 DB에 있는 강의 중 lecturetime 업데이트.. 좀 복잡한거 설명 들어야함
@@ -101,22 +97,22 @@ class Lecture < ActiveRecord::Base
   #     #lecture = find_by_id(row["id"]) || new
   #     # lecture.update_attribute("isu", row["isu"] )
   #     # lecture.update_attribute("place", row["place"] )
-      
+
   #     # if lecture.lecturetime == nil
-  #     if lecture 
+  #     if lecture
   #       @bool_value = true
-  #         # 강의시간이 
-  #         if lecture.lecturetime.length != 0  
+  #         # 강의시간이
+  #         if lecture.lecturetime.length != 0
   #           lecture.lecturetime.each do |time|
   #             if time == row["lecturetime"]
   #               @bool_value = false
   #             end
   #           end
-          
+
   #         end
 
   #         if @bool_value
-  #           lecture.lecturetime << row["lecturetime"]  
+  #           lecture.lecturetime << row["lecturetime"]
   #         end
   #       lecture.save
   #     end
@@ -131,7 +127,7 @@ class Lecture < ActiveRecord::Base
 
 
   # 길우꺼
-  # => 
+  # =>
   # def self.import(file)
   #   spreadsheet = open_spreadsheet(file)
   #   header = spreadsheet.row(1)
@@ -139,15 +135,15 @@ class Lecture < ActiveRecord::Base
   #     row = Hash[[header, spreadsheet.row(i)].transpose]
   #     row.to_hash.slice("subject", "professor", "major","lecturetime")
   #     @lecture= Lecture.where(subject: row["subject"], professor: row["professor"]).first
-        
+
   #     byebug
-  #    #첫번째 시도 시 하기 
+  #    #첫번째 시도 시 하기
   #     @lecture.lecturetime = {:first => row["lecturetime"]}
-  #   # 두번째 시도 시 하기  
+  #   # 두번째 시도 시 하기
 
 
   #     # if(@lecture.lecturetime[:second].nil? && @lecture.lecturetime[:first] != row["lecturetime"])
-  #     #   counts=@lecture.lecturetime.count 
+  #     #   counts=@lecture.lecturetime.count
 
   #     #   counts.times do |i|
   #     #   end
@@ -164,7 +160,7 @@ class Lecture < ActiveRecord::Base
   #   end
   # end
 
-       
+
 
 
 
@@ -177,14 +173,14 @@ class Lecture < ActiveRecord::Base
     end
   end
 
-  
+
   def lec_valuation(counts,t)
-    
+
     if self.acc_grade.nil?
         total = t.to_i
     else
         total = self.acc_total*counts + t.to_i
-    end   
+    end
     counts+=1
     self.acc_total = total/counts
   end
@@ -194,14 +190,14 @@ class Lecture < ActiveRecord::Base
       where(['(professor LIKE ? OR subject LIKE ? OR open_department LIKE ?)AND semester LIKE ?',
              "#{search}%","%#{search}%","#{search}%", "#{semester}"])
     end
-  end  
+  end
 
-  def self.search_home(search)  
+  def self.search_home(search)
       unless search.nil?
-         where(['professor LIKE ? OR subject Like ? OR open_department = ?', 
+         where(['professor LIKE ? OR subject Like ? OR open_department = ?',
         "#{search}%", "#{search}%", "#{search}"]).select('DISTINCT (subject), professor, acc_total, id')
       end
-  end  
+  end
 
   def self.detailSearch(major, isu)
       where(['major LIKE ? OR isu Like ?', "#{major}%","#{isu}%"]).order('acc_total DESC')
@@ -212,7 +208,7 @@ class Lecture < ActiveRecord::Base
     subject + " "
   end
 
-  
+
 
 
 

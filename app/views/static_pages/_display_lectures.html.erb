@@ -6,15 +6,15 @@
 		</div>
 	<% end %>
 
-		<!-- border-bottom 아래 --> 
+		<!-- border-bottom 아래 -->
 		<div class = "row_pd_top"
          onclick="showLecture(<%=v.lecture.id%>)"
-         onmouseover="valuation_mouseover(this)" >
+          >
 
 			<div class = "row_half_star">
 
 					<span style = "width : 150px; display: inline; color : #57ad68;
-                      font-weight:120"><%= v.user.nickname %></span> 
+                      font-weight:120"><%= v.user.nickname %></span>
 					<span class = "name_sentence">님의 평가</span>
 				<div class = "timestamp" style = "width : 150px; display: inline; margin-left:5px"><%= v.timestamp_division %></div>
 			</div>
@@ -22,19 +22,19 @@
 			<div class = "valuation_text_section">
 					<!-- 만약 현재페이지가 staticpages#home  -->
 					<% if current_page? controller: 'static_pages', action: 'newsfeed'%>
-						<%= simple_format(truncate v.content, length: 50)%>.. 
-						<a onclick="showLecture(<%=v.lecture.id%>)">자세히 보기</a>					
-					<% else %>	
+						<%= simple_format(truncate v.content, length: 50)%>..
+						<a onclick="showLecture(<%=v.lecture.id%>)">자세히 보기</a>
+					<% else %>
 						<%= simple_format(v.content) %>
 					<% end %>
-			</div>	
+			</div>
 
 			<div class = "lec_<%= v.lecture.id %> valuation_progress_section" >
-				
+
 				<!-- total : 총평 -->
 				<div class = "valuation_box">
 					<div class = "left total_subject">
-						총평 
+						총평
 					</div>
 					<div class = "right" id = "total">
 
@@ -45,13 +45,13 @@
 					</div>
 				</div>
 
-				
+
 			</div>
 		</div>  <!-- row, row_pd_top -->
 
     <div class = "edit_section">
        <% if current_user == v.user %>
-          <span><%= link_to "수정"%> <%= link_to "삭제", v, method: :delete, data: { confirm: "지우시겠습니까?"}%></span> 
+          <span><%= link_to "수정"%> <%= link_to "삭제", v, method: :delete, data: { confirm: "지우시겠습니까?"}%></span>
        <% end %>
     </div>
 	</div>
@@ -69,13 +69,13 @@
           window.location="/lectures/"+lec_num.toString()
          <% else %>
          window.location="<%=forcingwritting_url%>"
-         <% end %>  
+         <% end %>
        <% else %>
           $.fancybox({
 
             type: 'iframe',
             href: '/forcinglogin',
-           
+
                 'padding' : 20,
                 'width'   :1000,
                 'height'  :550,
@@ -86,11 +86,11 @@
                 'autoDimensions'  : false,
                 'overlayShow'    :    true
         });
-    <% end %>        
+    <% end %>
   }
 
   $('div.valuation_contents').hover(function(){
-	// 난이도 text 
+	// 난이도 text
   	var level_value = $(this).find('.level').attr('value');
   	classify_level_text(this, level_value);
 
@@ -104,10 +104,10 @@
   	classify_homework_text(this, homework_value);
 
   	var achievement_value = $(this).find('.achievement').attr('value');
-	classify_achievement_text(this, achievement_value);  	
+	classify_achievement_text(this, achievement_value);
 
   	var total_value = $(this).find('.total').attr('value');
-  	classify_total_text(this, total_value); 
+  	classify_total_text(this, total_value);
   });
 
   // mouseout 대신 mouseleave
@@ -123,146 +123,146 @@
 
   function classify_level_text(element, v){
 
-  	if (v <= 20) 
+  	if (v <= 20)
   	{
   		$(element).find('#level').html('짱쉬움');
   	}
   	else if (v <= 40)
   	{
-  		$(element).find('#level').html('조금 쉬움');	
+  		$(element).find('#level').html('조금 쉬움');
   	}
   	else if (v <= 60)
   	{
-  		$(element).find('#level').html('보통');	
+  		$(element).find('#level').html('보통');
   	}
   	else if (v <= 80)
   	{
-  		$(element).find('#level').html('조금 어려움');	
+  		$(element).find('#level').html('조금 어려움');
   	}
   	else if (v <= 100)
   	{
-  		$(element).find('#level').html('지옥');	
+  		$(element).find('#level').html('지옥');
   	}
   };
 
   function classify_grade_text(element, v){
-  	
-  	if (v <= 20) 
+
+  	if (v <= 20)
   	{
   		$(element).find('#grade').html('FF 폭격 FF');
   	}
   	else if (v <= 40)
   	{
-  		$(element).find('#grade').html('약간 야박하심');	
+  		$(element).find('#grade').html('약간 야박하심');
   	}
   	else if (v <= 60)
   	{
-  		$(element).find('#grade').html('보통');	
+  		$(element).find('#grade').html('보통');
   	}
   	else if (v <= 80)
   	{
-  		$(element).find('#grade').html('잘 주시는편');	
+  		$(element).find('#grade').html('잘 주시는편');
   	}
   	else if (v <= 100)
   	{
-  		$(element).find('#grade').html('꽉꽉 채워주심');	
+  		$(element).find('#grade').html('꽉꽉 채워주심');
   	}
   };
 
   function classify_workload_text(element, v){
-  	
-  	if (v <= 20) 
+
+  	if (v <= 20)
   	{
   		$(element).find('#workload').html('완전 적음');
   	}
   	else if (v <= 40)
   	{
-  		$(element).find('#workload').html('조금 적음');	
+  		$(element).find('#workload').html('조금 적음');
   	}
   	else if (v <= 60)
   	{
-  		$(element).find('#workload').html('보통');	
+  		$(element).find('#workload').html('보통');
   	}
   	else if (v <= 80)
   	{
-  		$(element).find('#workload').html('조금 많음');	
+  		$(element).find('#workload').html('조금 많음');
   	}
   	else if (v <= 100)
   	{
-  		$(element).find('#workload').html('지옥');	
+  		$(element).find('#workload').html('지옥');
   	}
   };
 
 
   function classify_homework_text(element, v){
-  	
-  	if (v <= 20) 
+
+  	if (v <= 20)
   	{
   		$(element).find('#homework').html('그런거 없다');
   	}
   	else if (v <= 40)
   	{
-  		$(element).find('#homework').html('조금 있음');	
+  		$(element).find('#homework').html('조금 있음');
   	}
   	else if (v <= 60)
   	{
-  		$(element).find('#homework').html('보통');	
+  		$(element).find('#homework').html('보통');
   	}
   	else if (v <= 80)
   	{
-  		$(element).find('#homework').html('초금 많음');	
+  		$(element).find('#homework').html('초금 많음');
   	}
   	else if (v <= 100)
   	{
-  		$(element).find('#homework').html('지옥');	
+  		$(element).find('#homework').html('지옥');
   	}
   };
 
   function classify_achievement_text(element, v){
-  	
-  	if (v <= 20) 
+
+  	if (v <= 20)
   	{
   		$(element).find('#achievement').html('없음(기억 무)');
   	}
   	else if (v <= 40)
   	{
-  		$(element).find('#achievement').html('어느정도 있음');	
+  		$(element).find('#achievement').html('어느정도 있음');
   	}
   	else if (v <= 60)
   	{
-  		$(element).find('#achievement').html('보통');	
+  		$(element).find('#achievement').html('보통');
   	}
   	else if (v <= 80)
   	{
-  		$(element).find('#achievement').html('뭔가 배운느낌');	
+  		$(element).find('#achievement').html('뭔가 배운느낌');
   	}
   	else if (v <= 100)
   	{
-  		$(element).find('#achievement').html('많이 남는 강의');	
+  		$(element).find('#achievement').html('많이 남는 강의');
   	}
   };
 
   function classify_total_text(element, v){
-  	
-  	if (v <= 1.0) 
+
+  	if (v <= 1.0)
   	{
   		$(element).find('#total').html('최악이에요');
   	}
   	else if (v <= 2.0)
   	{
-  		$(element).find('#total').html('별로에요');	
+  		$(element).find('#total').html('별로에요');
   	}
   	else if (v <= 3.0)
   	{
-  		$(element).find('#total').html('보통이요');	
+  		$(element).find('#total').html('보통이요');
   	}
   	else if (v <= 4.0)
   	{
-  		$(element).find('#total').html('좋아요');	
+  		$(element).find('#total').html('좋아요');
   	}
   	else if (v <= 5.0)
   	{
-  		$(element).find('#total').html('너무좋아요');	
+  		$(element).find('#total').html('너무좋아요');
   	}
   };
 
