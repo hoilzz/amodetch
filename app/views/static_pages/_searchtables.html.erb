@@ -1,6 +1,6 @@
-<%unless @lectures.nil?%> 
+<%unless @lectures.nil?%>
 
- 
+
 <font color="blue"><%=@lectures.count %>개 </font> 검색결과
 <div style = "text-align:center;" >
   <table class="table nogap table-striped" style= "font-size:1em;">
@@ -16,7 +16,7 @@
         <%end%>
       </tr>
     </thead>
-    <tbody></tbody>   
+    <tbody></tbody>
 
 
     <% @lectures.each do |lec| %>
@@ -24,25 +24,25 @@
       <tr class="search_table_row" onclick="showLecture(<%=lec.id%>)" >
     <%elsif current_page? controller: 'static_pages', action:'forcingwritting'%>
       <tr class="search_table_row" onclick="window.location='<%=writtingform_lecture_url(lec)%>'">
-    <%end%>     
+    <%end%>
 
       <td class="table_subject">
         <%= lec.subject%>
       </td>
       <td class="tb_unspot" >
-        <%=lec.professor%> 
-      </td>  
+        <%=lec.professor%>
+      </td>
       <td class="total_spot" style = "text-align:center">
         <!-- <div class="div_total"> -->
           <% if lec.acc_total==0 %>
             평가없음
-          <% else %> 
+          <% else %>
             <%= render 'shared/show_average_star',:var=> lec.acc_total%>
             <div class = "total_text">
              <%= lec.acc_total.round(1) %>
             </div>
         <!-- </div> -->
-          <% end %> 
+          <% end %>
       </td>
 
       <%if current_page? controller: 'static_pages', action:'newsfeed' %>
@@ -58,16 +58,16 @@
 
   </table>
 
-</div>      
-<% if @lectures.count ==0 %> 
+</div>
+<% if @lectures.count ==0 %>
 <font color="gray"><h3>검색 결과가 없습니다. </h3></font>
 <%end %>
 
 
 
 
-<div align='center'>   
+<div align='center'>
   <%= will_paginate @lectures%>
 </div>
 
-<%end%> 
+<%end%>

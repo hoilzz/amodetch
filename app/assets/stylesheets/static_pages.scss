@@ -23,7 +23,7 @@ $ft_navy      : #095fb5;
 .row_pd_top{
 	.row_half_star{
 		height : 40px;
-	}	
+	}
 }
 
 /* 						        	  */
@@ -44,7 +44,7 @@ $ft_navy      : #095fb5;
 .home_box{
 
 	margin : 10px auto;
-	
+
 	.search_box{
 		width:720px;
 		margin : 10px auto;
@@ -67,7 +67,7 @@ $ft_navy      : #095fb5;
 			cursor: pointer;
 			font-weight:900;
 		}
-		
+
 		.text_head{
 				text-align:center;
 				color:gray;
@@ -90,7 +90,7 @@ $ft_navy      : #095fb5;
 		    /*margin-right:10px;*/
 		    width : 27px;
 		    height : 26px;
-		    background : url("unactivated_star.png");
+		    background : url(asset-path('mypic.png'));
 		    display : inline-block;
 		    background-repeat: no-repeat;
 		    margin-right:-4px;
@@ -98,7 +98,7 @@ $ft_navy      : #095fb5;
 	    .total_spot .active{
 		    width : 27px;
 		    height : 26px;
-		    background : url("activated_star.png");
+		    background : url(asset-path('mypic.png'));
 		    display : inline-block;
 		    background-repeat: no-repeat;
 		    margin-right:-4px;
@@ -177,7 +177,7 @@ $ft_navy      : #095fb5;
 		text-align : center;
 		display: block;
 		margin-bottom: 10px;
-		.search	
+		.search
 		{
 			background:white;
 			margin :10px;
@@ -192,8 +192,8 @@ $ft_navy      : #095fb5;
 	}
 
 	.forcing_writting_search{
-		width:100%;   
-		text-align:center; 
+		width:100%;
+		text-align:center;
 		margin-right:auto;
 		margin:0 auto;
 	}
@@ -208,7 +208,7 @@ $ft_navy      : #095fb5;
 			cursor: pointer;
 			font-weight:900;
 		}
-		
+
 		.text_head{
 				text-align:center;
 				color:gray;
@@ -281,7 +281,7 @@ $ft_navy      : #095fb5;
 .newsfeed_container
 {
 	margin : 10px auto;
-	
+
 	.search_row{
 		margin : 15px 30px;
 		text-align : right;
@@ -327,7 +327,7 @@ $ft_navy      : #095fb5;
 			cursor: pointer;
 			font-weight:900;
 		}
-		
+
 		.text_head{
 				text-align:center;
 				color:gray;
@@ -350,7 +350,7 @@ $ft_navy      : #095fb5;
 		    /*margin-right:10px;*/
 		    width : 27px;
 		    height : 26px;
-		    background : url("unactivated_star.png");
+		    background : url(asset-path('unactivated_star.png'));
 		    display : inline-block;
 		    background-repeat: no-repeat;
 		    margin-right:-4px;
@@ -358,7 +358,7 @@ $ft_navy      : #095fb5;
 	    .total_spot .active{
 		    width : 27px;
 		    height : 26px;
-		    background : url("activated_star.png");
+		    background : url(asset-path('activated_star.png'));
 		    display : inline-block;
 		    background-repeat: no-repeat;
 		    margin-right:-4px;
@@ -378,7 +378,7 @@ $ft_navy      : #095fb5;
 	width:1000px;
 	margin-left : auto;
 	margin-right : auto;
-	
+
 	.recent_valuations{
 		width:720px;
 		margin-left : auto;
@@ -412,21 +412,21 @@ $ft_navy      : #095fb5;
 
 	.valuation_section{
 			width : 50%;
-			float:left; 
-			display:inline; 
+			float:left;
+			display:inline;
 			height : 50px;
 
 			.left{
 				width:40px;
-				float:left; 
-				margin-right : 5px; 
+				float:left;
+				margin-right : 5px;
 				margin-top:15px;
 			}
 			.right{
 				font-size: 18px;
 				float:right;
-				width: 20%; 
-				text-align:left; 
+				width: 20%;
+				text-align:left;
 				margin-top:10px;
 			}
 			#acc_progress{
@@ -476,7 +476,7 @@ $ft_navy      : #095fb5;
 
 .my_cart_container{
 
-	width : 100%; 
+	width : 100%;
 	margin-top : 10px;
 	float:right;
 	/*padding-left:30px;*/
@@ -488,7 +488,7 @@ $ft_navy      : #095fb5;
 		}
 		.t_contents {
 			.professor, , .isu, .del_btn {
-				text-align : center;	
+				text-align : center;
 			}
 			.del_btn {
 				.glyphicon-remove:hover{
@@ -583,15 +583,3 @@ span >ul>li>a
 .signUp{
 	margin-bottom:15%;
 }
-
-
-
-
-
-
-
-
-
-
-
-

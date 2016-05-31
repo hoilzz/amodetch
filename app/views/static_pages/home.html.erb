@@ -1,5 +1,6 @@
 <div class = "home_box">
-  <img src="assets/homeview_withbtn.png" usemap="#button"/>
+  <%= image_tag("homeview_withbtn.png", usemap: "#button") %>
+
 <map name="button">
   <area shape="rect" coords="660,260,859,302" href="/timetables/new" />
 </map>
@@ -37,8 +38,8 @@
         return false;
       });
   });
- 
- 
+
+
 
   <% if !@lecture_name.nil? %>
     $('.dropdown-toggle').dropdown().html('<%=@lecture_name%>');
@@ -60,10 +61,10 @@ function showLecture(lec_num)
           window.location="/lectures/"+lec_num.toString()
          <% else %>
          window.location="<%=forcingwritting_url%>"
-         <% end %>  
+         <% end %>
        <% else %>
           window.location="<%=root_url%>"
-      <% end %>        
+      <% end %>
   }
 
 
