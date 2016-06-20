@@ -78,21 +78,6 @@
   </div>
 
 </div>
-<script>
-$(document).ready(function() {
-    $(".iframe").fancybox({
-        type: 'iframe',
-        'width':200,
-        'height':200,
-        'autoSize' : false
-    });
-});
-</script>
-
-
-
-
-
 
 <script>
 
@@ -715,7 +700,7 @@ $(document).ready(function() {
     td_subject    = '<td></td>';
     td_professor  = '<td class = professor> </td>';
     td_isu        = '<td class = isu></td>';
-    td_del_btn    = '<td class = del_btn></td>';
+    td_del_btn    = '<td class = del_btn><i class=material-icons>clear</i></td>';
 
     span_glyphicon= '<span class = glyphicon></span>';
     span_lec_credit = '<span class = lec_credit></span>';
@@ -796,7 +781,6 @@ $(document).ready(function() {
 
     $(content_box).find('.lec_credit').css('display','none');
     // $(content_box).find('.lec_place').css('display','none');
-
     $(content_box).append(span_info).append(span_del);
     $(content_box).find('.del_btn').addClass('glyphicon glyphicon-remove').css('display','none');
 

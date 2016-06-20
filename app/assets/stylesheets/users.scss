@@ -1,5 +1,4 @@
-@import "bootstrap-sprockets";
-@import "bootstrap";
+
 
 
 
@@ -26,17 +25,8 @@
 }
 
 .field_with_errors {
-  @extend .has-error;
+  //@extend .has-error;
   .form-control {
-    color: $state-danger-text;
+    color: red;
   }
 }
-
-
-
-
-
-
-
-
-

@@ -5,8 +5,9 @@
  <meta http-equiv="contentType" type="text/html" charset="euc-kr" />
   <%= favicon_link_tag 'favicon.ico'%>
   <%= favicon_link_tag 'favicon.ico', rel: 'apple-touch-icon', type: 'image/png'%>
-  <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
   <title >아뭐듣지</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
@@ -21,6 +22,10 @@
 </head>
 
 <body>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+
   <%= render 'layouts/header' %>
   <div class = "alert-container" style = "z-index : 9999"></div>
     <div>

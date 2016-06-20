@@ -2,21 +2,20 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-@import "bootstrap-sprockets";
-@import "bootstrap";
+
 
 .detail_lecture_box{
   width:1000px;
   margin : 0 auto;
   padding-top :0px;
-	
+
 	/* 평균 수치 보여주는 row */
 	.lec_average_row{
 	  	width:720px;
 	  	margin:0 auto;
 	    padding-bottom: 20px;
 	    background-color: white;
-	    border-bottom : 2px solid $gray-lighter;
+	    border-bottom : 2px solid gray;
 		/* 별점 section */
 		.total_star_section {
 			width:50%;
@@ -29,42 +28,42 @@
 				}
 				.left{
 					width:40px;
-					float:left; 
-					margin-right : 10px; 
+					float:left;
+					margin-right : 10px;
 					margin-top:5px;
 				}
 				.right{
 					font-size:18px;
 					float:right;
-					width: 20%; 
-					text-align:left; 
+					width: 20%;
+					text-align:left;
 					margin-top:10px;
 				}
 		}
 
 		.professor_section{
-		    border-bottom: 2px solid $gray-lighter;
+		    border-bottom: 2px solid gray;
 		    margin-bottom:20px;
   		}
 
   		/* progress_bar section */
     	.valuation_section{
 			width : 50%;
-			float:left; 
-			display:inline; 
+			float:left;
+			display:inline;
 			height : 50px;
 
 			.left{
 				width:40px;
-				float:left; 
-				margin-right : 5px; 
+				float:left;
+				margin-right : 5px;
 				margin-top:15px;
 			}
 			.right{
 				font-size: 18px;
 				float:right;
-				width: 20%; 
-				text-align:left; 
+				width: 20%;
+				text-align:left;
 				margin-top:10px;
 			}
 			#acc_progress{
@@ -72,7 +71,7 @@
 				margin-top:15px;
 			}
 		}
-	}	
+	}
 		.valuation_contents {
 			background-color : white;
 			padding-top : 15px;
@@ -80,7 +79,7 @@
 			cursor : pointer;
 			border-bottom : 1.0px solid black;
 			margin-bottom:20px;
-		}  
+		}
 		  .timestamp{
 			color:#AAA;
 		}
@@ -94,7 +93,7 @@
 		    text-align:right;
 		    margin-top : 15px;
 		}
- 	
+
 
   .lecture_valuation{
     padding-top:20px;
@@ -104,7 +103,7 @@
 .valuations_row{
   	width:720px;
   	margin:0 auto;
-  	
+
   	.valuation_text_section{
   		display:inline-block;
   		width:300px;
@@ -163,5 +162,5 @@
 #timetable_td_time
 {
 
-	
+
 }
