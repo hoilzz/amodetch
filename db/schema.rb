@@ -11,8 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-ActiveRecord::Schema.define(version: 20160125072740) do
+ActiveRecord::Schema.define(version: 20160701013611) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace",     limit: 255
@@ -75,9 +74,6 @@ ActiveRecord::Schema.define(version: 20160125072740) do
   end
 
   add_index "comment_valuations", ["comment_id", "user_id"], name: "index_comment_valuations_on_comment_id_and_user_id", using: :btree
-  add_index "comment_valuations", ["comment_id"], name: "index_comment_valuations_on_comment_id", using: :btree
-  add_index "comment_valuations", ["lecture_id"], name: "index_comment_valuations_on_lecture_id", using: :btree
-  add_index "comment_valuations", ["user_id"], name: "index_comment_valuations_on_user_id", using: :btree
 
   create_table "comments", force: :cascade do |t|
     t.text     "content",    limit: 65535
@@ -88,12 +84,9 @@ ActiveRecord::Schema.define(version: 20160125072740) do
     t.integer  "likedcount", limit: 4,     default: 0
   end
 
-  add_index "comments", ["lecture_id"], name: "index_comments_on_lecture_id", using: :btree
   add_index "comments", ["user_id", "created_at"], name: "index_comments_on_user_id_and_created_at", using: :btree
-  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
   create_table "enrollments", force: :cascade do |t|
-    t.string   "day",          limit: 255
     t.string   "begin_time",   limit: 255
     t.string   "end_time",     limit: 255
     t.datetime "created_at",               null: false
@@ -104,8 +97,6 @@ ActiveRecord::Schema.define(version: 20160125072740) do
     t.integer  "timetable_id", limit: 4
   end
 
-  add_index "enrollments", ["timetable_id"], name: "index_enrollments_on_timetable_id", using: :btree
-
   create_table "lectures", force: :cascade do |t|
     t.string   "subject",         limit: 255
     t.string   "professor",       limit: 255
@@ -113,11 +104,6 @@ ActiveRecord::Schema.define(version: 20160125072740) do
     t.datetime "created_at",                                null: false
     t.datetime "updated_at",                                null: false
     t.string   "lecturetime",     limit: 255
-    t.float    "acc_grade",       limit: 24,  default: 0.0
-    t.float    "acc_workload",    limit: 24,  default: 0.0
-    t.float    "acc_level",       limit: 24,  default: 0.0
-    t.float    "acc_achievement", limit: 24,  default: 0.0
-    t.float    "acc_homework",    limit: 24,  default: 0.0
     t.float    "acc_total",       limit: 24,  default: 0.0
     t.string   "place",           limit: 255
     t.string   "isu",             limit: 255
@@ -125,6 +111,17 @@ ActiveRecord::Schema.define(version: 20160125072740) do
     t.float    "credit",          limit: 24
     t.string   "open_department", limit: 255
   end
+
+  create_table "microposts", force: :cascade do |t|
+    t.text     "content",    limit: 65535
+    t.integer  "user_id",    limit: 4
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.string   "picture",    limit: 255
+  end
+
+  add_index "microposts", ["user_id", "created_at"], name: "index_microposts_on_user_id_and_created_at", using: :btree
+  add_index "microposts", ["user_id"], name: "index_microposts_on_user_id", using: :btree
 
   create_table "plural_attrs", force: :cascade do |t|
     t.string   "lectureTime", limit: 255
@@ -134,12 +131,23 @@ ActiveRecord::Schema.define(version: 20160125072740) do
     t.datetime "updated_at",              null: false
   end
 
+  create_table "relationships", force: :cascade do |t|
+    t.integer  "follower_id", limit: 4
+    t.integer  "followed_id", limit: 4
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  add_index "relationships", ["followed_id"], name: "index_relationships_on_followed_id", using: :btree
+  add_index "relationships", ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true, using: :btree
+  add_index "relationships", ["follower_id"], name: "index_relationships_on_follower_id", using: :btree
+
   create_table "timetables", force: :cascade do |t|
     t.integer  "user_id",    limit: 4
     t.string   "name",       limit: 255
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
-    t.string   "semester",   limit: 255, default: "1학기"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.string   "semester",   limit: 255
   end
 
   create_table "users", force: :cascade do |t|
@@ -159,22 +167,13 @@ ActiveRecord::Schema.define(version: 20160125072740) do
     t.string   "major",           limit: 255
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-
   create_table "valuations", force: :cascade do |t|
-    t.integer  "user_id",     limit: 4
-    t.integer  "lecture_id",  limit: 4
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
-    t.integer  "up",          limit: 4,     default: 0
-    t.integer  "down",        limit: 4,     default: 0
-    t.integer  "grade",       limit: 4
-    t.integer  "workload",    limit: 4
-    t.integer  "level",       limit: 4
-    t.integer  "achievement", limit: 4
-    t.integer  "homework",    limit: 4
-    t.integer  "total",       limit: 4
-    t.text     "content",     limit: 65535
+    t.integer  "user_id",    limit: 4
+    t.integer  "lecture_id", limit: 4
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.integer  "total",      limit: 4
+    t.text     "content",    limit: 65535
   end
 
 end

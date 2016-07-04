@@ -1,14 +1,10 @@
 class SessionsController < ApplicationController
 
   def new
-
     render(:layout => "layouts/noheader") #헤더파일 포함 안함 !
-
-
   end
 
   def create
-
     user = User.find_by(email: params[:session][:email])
 
     if user && user.authenticate(params[:session][:password])
