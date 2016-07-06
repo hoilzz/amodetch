@@ -1,7 +1,21 @@
 Rails.application.routes.draw do
-  
+
  devise_for :admin_users, ActiveAdmin::Devise.config
  ActiveAdmin.routes(self)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  # get 'users/new'
  get 'home_admin' => 'static_pages#home_admin'
  get 'lecture_search' => 'static_pages#search'
@@ -44,7 +58,7 @@ post 'paste' => 'timetables#paste'
 
 resources :users do
    member { get :timetable }
-end 
+end
 
 
 match 'auth/:provider/callback', :controller => 'sessions', action: 'create_by_facebook', via: [:get, :post]
@@ -52,7 +66,7 @@ match 'auth/failure', to: redirect('/'), via: [:get, :post]
 match 'signout', to: 'sessions#destroy', as: 'signout', via: [:get, :post]
 resources :lectures do
   collection { post :import }
-  
+
   member { get :writtingform }
 end
 

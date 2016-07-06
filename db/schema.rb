@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160701013611) do
+ActiveRecord::Schema.define(version: 20160705065525) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace",     limit: 255
@@ -141,6 +141,31 @@ ActiveRecord::Schema.define(version: 20160701013611) do
   add_index "relationships", ["followed_id"], name: "index_relationships_on_followed_id", using: :btree
   add_index "relationships", ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true, using: :btree
   add_index "relationships", ["follower_id"], name: "index_relationships_on_follower_id", using: :btree
+
+  create_table "schedule_details", force: :cascade do |t|
+    t.integer  "schedule_id", limit: 4
+    t.string   "start_time",  limit: 255
+    t.string   "end_time",    limit: 255
+    t.string   "day",         limit: 255
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  create_table "schedules", force: :cascade do |t|
+    t.string   "lecturetime", limit: 255
+    t.string   "semester",    limit: 255
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "lecture_id",  limit: 4
+  end
+
+  create_table "timetable_items", force: :cascade do |t|
+    t.integer  "lecture_id",   limit: 4
+    t.integer  "schedule_id",  limit: 4
+    t.integer  "timetable_id", limit: 4
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "timetables", force: :cascade do |t|
     t.integer  "user_id",    limit: 4

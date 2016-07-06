@@ -12,6 +12,7 @@ class Lecture < ActiveRecord::Base
   has_many :valuations, dependent: :destroy
   has_many :comment_valuations, dependent: :destroy
   has_many :enrollment
+  has_many :schedules
   belongs_to :timetable
 
   scope :order_by_comments, -> { joins(:comments).order("comments.created_at DESC") }
@@ -28,39 +29,66 @@ class Lecture < ActiveRecord::Base
   # 1 기존에 없던 강의 추가
 
   def self.import(file)
-    lec = Lecture.where('semester = "2016년 1학기"')
-    lec.each do |l|
-      l.update_attribute(:semester, nil)
-      if l.plural_attrs
-        l.plural_attrs.each do |p|
-          p.destroy
-        end
-      end
-    end
     spreadsheet = open_spreadsheet(file)
     header = spreadsheet.row(1)
     (2..spreadsheet.last_row).each do |i|
       row = Hash[[header, spreadsheet.row(i)].transpose]
+      # lecture의 attr은 불변하는 속성들
+
       lecture = find_by(subject: row["subject"], professor: row["professor"])
 
       if lecture
-        lecture.update_attributes(isu: row["isu"], semester: row["semester"], credit: row["credit"],
-                                  open_department: row["open_department"], major: row["major"])
+        lecture.update_attributes(isu: row["isu"], credit: row["credit"],
+                                         open_department: row["open_department"], major: row["major"])
       else
-        lecture = Lecture.new
-        lecture.update_attributes(isu: row["isu"], semester: row["semester"], credit: row["credit"],
-                                  open_department: row["open_department"], major: row["major"],
-                                  subject: row["subject"], professor: row["professor"])
+        lecture = Lecture.create(major: row["major"], subject: row["subject"], isu: row["isu"],
+                            professor: row["professor"], credit: row["credit"], open_department: row["open_department"])
       end
 
-      lec_plural_attrs = lecture.plural_attrs.build(lectureTime: row["lectureTime"], place: row["place"])
-      lec_plural_attrs.save
-      # 현재 엑셀의 column 개수와 업데이트 할 attr 개수 일치 확인.
-      # lecture.attributes = row.to_hash.slice("subject", "professor", "major", "place", "isu","semester", "open_department", "credit")
-      lecture.save
-      #lecture.lecturetime = [row["lecturetime"]]
+      schedule = Schedule.find_by(lecture_id: lecture.id, lecturetime: row["lecturetime"], semester: row["semester"])
+      unless schedule
+        schedule = lecture.schedules.create( lecturetime: row["lecturetime"], semester: row["semester"] )
+        ScheduleDetail.makeScheduleDetails(schedule.id, schedule.lecturetime)
+        # schedule id를 schedule_detail.메서드(id) 에 전달하여 새로 만든 schedule detail등록
+      end
+
     end
   end
+
+  # #def self.import(file)
+  #   lec = Lecture.where('semester = "2016년 1학기"')
+  #   lec.each do |l|
+  #     l.update_attribute(:semester, nil)
+  #     if l.plural_attrs
+  #       l.plural_attrs.each do |p|
+  #         p.destroy
+  #       end
+  #     end
+  #   end
+  #   spreadsheet = open_spreadsheet(file)
+  #   header = spreadsheet.row(1)
+  #   (2..spreadsheet.last_row).each do |i|
+  #     row = Hash[[header, spreadsheet.row(i)].transpose]
+  #     lecture = find_by(subject: row["subject"], professor: row["professor"])
+  #
+  #     if lecture
+  #       lecture.update_attributes(isu: row["isu"], semester: row["semester"], credit: row["credit"],
+  #                                 open_department: row["open_department"], major: row["major"])
+  #     else
+  #       lecture = Lecture.new
+  #       lecture.update_attributes(isu: row["isu"], semester: row["semester"], credit: row["credit"],
+  #                                 open_department: row["open_department"], major: row["major"],
+  #                                 subject: row["subject"], professor: row["professor"])
+  #     end
+  #
+  #     lec_plural_attrs = lecture.plural_attrs.build(lectureTime: row["lectureTime"], place: row["place"])
+  #     lec_plural_attrs.save
+  #     # 현재 엑셀의 column 개수와 업데이트 할 attr 개수 일치 확인.
+  #     # lecture.attributes = row.to_hash.slice("subject", "professor", "major", "place", "isu","semester", "open_department", "credit")
+  #     lecture.save
+  #     #lecture.lecturetime = [row["lecturetime"]]
+  #   end
+  # end
 
 
 
@@ -192,7 +220,7 @@ class Lecture < ActiveRecord::Base
     end
   end
 
-  def self.search_home(search)
+  def self.search_home(search)ㅇ
       unless search.nil?
          where(['professor LIKE ? OR subject Like ? OR open_department = ?',
         "#{search}%", "#{search}%", "#{search}"]).select('DISTINCT (subject), professor, acc_total, id')
