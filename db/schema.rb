@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160705065525) do
+ActiveRecord::Schema.define(version: 20160716032021) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace",     limit: 255
@@ -103,9 +103,7 @@ ActiveRecord::Schema.define(version: 20160705065525) do
     t.string   "major",           limit: 255
     t.datetime "created_at",                                null: false
     t.datetime "updated_at",                                null: false
-    t.string   "lecturetime",     limit: 255
     t.float    "acc_total",       limit: 24,  default: 0.0
-    t.string   "place",           limit: 255
     t.string   "isu",             limit: 255
     t.string   "semester",        limit: 255
     t.float    "credit",          limit: 24
@@ -152,11 +150,13 @@ ActiveRecord::Schema.define(version: 20160705065525) do
   end
 
   create_table "schedules", force: :cascade do |t|
-    t.string   "lecturetime", limit: 255
-    t.string   "semester",    limit: 255
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-    t.integer  "lecture_id",  limit: 4
+    t.string   "lecture_time", limit: 255
+    t.string   "semester",     limit: 255
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.integer  "lecture_id",   limit: 4
+    t.boolean  "recent",       limit: 1
+    t.string   "place",        limit: 255
   end
 
   create_table "timetable_items", force: :cascade do |t|

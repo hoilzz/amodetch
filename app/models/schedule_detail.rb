@@ -1,5 +1,5 @@
 class ScheduleDetail < ActiveRecord::Base
-  belongs_to :schedule
+  belongs_to :schedule, -> {includes :lecture}
 
   # 전환하고 저장하는거니까 메서드 명 포괄적으로 바꾸자.
   def self.makeScheduleDetails(scheduleId, lectureTime)
@@ -24,7 +24,6 @@ class ScheduleDetail < ActiveRecord::Base
   def self.makeCellTime(day, time)
     cellTime = Hash.new
     timeSplited = splitLectureTime (time)
-
     cellTime[:dayColumnNum] = convertDayToDayColumnNum(day)
     cellTime[:startTimeRowNum] = convertTimeToTimeRowNum(timeSplited[0])
     cellTime[:endTimeRowNum] = convertTimeToTimeRowNum(timeSplited[1])

@@ -56,13 +56,10 @@ $hover_gray   : #f9f9f9;
     position: relative;
     display:inline-block;
     vertical-align: middle;
-    float:left; 
+    float:left;
     display:inline;
 }
 .left-container{
-    width:17%;
-    float:left;
-    margin-left:2%;
 }
 .btn-add{
     background-color:#095fb5 !important;
@@ -71,7 +68,7 @@ $hover_gray   : #f9f9f9;
     margin-right:0px;
     border-radius:0 !important;
     float:left;
-    border:none !important; 
+    border:none !important;
 }
 .btn-copy{
     min-width:90px;
@@ -88,7 +85,7 @@ $hover_gray   : #f9f9f9;
     margin-right: 0px;
 }
 .btn-share{
-    background-color:#009ce6 !important; 
+    background-color:#009ce6 !important;
     max-width:90px;
     border-radius:0 !important;
     float:left;
@@ -108,13 +105,8 @@ $hover_gray   : #f9f9f9;
     float:left;
     margin-top:5%;
 }
-.right-container
-{
-    width:35%;
-    float:left;
-    padding-left:2%;
-    margin-bottom:20px;
-    
+
+
     .search_box
     {
         width:100%;
@@ -141,10 +133,10 @@ $hover_gray   : #f9f9f9;
         {
             position:absolute;
             bottom:-2px;
-            right:0px; 
-            display:inline; 
+            right:0px;
+            display:inline;
             text-align:right;
-            
+
             span
             {
                 background-color : gray;
@@ -159,7 +151,7 @@ $hover_gray   : #f9f9f9;
         }
         .icon-info
         {
-            color:gray; 
+            color:gray;
             font-size :14px;
         }
     }
@@ -168,12 +160,12 @@ $hover_gray   : #f9f9f9;
         background-color : $hover_gray;
     }
 
-}
+
 
 
 
 .rank-form{
-    text-align:center; 
+    text-align:center;
     display:inline
 }
 .rank-textf{
@@ -201,7 +193,7 @@ $hover_gray   : #f9f9f9;
    margin: 0 auto;
    margin-bottom:20px;
     width: 50% !important;
-    
+
 }
 .btn-detailsearch{
     min-height:34px;
@@ -212,7 +204,7 @@ $hover_gray   : #f9f9f9;
     margin-bottom:20px;
     margin-right:10px;
     background-color:#2db1ee !important;
-    width : 55px;   
+    width : 55px;
 }
 .btn-detailclose{
     min-height:34px;
@@ -222,7 +214,7 @@ $hover_gray   : #f9f9f9;
     margin-top:10px;
     margin-bottom:20px;
     background-color:#95a5a6 !important;
-    width : 55px;  
+    width : 55px;
 }
 .btn-zoomin{
     color:white;
@@ -232,7 +224,7 @@ $hover_gray   : #f9f9f9;
     float:left;
     margin-bottom:20px;
     background-color:orange !important;
-    width : 55px;   
+    width : 55px;
 }
 .glyphicon-search{
     font-size:15px;
@@ -319,7 +311,7 @@ $hover_gray   : #f9f9f9;
     {
         display:inline-block;
         max-width:180px;
-        
+
         .del_btn
         {
             background-color:#e00000;
@@ -351,7 +343,7 @@ $hover_gray   : #f9f9f9;
 
 
 .table > thead > tr > th, .table > thead > tr > td,
- .table > tbody > tr > th, 
+ .table > tbody > tr > th,
   .table > tfoot > tr > th, .table > tfoot > tr > td
 {
     border:0;
@@ -403,13 +395,11 @@ $hover_gray   : #f9f9f9;
 
 .timetable_container
 {
-    width:64%;
-    float:left;
     position:relative;
     .timetable_name_box
     {
         display :inline-block;
-        
+
         span
         {
             width:15px;
@@ -426,7 +416,7 @@ $hover_gray   : #f9f9f9;
     {
         display :inline-block;
         margin-left : 25px;
-        color : #cbd4db;    
+        color : #cbd4db;
     }
 
     .total_credits
@@ -434,7 +424,7 @@ $hover_gray   : #f9f9f9;
         display : inline-block;
     }
 
-    
+
     .lessons
     {
 
@@ -448,16 +438,16 @@ $hover_gray   : #f9f9f9;
         }
         .c0{
             background-color : $bg_1 !important;
-            color : $ft_1; 
-        }   
+            color : $ft_1;
+        }
         .c1{
             background-color : $bg_2 !important;
             color : $ft_2;
-        }   
+        }
         .c2{
             background-color : $bg_3 !important;
             color : $ft_3;
-        }   
+        }
         .c3{
             background-color : $bg_4 !important;
             color : $ft_4;
@@ -468,29 +458,29 @@ $hover_gray   : #f9f9f9;
         }
         .c5{
             background-color : $bg_6 !important;
-            color : $ft_6;          
+            color : $ft_6;
         }
         .c6{
             background-color : $bg_7 !important;
-            color : $ft_7;          
+            color : $ft_7;
 
         }
         .c7
         {
             background-color : $bg_8 !important;
-            color : $ft_8;          
+            color : $ft_8;
 
         }
         .c8
         {
             background-color : $bg_9 !important;
-            color : $ft_9;          
+            color : $ft_9;
 
         }
         .c9
         {
             background-color : $bg_10 !important;
-            color : $ft_10;          
+            color : $ft_10;
 
         }
 
@@ -501,7 +491,7 @@ $hover_gray   : #f9f9f9;
             position:relative;
 
             .lec_place, .lec_professor, .lec_name {
-                width:99%;      
+                width:99%;
             }
             .lec_name
             {
@@ -512,32 +502,32 @@ $hover_gray   : #f9f9f9;
             {
                 font-size:12px;
             }
-            
+
 
             .del_btn {
                 cursor : pointer;
                 top   : 0;
             }
-            
+
 
             a{
                 color : #333333;
-                
+
                 .info_btn{
                 cursor : pointer;
                 top: 20px;
-                }   
+                }
             }
 
             .glyphicon {
                 right : 0;
                 position:absolute;
-            }   
+            }
         }
     }
 }
 
-/* 
+/*
  * my_cart_container
 */
 
@@ -558,22 +548,3 @@ $hover_gray   : #f9f9f9;
 div.detailsearch{
     text-align:center;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

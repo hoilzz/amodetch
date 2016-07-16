@@ -10,7 +10,7 @@ gem 'sass-rails', '>= 3.2'
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.1.0'
-# See htt                                                              
+# See htt
 gem 'bcrypt', '3.1.7'
 gem 'bootstrap-sass'
 gem 'roo', '2.0.0'
@@ -45,12 +45,13 @@ gem 'activeadmin', github: 'gregbell/active_admin'
 # gem 'activeadmin', '~> 1.0.0.pre2'
 # gem 'activeadmin', github: 'activeadmin'
 
-gem 'rollbar', '~> 2.8.3'
+# gem 'rollbar', '~> 2.8.3'
+
+gem 'puma'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
-
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
 
@@ -58,4 +59,3 @@ group :development, :test do
   gem 'spring'
 end
 # mysqldump -u root -p amodzzi_development > amodzzi_development_201605011
-

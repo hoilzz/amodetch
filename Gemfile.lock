@@ -156,6 +156,8 @@ GEM
     orm_adapter (0.5.0)
     polyamorous (1.3.0)
       activerecord (>= 3.0)
+    puma (2.11.1)
+      rack (>= 1.1, < 2.0)
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -196,8 +198,6 @@ GEM
     ref (2.0.0)
     responders (2.1.1)
       railties (>= 4.2.0, < 5.1)
-    rollbar (2.8.3)
-      multi_json
     roo (2.0.0)
       nokogiri (~> 1)
       rubyzip (~> 1.1, < 2.0.0)
@@ -275,8 +275,8 @@ DEPENDENCIES
   mysql2 (~> 0.3.20)
   omniauth
   omniauth-facebook
+  puma
   rails (= 4.2.2)
-  rollbar (~> 2.8.3)
   roo (= 2.0.0)
   roo-xls
   sass-rails (>= 3.2)

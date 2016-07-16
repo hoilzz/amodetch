@@ -1,53 +1,65 @@
-e
 
-<% if !lectures.nil? %>
-    <% if lectures.nil? %>
-      <div> 검색결과가 없습니다.. </div>
 
-    <% else %>
 
-        
-       
+
       <!--%= will_paginate lectures, :class=>'paginate', :previous_label=>'«', :next_label=>'»',:inner_window=>'3', :outer_window=>'-1'%-->
-    <% end %>
-<% end %>
-<% if plural_attrs %>
-  <% plural_attrs.each do |p| %>
-    <div class="list-group lec_<%= p.lecture.id %>">
-      <h4 class = "subject"><%= p.lecture.subject %></h4>
-      <span class = "professor"><%= p.lecture.professor %></span>
-      <span class = "place" style = "display : none"> <%= p.place %></span>
-      <span class = "lecture_time"><%= p.lectureTime %></span>
-      <span class = "credit" style = "display : none"><%= p.lecture.credit %> </span>
-      <span class = "isu" style = "display : none"><%= p.lecture.isu %> </span>
 
-      <div class = "send_lec" style = "position : absolute; right:4px; top : 4px">
 
-      <%= button_to lecture_path(p.lecture), method: :get, class: 'btn btn-default btn_info', :type => 'button', form: {target: '_blank'}, dataid: p.lecture.id, style: 'display:none' do %>
-        <i class="icon-info"></i>
-      <% end %>
-      </div>
 
-      <div class = "department_open">
-        <span><%= p.lecture.open_department %></span>
-      </div>
+
+  <!--%= will_paginate plural_attrs, :class=>'paginate', :previous_label=>'«', :next_label=>'»',:inner_window=>'3', :outer_window=>'-1'%-->
+
+  <ul class="collection">
+
+    <a href = "#" class = "collection-item" style = "padding : 0">
+      <li class="collection-item" style = "background-color : transparent">
+        <div class="title">Capstone 설계 졸업작품 연계</div>
+        <span class = "professor">양효식</span>
+        <span class = "lecturetime">화목 15:00-18:00</span>
+        <span style = "float:right;"> 컴퓨터공학과 </span>
+      </li>
+    </a>
+    <li class="collection-item avatar">
+      <span class="title">Title</span>
+      <p>First Line
+         Second Line
+      </p>
+      <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+    </li>
+
+  </ul>
+
+
+
+  <div class="list-group collection lec_testId">
+    <h4 class = "subject">Capstone 심화 설계 졸전 연계</h4>
+    <span class = "professor">정호일</span>
+    <span class = "place" style = "display : none"> 다산관 205호</span>
+    <span class = "lecture_time">화목 12:00-13:00</span>
+    <span class = "credit" style = "display : none">6.0 </span>
+    <span class = "isu" style = "display : none">전필 </span>
+
+    <div class = "send_lec" style = "position : absolute; right:4px; top : 4px">
+
     </div>
-  <% end %>
-  <%= will_paginate plural_attrs, :class=>'paginate', :previous_label=>'«', :next_label=>'»',:inner_window=>'3', :outer_window=>'-1'%>
-<% end %>
 
-<script>
+    <div class = "department_open">
+      <span>소프트웨어공학과</span>
+    </div>
+  </div>
 
-$(document).ready(function(){
-      $("a.tooltipLink").tooltip();
-      $(".disabled").hide();
-});
-   
-
-
-
-
-
-
-
-</script>
+  <ul class="pagination">
+    <!-- <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+    <li class="active"><a href="#!">1</a></li>
+    <li class="waves-effect"><a href="#!">2</a></li>
+    <li class="waves-effect"><a href="#!">3</a></li>
+    <li class="waves-effect"><a href="#!">4</a></li>
+    <li class="waves-effect"><a href="#!">5</a></li>
+    <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li> -->
+  </ul>
+<!-- <ul class="pagination">
+  <li class="active"><a href="">1</a></li>
+  <li class="page"><a class="follow_link" href="#/2">2</a></li>
+  <li class="next page"><a class="follow_link" href="#/2">&rarr;</a></li>
+  <li class="next page"><a class="follow_link" href="#/11">&raquo;</a></li>
+</ul> -->

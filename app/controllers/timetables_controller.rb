@@ -6,7 +6,7 @@ class TimetablesController < ApplicationController
 		end
 		if params[:search]==''||params[:search].nil?
 		else
-	        @lectures = Lecture.search_timetable(params[:search],params[:semester])
+	      @lectures = Lecture.search_timetable(params[:search],params[:semester])
 	    	@plural_attrs = PluralAttr.where(:lecture_id => @lectures).paginate(:page => params[:page], :per_page => 5)
 	    end
 
@@ -14,17 +14,18 @@ class TimetablesController < ApplicationController
 	    if (@current_timetable = current_user.timetables.find(params[:id]))
 
 			# 기본 타임테이블 안에 등록된 강의 collection 담기
-			@lectures_in_timetable = @current_timetable.enrollments  
+			@lectures_in_timetable = @current_timetable.enrollments
 
 			# activated_timetable(t)
-			
+
 			@timetables = current_user.timetables
 	    # 강의 등록한 적 없는 사용자
 	    else
 	      current_user.timetables.create!(name: "기본시간표")
-	      @lectures_in_timetable = current_user.timetables[0].enrollments  
+	      @lectures_in_timetable = current_user.timetables[0].enrollments
 	    end
 	end
+
 	def goLog
 		unless current_user
 			flash[:danger]="로그인 후 이용 바랍니다."
@@ -74,8 +75,8 @@ class TimetablesController < ApplicationController
 
 	def paste
 		@existed_t = Timetable.find(params[:timetable][:id])
-		
-		#복제시 이름 같이 업데이트, 그래서 이름값 인자로 같이 보냄 
+
+		#복제시 이름 같이 업데이트, 그래서 이름값 인자로 같이 보냄
 		@reproduced_t = reproduce_timetable(@existed_t, params[:timetable][:name])
 		reproduce_enrollment(@existed_t, @reproduced_t)
 
@@ -87,7 +88,7 @@ class TimetablesController < ApplicationController
 	end
 
 
-	private 
+	private
 
 	def timetable_params
 		params.require(:timetable).permit(:name,:semester)

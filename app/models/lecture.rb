@@ -5,55 +5,109 @@ class Lecture < ActiveRecord::Base
   validates :subject, presence: true, length: {maximum: 40}, uniqueness: {scope: [:professor] }
   validates :professor, length: {maximum: 40}
   validates :major, presence:true
-  serialize :lecturetime
 
   has_many :plural_attrs, dependent: :destroy
   has_many :comments
   has_many :valuations, dependent: :destroy
   has_many :comment_valuations, dependent: :destroy
   has_many :enrollment
-  has_many :schedules
+  has_many :schedules, -> {where recent: true}
+
   belongs_to :timetable
 
   scope :order_by_comments, -> { joins(:comments).order("comments.created_at DESC") }
   scope :group_by_id, ->  { group(:lecture_id)}
 
+
   require 'rubygems'
   require 'roo'
 
-  # IMPORT 2종류                           #
-  #                                       #
-  # 1  새로운 강의 추가                       #
-  # 2  DB에 있는 강의에 몇가지 COLUMN 업데이트   #
-
-  # 1 기존에 없던 강의 추가
 
   def self.import(file)
     spreadsheet = open_spreadsheet(file)
     header = spreadsheet.row(1)
+
+    tempRow = Hash[[header, spreadsheet.row(2)].transpose]
+    currentSemester = tempRow["semester"]
+
+    Schedule.where("semester = ? ", currentSemester).update_all(recent: false)
+
     (2..spreadsheet.last_row).each do |i|
       row = Hash[[header, spreadsheet.row(i)].transpose]
-      # lecture의 attr은 불변하는 속성들
 
-      lecture = find_by(subject: row["subject"], professor: row["professor"])
-
-      if lecture
+      lecture = Lecture.new(major: row["major"], subject: row["subject"], isu: row["isu"],
+                          professor: row["professor"], credit: row["credit"], open_department: row["open_department"])
+      if lecture.valid?
+        lecture.save
+      else
+        lecture = find_by(subject: row["subject"], professor: row["professor"])
         lecture.update_attributes(isu: row["isu"], credit: row["credit"],
                                          open_department: row["open_department"], major: row["major"])
-      else
-        lecture = Lecture.create(major: row["major"], subject: row["subject"], isu: row["isu"],
-                            professor: row["professor"], credit: row["credit"], open_department: row["open_department"])
       end
 
-      schedule = Schedule.find_by(lecture_id: lecture.id, lecturetime: row["lecturetime"], semester: row["semester"])
-      unless schedule
-        schedule = lecture.schedules.create( lecturetime: row["lecturetime"], semester: row["semester"] )
-        ScheduleDetail.makeScheduleDetails(schedule.id, schedule.lecturetime)
-        # schedule id를 schedule_detail.메서드(id) 에 전달하여 새로 만든 schedule detail등록
+      schedule = lecture.schedules.new( lecture_time: row["lecturetime"], place: row["place"],
+                                        semester: row["semester"], recent: true)
+      # 이번학기 데이터를 선 구축후, 조건문 해석
+      # 지금 등록하려는 강의 스케줄이 새로 변경 or 추가됨
+      if schedule.valid?
+        schedule.save
+        ScheduleDetail.makeScheduleDetails(schedule.id, schedule.lecture_time)
+      # 지금 등록하려는 강의 스케줄이 기존에 등록한 적 있음
+      else
+        schedule = Schedule.find_by(lecture_id: lecture.id, lecture_time: row["lecturetime"], semester: row["semester"], recent: "false")
+        schedule.toggle(:recent)
+        schedule.save
       end
 
     end
   end
+
+  def self.open_spreadsheet(file)
+    case File.extname(file.original_filename)
+    when ".csv" then Roo::Csv.new(file.path)
+    when ".xls" then Roo::Excel.new(file.path)
+    when ".xlsx" then Roo::Excelx.new(file.path)
+    else raise "Unknown file type: #{file.original_filename}"
+    end
+  end
+
+  def self.extractSchedules(lecs, semester)
+    lecs.joins(:schedules).where("schedules.semester" => semester).select("schedules.*")
+
+  end
+
+  def lec_valuation(counts,t)
+
+    if self.acc_grade.nil?
+        total = t.to_i
+    else
+        total = self.acc_total*counts + t.to_i
+    end
+    counts+=1
+    self.acc_total = total/counts
+  end
+
+  def self.searchOnTimetable(search, semester)
+    unless search.nil?
+      where(['(professor LIKE ? OR subject LIKE ? OR open_department LIKE ?)',
+         "#{search}%","%#{search}%","#{search}%"])
+    end
+  end
+
+  def self.search_home(search)
+      unless search.nil?
+         where(['professor LIKE ? OR subject Like ? OR open_department = ?',
+        "#{search}%", "#{search}%", "#{search}"]).select('DISTINCT id, subject, professor, major, isu, credit')
+      end
+  end
+
+  def self.detailSearch(major, isu)
+      where(['major LIKE ? OR isu Like ?', "#{major}%","#{isu}%"]).order('acc_total DESC')
+  end
+
+end
+
+
 
   # #def self.import(file)
   #   lec = Lecture.where('semester = "2016년 1학기"')
@@ -187,67 +241,3 @@ class Lecture < ActiveRecord::Base
   #     # end
   #   end
   # end
-
-
-
-
-
-  def self.open_spreadsheet(file)
-    case File.extname(file.original_filename)
-    when ".csv" then Roo::Csv.new(file.path)
-    when ".xls" then Roo::Excel.new(file.path)
-    when ".xlsx" then Roo::Excelx.new(file.path)
-    else raise "Unknown file type: #{file.original_filename}"
-    end
-  end
-
-
-  def lec_valuation(counts,t)
-
-    if self.acc_grade.nil?
-        total = t.to_i
-    else
-        total = self.acc_total*counts + t.to_i
-    end
-    counts+=1
-    self.acc_total = total/counts
-  end
-
-  def self.search_timetable(search, semester)
-    unless search.nil?
-      where(['(professor LIKE ? OR subject LIKE ? OR open_department LIKE ?)AND semester LIKE ?',
-             "#{search}%","%#{search}%","#{search}%", "#{semester}"])
-    end
-  end
-
-  def self.search_home(search)ㅇ
-      unless search.nil?
-         where(['professor LIKE ? OR subject Like ? OR open_department = ?',
-        "#{search}%", "#{search}%", "#{search}"]).select('DISTINCT (subject), professor, acc_total, id')
-      end
-  end
-
-  def self.detailSearch(major, isu)
-      where(['major LIKE ? OR isu Like ?', "#{major}%","#{isu}%"]).order('acc_total DESC')
-  end
-
-
-  def name
-    subject + " "
-  end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-end
