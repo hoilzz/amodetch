@@ -548,3 +548,19 @@ $hover_gray   : #f9f9f9;
 div.detailsearch{
     text-align:center;
 }
+
+
+/*
+////////////////////////
+////
+//// BEM
+////
+////////////////////////
+*/
+
+
+
+.timetable__td--active
+{
+  background-color : #f9f9f9;
+}

@@ -76,9 +76,9 @@ class LecturesController < ApplicationController
 			if schDetailObjs.size == 0
 				# 싸강
 			elsif schDetailObjs.size == 1
-				temp = schDetailObjs
-				schDetailObjs = Array.new
-				schDetailObjs.push(temp)
+				#temp = schDetailObjs
+				#schDetailObjs = Array.new
+				#schDetailObjs.push(temp)
 			end
 
 			lectureObj = lectureObj.merge(schduleObj)

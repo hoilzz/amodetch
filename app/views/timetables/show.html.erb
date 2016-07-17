@@ -247,13 +247,13 @@
         {
           var all_time_list = day_times[i_day].split(",");
 
-          $("#"+all_time_list[0]).attr('rowspan', all_time_list.length).addClass("active");
+          $("#"+all_time_list[0]).attr('rowspan', all_time_list.length).addClass("timetable__td--active");
 
           for(var j = 1; all_time_list[j]; j+=1)
           {
             // 중복검사
             // active 클래스 추가
-            $("#"+all_time_list[j]).addClass("active");
+            $("#"+all_time_list[j]).addClass("timetable__td--active");
             $("#"+all_time_list[j]).css('display','none');
           }
 
@@ -273,13 +273,13 @@
 
         // removeClass
         // rowspan 해제
-        $("#"+all_time_list[0]).removeAttr('rowspan').removeClass("active");
+        $("#"+all_time_list[0]).removeAttr('rowspan').removeClass("timetable__td--active");
 
         for(var j = 1; all_time_list[j]; j+=1)
         {
           // 중복검사
           // active 클래스 추가
-          $("#"+all_time_list[j]).removeClass("active");
+          $("#"+all_time_list[j]).removeClass("timetable__td--active");
           $("#"+all_time_list[j]).css('display','table-cell');
         }
 
