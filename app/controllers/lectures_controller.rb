@@ -72,18 +72,13 @@ class LecturesController < ApplicationController
 
 			schduleObj = sch.as_json(only: [:lecture_id, :lecture_time])
 
-			schDetailObjs = ScheduleDetail.where(schedule_id: sch.id).select("start_time, end_time, day")
-			if schDetailObjs.size == 0
-				# 싸강
-			elsif schDetailObjs.size == 1
-				#temp = schDetailObjs
-				#schDetailObjs = Array.new
-				#schDetailObjs.push(temp)
-			end
-
+			lectureObj[:schedule_id] = sch.id
 			lectureObj = lectureObj.merge(schduleObj)
 
+			schDetailObjs = ScheduleDetail.where(schedule_id: sch.id).select("start_time, end_time, day")
+
 			lectureObj[:schDetails] = schDetailObjs.as_json(only: [:start_time, :end_time, :day])
+
 
 			@lecArr.push(lectureObj)
 		end

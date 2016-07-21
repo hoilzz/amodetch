@@ -3,7 +3,7 @@
   <!-- development -->
   <!-- 시간표 TABLE VIEW -->
   <div class = "container" style = "width : 90%">
-    <div class = "col m8">
+    <div class = "col m8" id="timetable" data-t-id = "<%= @current_timetable.id%>">
     <div class = "timetable_container">
       <div class = "timetable_name_box">
         <p class = "lead">
@@ -89,10 +89,8 @@
       var pageNum = pageNumClicked || 1;
 
       // Send the data using post
-      var posting = $.post( url, { searchWord: word, semester: semester, pageSelected: pageNum}, function( data ) {
-      });
+      var posting = $.post( url, { searchWord: word, semester: semester, pageSelected: pageNum});
 
-      // Put the results in a div
       posting.success(function( data ) {
         var collectionUl = $('ul.collection');
         var paginationUl = $('ul.pagination');
@@ -125,6 +123,8 @@
           // li 태그 안에 순서대로 삽입.
           collectionLi = timetable.insertLecTime(collectionLi, data.lectures[i].schDetails);
 
+          collectionLi = $(collectionLi).attr('data-sch-id', data.lectures[i].schedule_id);
+
           collectionLi = $(collectionLi).append(lec_title).append(lec_professor).append(lec_time).append(lec_openDepartment);
           $(collectionUl).append(collectionLi);
         }
@@ -151,17 +151,29 @@
 
      // 검색 결과 강의 클릭시
      $('body').on('click', '.collection-item', function(event){
+       // 시간표에 강의 등록하기
        event.preventDefault();
+       timetable.putLectureOnTimetable($(this));
      });
 
      // 검색 결과 강의에 마우스 커서 올렸을 때
      $('body').on('mouseenter', '.collection-item', function(event){
+       event.preventDefault();
        timetable.fillPreviewLecture($(this));
 
      });
      $('body').on('mouseleave', '.collection-item', function(event){
+       event.preventDefault();
        timetable.erasePreviewLecture($(this));
      });
+
+     // 시간표에 담긴 강의 삭제하기
+     $('body').on('click', '.lessons table tbody tr td', function(event){
+       event.preventDefault();
+       timetable.destroyTimetableItem($(this));
+     });
+
+
     },
 
     fillSearchPagination: function(pageSelected, pageTotal)
@@ -210,10 +222,23 @@
     {
       var sLi = searchLi;
       var lecTimeLen = lecTimes.length;
-      var all_time_str = "";
+      var time_list_str = "";
 
-      // 강의시간을 시작시간(start_time_str), 끝시간(end_time_str)으로 구분하여 누적 저장.
-      // 시작 및 끝시간은 v0_950, v0_1000 ... 과 같이 누적된다.
+      time_list_str = timetable.makeIntervalThirtyMin(lecTimes);
+
+      sLi = $(sLi).attr('data-cell-time', time_list_str);
+      return $(sLi);
+    },
+
+    // 시작시간 - 끝시간을, 30분 간격으로 string list 만듬
+    // 월수13:00-15:00 : {start_time : 1330, end_time : 1500, day : "월"}
+    //                  {day : "수"}
+    // return : "v0_1300, v0_1350, v0_1400, v0_1430/v2_1300...,v2_1430"
+    makeIntervalThirtyMin: function(lecTimes)
+    {
+      var time_list_str = "";
+      var lecTimeLen = lecTimes.length;
+
       for (var i = 0; i < lecTimeLen; i+=1)
       {
         var i_time = lecTimes[i].start_time*1,
@@ -221,17 +246,15 @@
 
         for (; i_time < e_time; i_time += 50)
         {
-          all_time_str = all_time_str + lecTimes[i].day + "_" + i_time + ",";
+          time_list_str = time_list_str + lecTimes[i].day + "_" + i_time + ",";
         }
-        all_time_str = all_time_str.slice(0, -1);
-        all_time_str = all_time_str + "/"
+        time_list_str = time_list_str.slice(0, -1);
+        time_list_str = time_list_str + "/";
       }
-
       // 마지막 "," 제거
-      all_time_str = all_time_str.slice(0, -1);
+      time_list_str = time_list_str.slice(0, -1);
 
-      sLi = $(sLi).attr('data-cell-time', all_time_str);
-      return $(sLi);
+      return time_list_str;
     },
 
     // 추가된 강의 시간표에서 미리보기
@@ -240,21 +263,21 @@
     {
       var l_item = $(lectureItem),
         // Split by Day, 요일에 따라 강의 시간 Split
-        day_times = l_item.data("cell-time").split("/");
+        day_list_arr = $(l_item).data("cell-time").split("/");
 
 
-        for(var i_day = 0; day_times[i_day]; i_day+=1)
+        for(var i_day = 0; day_list_arr[i_day]; i_day+=1)
         {
-          var all_time_list = day_times[i_day].split(",");
+          var time_list_arr = day_list_arr[i_day].split(",");
 
-          $("#"+all_time_list[0]).attr('rowspan', all_time_list.length).addClass("timetable__td--active");
-
-          for(var j = 1; all_time_list[j]; j+=1)
+          // $("#"+time_list_arr[0]).attr('rowspan', time_list_arr.length).addClass("timetable__td--active");
+          $("#"+time_list_arr[0]).addClass("timetable__td--active");
+          for(var j = 1; time_list_arr[j]; j+=1)
           {
             // 중복검사
             // active 클래스 추가
-            $("#"+all_time_list[j]).addClass("timetable__td--active");
-            $("#"+all_time_list[j]).css('display','none');
+            $("#"+time_list_arr[j]).addClass("timetable__td--active");
+          //  $("#"+time_list_arr[j]).css('display','none');
           }
 
         }
@@ -273,16 +296,103 @@
 
         // removeClass
         // rowspan 해제
-        $("#"+all_time_list[0]).removeAttr('rowspan').removeClass("timetable__td--active");
+        $("#"+all_time_list[0]).removeClass("timetable__td--active");
 
         for(var j = 1; all_time_list[j]; j+=1)
         {
           // 중복검사
           // active 클래스 추가
           $("#"+all_time_list[j]).removeClass("timetable__td--active");
-          $("#"+all_time_list[j]).css('display','table-cell');
+          //$("#"+all_time_list[j]).css('display','table-cell');
         }
 
+      }
+    },
+
+    // 시간표에 강의 등록 (via ajax)
+    putLectureOnTimetable: function(lectureItem)
+    {
+      var sch_id = $(lectureItem).data('sch-id'),
+        timetable_id = $("#timetable").data('t-id');
+      // url = timetables/:timetable_id/timetable_items == timetable_timetable_items_url
+      $.ajax({
+              url:'<%= timetable_items_url %>'+'.json',
+              dataType: "json", // response type
+              type:'POST',
+              beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+              data: {'timetable_item': {'timetable_id':timetable_id, 'schedule_id':sch_id}},
+              success:function(data)
+              {
+                alert('성공했수다..');
+                // timetable에 fill 해주기
+                timetable.fillLecture(data);
+              },
+              error:function(jqXHR, textStatus, errorThrown)
+              {
+                console.log(JSON.stringify(jqXHR));
+                console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                alert("실패했수다..")
+              }
+            });
+    },
+
+    fillLecture: function(data)
+    {
+      var l_data = data,
+          // return : "v0_1300, v0_1350, v0_1400, v0_1430/v2_1300...,v2_1430
+          schedule_str = timetable.makeIntervalThirtyMin(data.schDetails),
+          day_list_arr = schedule_str.split("/");
+
+      for (var i = 0; day_list_arr[i]; i+=1 )
+      {
+        var time_list_arr = day_list_arr[i].split(","),
+          time_cell = $("#"+time_list_arr[0]);
+        $(time_cell).attr('rowspan', time_list_arr.length).addClass("timetable__td--has-lec");
+        $(time_cell).html(""+data.subject+" "+data.professor+ " "+data.place);
+        $(time_cell).addClass("t"+data.timeitem_id);
+
+        // attr은 리턴값이 없다.... API좀 제대로 읽자..
+        $(time_cell).attr('data-t-item-id', data.timeitem_id);
+
+
+        for(var j = 1; time_list_arr[j]; j+=1)
+        {
+          $("#"+time_list_arr[j]).addClass("t"+data.timeitem_id);
+          $("#"+time_list_arr[j]).addClass("timetable__td--has-lec");
+          $("#"+time_list_arr[j]).css('display','none');
+        }
+      }
+    },
+
+    destroyTimetableItem: function(timetableItem)
+    {
+      var time_item = $(timetableItem),
+          t_item_id = $(time_item).data("t-item-id");
+          $.ajax({
+    				url: "/timetable_items/" + t_item_id + ".json",
+    				dataType: "json",
+            data: {'id':t_item_id},
+    				type: "DELETE",
+    				success: function(result) {
+              timetable.eraseLecture(result)
+    					alert("삭제 성공")
+    				},
+    				error: function() {
+    					alert('삭제에 실패했습니다. 다시 시도해 주세요.');
+    				}
+    			});
+    },
+
+    eraseLecture: function(time_item_id)
+    {
+      var time_item_tds = $(".t"+time_item_id),
+          time_items_len = $(time_item_tds).length;
+
+      for (var i = 0; i < time_items_len; i+=1)
+      {
+        $time_item_td = $($(time_item_tds)[i]);
+        $time_item_td.removeClass().html('').css('display','table-cell');
+        $time_item_td.prop('rowspan', null).prop('data-t-item-id', null);
       }
     }
 
