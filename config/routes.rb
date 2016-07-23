@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
  post 'search' => 'lectures#search'
 
-
+ get 'load' => 'schedules#load'
 
 
 

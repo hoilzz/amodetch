@@ -6,7 +6,6 @@ class Timetable < ActiveRecord::Base
 
 	validates :name, presence: true, length: {maximum: 20}
 
-
 	scope :countMore1, -> {having('count(user_id) > 1').order('user_id DESC')}
 	scope :countMore2, -> {having('count(user_id) > 2').order('user_id DESC')}
 
@@ -24,5 +23,10 @@ class Timetable < ActiveRecord::Base
 			dup_e.save!
 	  	end
 	end
+
+
+
+
+
 
 end

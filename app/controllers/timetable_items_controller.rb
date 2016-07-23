@@ -18,6 +18,9 @@ class TimetableItemsController < ApplicationController
 
         @dataTojson[:timeitem_id] = @t_item.reload.id
 
+        # @dataTojson = { Lecture : {subject, professor, isu},
+        #                  Schedule : {id, place}}
+        #                  ScheduleDetails : {start_time, end_time, day}...}
         format.json {render json: @dataTojson}
       else
         #format.html{redirect_to @current_timetable}
