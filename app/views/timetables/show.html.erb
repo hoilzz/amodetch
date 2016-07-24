@@ -71,9 +71,8 @@
     var timetable = {
 
 
-    findLectures: function(formElement, pageNumClicked)
-    {
-      // Get some values from elements on the page:
+    findLectures: function(formElement, pageNumClicked){
+       // Get some values from elements on the page:
       var $form = $( formElement ),
         word = $form.find( "input[name='searchWord']" ).val(),
         url = $form.attr( "action" ),
@@ -121,7 +120,7 @@
           $(collectionUl).append(collectionLi);
         }
 
-        timetable.fillSearchPagination(data.pageSelected, data.pageTotal);
+        timetable.fillSearchPagination(data.pageSelected, data.finalPageNum);
 
       });
     },
@@ -156,7 +155,7 @@
      });
      $('body').on('mouseleave', '.collection-item', function(event){
        event.preventDefault();
-       timetable.erasePreviewLecture($(this));
+       timetable.erasePreviewLecture();
      });
 
      // 시간표에 담긴 강의 삭제하기
@@ -280,50 +279,54 @@
     {
       var l_item = $(lectureItem),
         // Split by Day, 요일에 따라 강의 시간 Split
-        day_list_arr = $(l_item).data("cell-time").split("/");
-
+        day_list_arr = $(l_item).data("cell-time").split("/"),
+        $duplicate_cell;
 
         for(var i_day = 0; day_list_arr[i_day]; i_day+=1)
         {
           var time_list_arr = day_list_arr[i_day].split(",");
 
-          // $("#"+time_list_arr[0]).attr('rowspan', time_list_arr.length).addClass("timetable__td--active");
-          $("#"+time_list_arr[0]).addClass("timetable__td--active");
-          for(var j = 1; time_list_arr[j]; j+=1)
+          for(var j = 0; time_list_arr[j]; j+=1)
           {
+            timetable.isDuplicateSchedule($("#"+time_list_arr[j]));
             // 중복검사
-            // active 클래스 추가
+            // 중복되는 것 바로 색칠하기 함수
+
+            //$duplicate_cell = $("#"+time_list_arr[j]);
+            // fillWarning
+            // 해당 class명을 가진 엘리먼트 outline red
+            // or 뭔가 css 속성 이용해서 rowspan 있는 얘만 클래스 추가..?
             $("#"+time_list_arr[j]).addClass("timetable__td--active");
-          //  $("#"+time_list_arr[j]).css('display','none');
           }
-
         }
-
         // 첫번째 셀에 rowspan, 강의명, 교수명 추가
     },
-    erasePreviewLecture: function(lectureItem)
+
+    fillDuplicate: function(idVal)
     {
-      var l_item = $(lectureItem),
-        // Split by Day, 요일에 따라 강의 시간 Split
-        day_times = l_item.data("cell-time").split("/");
+      var $cells = $('.'+idVal);
 
-      for(var i_day = 0; day_times[i_day]; i_day+=1)
+      for ( var i = 0; $cells[i]; i+=1)
       {
-        var all_time_list = day_times[i_day].split(",");
-
-        // removeClass
-        // rowspan 해제
-        $("#"+all_time_list[0]).removeClass("timetable__td--active");
-
-        for(var j = 1; all_time_list[j]; j+=1)
-        {
-          // 중복검사
-          // active 클래스 추가
-          $("#"+all_time_list[j]).removeClass("timetable__td--active");
-          //$("#"+all_time_list[j]).css('display','table-cell');
-        }
-
+        $($cells[i]).addClass("timetable__td--duplicate");
       }
+    },
+
+    isDuplicateSchedule: function(scheduleCell)
+    {
+      var $sch_cell = $(scheduleCell),
+          rex = /t\d+/,
+          className = $($sch_cell).attr('class');
+      if (rex.test(className))
+      {
+        var duplicateClass = rex.exec(className);
+        timetable.fillDuplicate(duplicateClass);
+      }
+    },
+
+    erasePreviewLecture: function()
+    {
+      $("#timetable td").removeClass("timetable__td--active").removeClass("timetable__td--duplicate");
     },
 
     // 시간표에 강의 등록 (via ajax)
@@ -332,25 +335,36 @@
       var sch_id = $(lectureItem).data('sch-id'),
         timetable_id = $("#timetable").data('t-id');
       // url = timetables/:timetable_id/timetable_items == timetable_timetable_items_url
-      $.ajax({
-              url:'<%= timetable_items_url %>'+'.json',
-              dataType: "json", // response type
-              type:'POST',
-              beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-              data: {'timetable_item': {'timetable_id':timetable_id, 'schedule_id':sch_id}},
-              success:function(data)
-              {
-                alert('성공했수다..');
-                // timetable에 fill 해주기
-                timetable.fillLecture(data);
-              },
-              error:function(jqXHR, textStatus, errorThrown)
-              {
-                console.log(JSON.stringify(jqXHR));
-                console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
-                alert("실패했수다..")
-              }
-            });
+        var $duplicateCellLen = $('#timetable').find(".timetable__td--duplicate").length;
+
+      if ($duplicateCellLen > 0)
+      {
+        alert("중복된 강의 있다");
+      }
+
+      else
+      {
+        $.ajax({
+                url:'<%= timetable_items_url %>'+'.json',
+                dataType: "json", // response type
+                type:'POST',
+                beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+                data: {'timetable_item': {'timetable_id':timetable_id, 'schedule_id':sch_id}},
+                success:function(data)
+                {
+                  alert('성공했수다..');
+                  // timetable에 fill 해주기
+                  timetable.fillLecture(data);
+                },
+                error:function(jqXHR, textStatus, errorThrown)
+                {
+                  console.log(JSON.stringify(jqXHR));
+                  console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                  alert("실패했수다..")
+                }
+              });
+      }
+
     },
 
     // data = { Lecture : {subject, professor, isu},
@@ -377,8 +391,8 @@
 
         for(var j = 1; time_list_arr[j]; j+=1)
         {
-          $("#"+time_list_arr[j]).addClass("t"+data.timeitem_id);
           $("#"+time_list_arr[j]).addClass("timetable__td--has-lec");
+          $("#"+time_list_arr[j]).addClass("t"+data.timeitem_id);
           $("#"+time_list_arr[j]).css('display','none');
         }
       }
@@ -387,7 +401,8 @@
     destroyTimetableItem: function(timetableItem)
     {
       var time_item = $(timetableItem),
-          t_item_id = $(time_item).data("t-item-id");
+          t_item_id = $(time_item).attr('data-t-item-id');
+
           $.ajax({
     				url: "/timetable_items/" + t_item_id + ".json",
     				dataType: "json",
@@ -412,7 +427,7 @@
       {
         $time_item_td = $($(time_item_tds)[i]);
         $time_item_td.removeClass().html('').css('display','table-cell');
-        $time_item_td.prop('rowspan', null).prop('data-t-item-id', null);
+        $time_item_td.prop('rowspan', null).attr('data-t-item-id', null);
       }
     }
 

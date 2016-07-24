@@ -53,42 +53,7 @@ class LecturesController < ApplicationController
 	end
 
 	def search
-		@lecArr = []
-		@dataTojson = Hash.new	# Hash로 선언 후, 전송 전에 json으로 변경
-
-		@lectures = Lecture.searchOnTimetable(params[:searchWord], params[:semester])
-
-		@dataTojson[:totalSearched] =  @lectures.joins(:schedules).where("schedules.semester" => params[:semester]).select("schedules.*").size
-							 #	= Lecture.extractSchedules(@lectures, params[:semester])
-
-		offsetByPage = (params[:pageSelected].to_i - 1) * 8
-
-		@schedulesPrinted = @lectures.joins(:schedules).where("schedules.semester" => params[:semester]).select("schedules.*").offset(offsetByPage).limit(8)
-
-		@schedulesPrinted.each do |sch|
-			lectureObj = Hash.new
-
-			lectureObj = Lecture.find(sch.lecture_id).as_json(only: [:subject, :professor, :open_department])
-
-			schduleObj = sch.as_json(only: [:lecture_id, :lecture_time])
-
-			lectureObj[:schedule_id] = sch.id
-			lectureObj = lectureObj.merge(schduleObj)
-
-			schDetailObjs = ScheduleDetail.where(schedule_id: sch.id).select("start_time, end_time, day")
-
-			lectureObj[:schDetails] = schDetailObjs.as_json(only: [:start_time, :end_time, :day])
-
-
-			@lecArr.push(lectureObj)
-		end
-
-
-		@dataTojson[:pageSelected] = params[:pageSelected]
-		@dataTojson[:pageTotal] = (@dataTojson[:totalSearched] / 8) + ((@dataTojson[:totalSearched].to_i % 8 + 7) / 8)
-
-		#@lecArr.push(@dataTojson)
-		@dataTojson[:lectures] = @lecArr
+		 @dataTojson = Lecture.getLecturesBeSearched(params[:searchWord], params[:semester], params[:pageSelected])
 		 respond_to do |format|
 		 	format.json {render json:	@dataTojson}
 		 end

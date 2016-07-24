@@ -574,3 +574,9 @@ div.detailsearch{
   background-color : $bg_1;
   color : $ft_1;
 }
+
+.timetable__td--duplicate
+{
+  outline : red solid 1px;
+  color : red;
+}
