@@ -70,6 +70,8 @@
 (function($,document,window,undefined){
     var timetable = {
 
+        colorIdx: 0,
+
 
     findLectures: function(formElement, pageNumClicked){
        // Get some values from elements on the page:
@@ -195,7 +197,8 @@
     fillSearchPagination: function(pageSelected, pageTotal)
     {
       var pagination = $('.pagination');
-      if(pageSelected <=2)
+      var _pageSelected = pageSelected*1;
+      if(_pageSelected <=2)
       {
         for(var pageNum = 1; pageNum <= 3; pageNum++)
         {
@@ -215,7 +218,7 @@
       }
       else
       {
-        for(var pageNum = pageSelected-1; pageNum <= pageSelected+1; pageNum++)
+        for(var pageNum = pageSelected-1; pageNum <= _pageSelected+1; pageNum+=1)
         {
           if (pageNum > pageTotal ) {break;}
           var paginationLi = "<li class=waves-effect></li>";
@@ -282,24 +285,44 @@
         day_list_arr = $(l_item).data("cell-time").split("/"),
         $duplicate_cell;
 
-        for(var i_day = 0; day_list_arr[i_day]; i_day+=1)
+        // 강의 시간이 있는 강의
+        if (day_list_arr[0].length > 0)
         {
-          var time_list_arr = day_list_arr[i_day].split(",");
-
-          for(var j = 0; time_list_arr[j]; j+=1)
+          for(var i_day = 0; day_list_arr[i_day]; i_day+=1)
           {
-            timetable.isDuplicateSchedule($("#"+time_list_arr[j]));
-            // 중복검사
-            // 중복되는 것 바로 색칠하기 함수
+            var time_list_arr = day_list_arr[i_day].split(",");
 
-            //$duplicate_cell = $("#"+time_list_arr[j]);
-            // fillWarning
-            // 해당 class명을 가진 엘리먼트 outline red
-            // or 뭔가 css 속성 이용해서 rowspan 있는 얘만 클래스 추가..?
-            $("#"+time_list_arr[j]).addClass("timetable__td--active");
+            for(var j = 0; time_list_arr[j]; j+=1)
+            {
+              // 중복 검사 후, 중복이면 td에 빨간 줄 그리는 함수
+              timetable.isDuplicateSchedule($("#"+time_list_arr[j]));
+
+              $("#"+time_list_arr[j]).addClass("timetable__td--active");
+            }
           }
         }
+        else
+        {
+            var cyber_col = ["v5_800", "v5_850", "v5_900","v5_950", "v5_1000", "v5_1050", "v5_1100", "v5_1150", "v5_1200",
+                             "v5_1250", "v5_1300", "v5_1350", "v5_1400", "v5_1450", "v5_1500", "v5_1550", "v5_1600", "v5_1650",
+                              "v5_1700", "v5_1750", "v5_1800", "v5_1850", "v5_1900", "v5_1950", "v5_2000", "v5_2050", "v5_2100"];
+            for (var i = 0; cyber_col[i]; i+=1)
+            {
+              var $tempCell = $("#"+cyber_col[i]);
+              if ($tempCell.hasClass("timetable__td--has-lec"))
+              {
+                continue;
+              }
+              else
+              {
+                $tempCell.addClass("timetable__td--active");
+                $("#"+cyber_col[i+1]).addClass("timetable__td--active");
+                return;
+              }
+            }
+        }
         // 첫번째 셀에 rowspan, 강의명, 교수명 추가
+
     },
 
     fillDuplicate: function(idVal)
@@ -375,28 +398,77 @@
       var l_data = data,
           // return : "v0_1300, v0_1350, v0_1400, v0_1430/v2_1300...,v2_1430
           schedule_str = timetable.makeIntervalThirtyMin(data.schDetails),
-          day_list_arr = schedule_str.split("/");
+          day_list_arr = schedule_str.split("/"),
+          color_idx = "td--c" + (timetable.colorIdx++) % 10;
 
-      for (var i = 0; day_list_arr[i]; i+=1 )
+      // 사강은 넘어갑니다..
+      // fill 강의시간이 있는 강의
+      if (day_list_arr[0].length > 0)
       {
-        var time_list_arr = day_list_arr[i].split(","),
-          time_cell = $("#"+time_list_arr[0]);
-        $(time_cell).attr('rowspan', time_list_arr.length).addClass("timetable__td--has-lec");
-        $(time_cell).html(""+data.subject+" "+data.professor+ " "+data.place);
-        $(time_cell).addClass("t"+data.timeitem_id);
-
-        // attr은 리턴값이 없다.... API좀 제대로 읽자..
-        $(time_cell).attr('data-t-item-id', data.timeitem_id);
-
-
-        for(var j = 1; time_list_arr[j]; j+=1)
+        for (var i = 0; day_list_arr[i]; i+=1 )
         {
-          $("#"+time_list_arr[j]).addClass("timetable__td--has-lec");
-          $("#"+time_list_arr[j]).addClass("t"+data.timeitem_id);
-          $("#"+time_list_arr[j]).css('display','none');
+          var time_list_arr = day_list_arr[i].split(","),
+            time_cell = $("#"+time_list_arr[0]);
+          $(time_cell).attr('rowspan', time_list_arr.length).addClass("timetable__td--has-lec");
+          $(time_cell).html(""+data.subject+" "+data.professor+ " "+data.place);
+          $(time_cell).addClass("t"+data.timeitem_id);
+
+          // attr은 리턴값이 없다.... API좀 제대로 읽자..
+          $(time_cell).attr('data-t-item-id', data.timeitem_id);
+
+          // timetable의 인덱스를 기준으로 background color
+          $(time_cell).addClass(color_idx);
+
+
+          for(var j = 1; time_list_arr[j]; j+=1)
+          {
+            $("#"+time_list_arr[j]).addClass("timetable__td--has-lec");
+            $("#"+time_list_arr[j]).addClass("t"+data.timeitem_id);
+            $("#"+time_list_arr[j]).css('display','none');
+          }
         }
       }
+      else
+      {
+        var cyber_col = ["v5_800", "v5_850", "v5_900", "v5_950", "v5_1000", "v5_1050", "v5_1100", "v5_1150", "v5_1200",
+                         "v5_1250", "v5_1300", "v5_1350", "v5_1400", "v5_1450", "v5_1500", "v5_1550", "v5_1600", "v5_1650",
+                          "v5_1700", "v5_1750", "v5_1800", "v5_1850", "v5_1900", "v5_1950", "v5_2000", "v5_2050", "v5_2100"];
+
+        // 반복문을 통해 사강 column에 빈 cell찾기.
+        // 찾으면 강의 정보 insert
+        for (var i = 0; cyber_col[i]; i+=1)
+        {
+          var $tempCell = $("#"+cyber_col[i]);
+          if ($tempCell.hasClass("timetable__td--has-lec"))
+          {
+            continue;
+          }
+          else
+          {
+
+            $($tempCell).attr('rowspan', 2).addClass("timetable__td--has-lec");
+            $($tempCell).html(""+data.subject+" "+data.professor);
+            $($tempCell).addClass("t"+data.timeitem_id);
+
+            $($tempCell).attr('data-t-item-id', data.timeitem_id);
+
+            $($tempCell).addClass(color_idx);
+
+            $("#"+cyber_col[i+1]).addClass("timetable__td--has-lec");
+            $("#"+cyber_col[i+1]).addClass("t"+data.timeitem_id);
+            $("#"+cyber_col[i+1]).css('display','none');
+
+
+            return;
+          }
+        }
+      }
+
+
+
     },
+
+
 
     destroyTimetableItem: function(timetableItem)
     {

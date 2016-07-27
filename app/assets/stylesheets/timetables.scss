@@ -436,53 +436,7 @@ $hover_gray   : #f9f9f9;
                 background-color : #fff3f2 !important;
             }
         }
-        .c0{
-            background-color : $bg_1 !important;
-            color : $ft_1;
-        }
-        .c1{
-            background-color : $bg_2 !important;
-            color : $ft_2;
-        }
-        .c2{
-            background-color : $bg_3 !important;
-            color : $ft_3;
-        }
-        .c3{
-            background-color : $bg_4 !important;
-            color : $ft_4;
-        }
-        .c4{
-            background-color : $bg_5 !important;
-            color : $ft_5;
-        }
-        .c5{
-            background-color : $bg_6 !important;
-            color : $ft_6;
-        }
-        .c6{
-            background-color : $bg_7 !important;
-            color : $ft_7;
 
-        }
-        .c7
-        {
-            background-color : $bg_8 !important;
-            color : $ft_8;
-
-        }
-        .c8
-        {
-            background-color : $bg_9 !important;
-            color : $ft_9;
-
-        }
-        .c9
-        {
-            background-color : $bg_10 !important;
-            color : $ft_10;
-
-        }
 
 
         .lec{}
@@ -580,4 +534,52 @@ div.detailsearch{
 {
   outline : red solid 1px;
   color : red;
+}
+
+.td--c0{
+    background-color : $bg_1 !important;
+    color : $ft_1;
+}
+.td--c1{
+    background-color : $bg_2 !important;
+    color : $ft_2;
+}
+.td--c2{
+    background-color : $bg_3 !important;
+    color : $ft_3;
+}
+.td--c3{
+    background-color : $bg_4 !important;
+    color : $ft_4;
+}
+.td--c4{
+    background-color : $bg_5 !important;
+    color : $ft_5;
+}
+.td--c5{
+    background-color : $bg_6 !important;
+    color : $ft_6;
+}
+.td--c6{
+    background-color : $bg_7 !important;
+    color : $ft_7;
+
+}
+.td--c7
+{
+    background-color : $bg_8 !important;
+    color : $ft_8;
+
+}
+.td--c8
+{
+    background-color : $bg_9 !important;
+    color : $ft_9;
+
+}
+.td--c9
+{
+    background-color : $bg_10 !important;
+    color : $ft_10;
+
 }
