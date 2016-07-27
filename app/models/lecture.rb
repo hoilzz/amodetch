@@ -2,15 +2,14 @@ class Lecture < ActiveRecord::Base
 
   include ActionView::Helpers::DateHelper
 
-  validates :subject, presence: true, length: {maximum: 40}, uniqueness: {scope: [:professor] }
+  validates :subject, presence: true, length: {maximum: 40}, uniqueness: {scope: [:professor, :major] }
   validates :professor, length: {maximum: 40}
   validates :major, presence:true
 
-  #has_many :plural_attrs, dependent: :destroy
+
   has_many :comments
   has_many :valuations, dependent: :destroy
   has_many :comment_valuations, dependent: :destroy
-  #has_many :enrollment
   has_many :schedules, -> {where recent: true}
 
   belongs_to :timetable
@@ -44,7 +43,6 @@ class Lecture < ActiveRecord::Base
         lecture.update_attributes(isu: row["isu"], credit: row["credit"],
                                          open_department: row["open_department"], major: row["major"])
       end
-
       schedule = lecture.schedules.new( lecture_time: row["lecturetime"], place: row["place"],
                                         semester: row["semester"], recent: true)
       # 이번학기 데이터를 선 구축후, 조건문 해석

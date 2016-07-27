@@ -6,18 +6,20 @@ class ScheduleDetail < ActiveRecord::Base
     cellTime = Hash.new
 
     # split and make method
-    timeArr = lectureTime.split(",")
-    timeArr.each do |t|
-      if t.length > 12
-        timeArr.push(t[1]+t[2..-1])
-        t[1] = ""
+    if !lectureTime.nil?
+      timeArr = lectureTime.split(",")
+      timeArr.each do |t|
+        if t.length > 12
+          timeArr.push(t[1]+t[2..-1])
+          t[1] = ""
+        end
       end
-    end
 
-    timeArr.each do |t|
-      cellTime = makeCellTime(t[0], t[1..-1])
-      ScheduleDetail.create(schedule_id: scheduleId, start_time: cellTime[:startTimeRowNum],
-                  end_time: cellTime[:endTimeRowNum], day: cellTime[:dayColumnNum])
+      timeArr.each do |t|
+        cellTime = makeCellTime(t[0], t[1..-1])
+        ScheduleDetail.create(schedule_id: scheduleId, start_time: cellTime[:startTimeRowNum],
+                    end_time: cellTime[:endTimeRowNum], day: cellTime[:dayColumnNum])
+      end
     end
   end
 

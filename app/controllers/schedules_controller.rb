@@ -2,9 +2,14 @@ class SchedulesController < ApplicationController
 
   def load
     @schedules = Schedule.getSchedules(params[:timetable_id])
-
-    respond_to do |format|
-      format.json {render json: @schedules}
+    if !@schedules.nil?
+      respond_to do |format|
+        format.json {render json: @schedules}
+      end
+    else
+      respond_to do |format|
+        format.json {render json: "불러올 강의가 없수다."}
+      end
     end
   end
 

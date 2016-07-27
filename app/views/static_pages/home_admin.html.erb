@@ -1,53 +1,7 @@
 
-	<table>
-		<thead>
-			<tr>
-				<td> 학기 </td>
-				<td> 강의명 </td>
-				<td> 교수명 </td>
-				<td> 개설학과 </td>
-				<td> 학점 </td>
-				<td> 장소 </td>
-				<td> 강의시간 </td>
-				<td> open_department </td>
-				<td> show </td>
-				<td> edit  </td>
-				<td> destroy </td>
-			</tr>
-		</thead>
-
-		<tbody>
-			<% @lectures.each do |lec| %>
-				<tr>
-					<td> <%= lec.semester %> </td>
-					<td> <%= lec.subject%>  </td>
-					<td> <%=lec.professor%> </td>
-					<td> <%= lec.major%> </td>
-					<td> <%= lec.credit %> </td>
-					<td> <%= lec.place %> </td>
-
-					<td>
-						<% unless lec.lecturetime.nil? %>
-							
-							<% lec.lecturetime.each do |lec_time|%>
-						 		<%= lec_time %>       
-							<% end %>
-						<% end %>
-					</td>
-					<td> <%= lec.open_department %> </td>
-
-					<td> <%= link_to "Show",   lecture_path(lec) %> </td>
-					<td> <%= link_to "Edit", edit_lecture_path(lec)%> </td>
-					<td> <%= link_to "Destroy", lecture_path(lec), method: :delete, data: {confirm: "Are you sure you want to delete this? (#{lec.subject})"}%>  </td>
-				</tr> 
-			<% end %>
-		</tbody>
-	</table>
-
-	<%= will_paginate @lectures %>
 
 	<%= link_to "New_Lecture", new_lecture_path %>
-	
+
 	<div style = "width:50%">
 		<%= form_tag import_lectures_path, multipart: true do %>
 			<%= file_field_tag :file %>
