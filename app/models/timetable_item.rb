@@ -19,7 +19,7 @@ class TimetableItem < ActiveRecord::Base
 
     schedule = self.schedule
 
-    @dataTojson = schedule.lecture.as_json(only: [:subject, :professor, :isu])
+    @dataTojson = schedule.lecture.as_json(only: [:subject, :professor, :isu, :credit])
 
     @dataTojson[:schedule_id] = schedule.id
     @dataTojson[:place] = schedule.place

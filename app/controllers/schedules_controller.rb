@@ -2,6 +2,7 @@ class SchedulesController < ApplicationController
 
   def load
     @schedules = Schedule.getSchedules(params[:timetable_id])
+
     if !@schedules.nil?
       respond_to do |format|
         format.json {render json: @schedules}
