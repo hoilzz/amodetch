@@ -42,10 +42,17 @@ gem 'therubyracer'
 
 gem 'devise'
 gem 'activeadmin', github: 'gregbell/active_admin'
-# gem 'activeadmin', '~> 1.0.0.pre2'
-# gem 'activeadmin', github: 'activeadmin'
 
 # gem 'rollbar', '~> 2.8.3'
+
+group :development do
+  gem 'capistrano'
+  gem 'capistrano3-puma'
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-rvm'
+end
+
 
 gem 'puma'
 
