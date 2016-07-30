@@ -45,14 +45,6 @@ gem 'activeadmin', github: 'gregbell/active_admin'
 
 # gem 'rollbar', '~> 2.8.3'
 
-group :development do
-  gem 'capistrano'
-  gem 'capistrano3-puma'
-  gem 'capistrano-rails', require: false
-  gem 'capistrano-bundler', require: false
-  gem 'capistrano-rvm'
-end
-
 
 gem 'puma'
 
@@ -64,5 +56,10 @@ group :development, :test do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+  gem 'capistrano'
+  gem 'capistrano3-puma'
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-rvm'
 end
 # mysqldump -u root -p amodzzi_development > amodzzi_development_201605011
