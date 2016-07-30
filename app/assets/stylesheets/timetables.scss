@@ -596,6 +596,7 @@ div.detailsearch{
   position : absolute;
   display : none;
 }
+
 .timetable__span--info
 {
   background : url(asset-path('ic_info_outline_black_24dp_1x.png'));
@@ -608,6 +609,24 @@ div.detailsearch{
   display : none;
 }
 
+.search-blk
+{
+  background : url(asset-path('ic_info_outline_black_24dp_1x.png'));
+  width : 24px;
+  height : 24px;
+  cursor : pointer;
+  top: 5px;
+  right: 20px;
+  cursor:pointer;
+  position:absolute;
+  display : none;
+}
+
+.collection .collection-item
+{
+  position :relative;
+}
+
 
 
 .cart
@@ -618,6 +637,15 @@ div.detailsearch{
 .cart__td
 {
   text-align : center !important;
+}
+
+.cart__td--del
+{
+  background : url(asset-path('ic_clear_black_24dp_1x.png'));
+  width : 24px;
+  height : 24px;
+  cursor : pointer;
+  display: inline-block;
 }
 
 // materialize td, th padding 오버라이딩

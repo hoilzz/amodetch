@@ -24,9 +24,10 @@ class Timetable < ActiveRecord::Base
 	  	end
 	end
 
-
-
-
+	def getStrSemester
+		str_semester = semester.to_s
+		str_semester = str_semester[0..3]+"-"+str_semester[4]+"학기"
+	end
 
 
 end

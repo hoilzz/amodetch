@@ -17,7 +17,7 @@
       </div>
 
       <div class = "timetable_semester">
-        <p class = "lead"> <%= @current_timetable.semester%> / </p>
+        <p class = "lead"> <%= @current_timetable.getStrSemester%> / </p>
       </div>
 
       <div class = "total_credits">
@@ -110,13 +110,13 @@
         // data-hover : 강의시간을 시간표 cell id로 변환 한것을 저장
         for (var i = 0; i < dataLecture_len; i++)
         {
-          //var dataSchDetail_len = data.lectures[i].schDetails.length;
-
           var lec_title          = "<div class=title></div>",
               lec_professor      = "<span class=professor></span>",
               lec_time           = "<span class=lecturetime></span>",
               lec_openDepartment = "<span style=float:right></span>",
-              collectionLi = "<li class=collection-item></li>";
+              collectionLi = "<li class=collection-item></li>",
+              lec_info_btn = timetable.makeLinkToLecture(data.lectures[i].lecture_id, "search-blk")
+
 
           // 강의명, 교수명, 강의시간, 개설학과 순서대로 html 값 삽입
           lec_title = $(lec_title).html(data.lectures[i].subject);
@@ -124,12 +124,14 @@
           lec_time = $(lec_time).html(data.lectures[i].lecture_time);
           lec_openDepartment = $(lec_openDepartment).html(data.lectures[i].open_department);
 
+
+
           // li 태그 안에 순서대로 삽입.
           collectionLi = timetable.insertLecTime(collectionLi, data.lectures[i].schDetails);
 
           collectionLi = $(collectionLi).attr('data-sch-id', data.lectures[i].schedule_id);
 
-          collectionLi = $(collectionLi).append(lec_title).append(lec_professor).append(lec_time).append(lec_openDepartment);
+          collectionLi = $(collectionLi).append(lec_title, lec_professor, lec_time, lec_openDepartment, lec_info_btn);
           $(collectionUl).append(collectionLi);
         }
 
@@ -163,18 +165,14 @@
      // 검색 결과 강의에 마우스 커서 올렸을 때
      $('body').on('mouseenter', '.collection-item', function(event){
        event.preventDefault();
+       $(this).find(".search-blk").css('display','inline');
        timetable.fillPreviewLecture($(this));
 
      });
      $('body').on('mouseleave', '.collection-item', function(event){
        event.preventDefault();
+       $(this).find(".search-blk").removeAttr('style');
        timetable.erasePreviewLecture();
-     });
-
-     // 시간표에 담긴 강의 삭제하기
-     $('body').on('click', '.lessons table tbody tr td', function(event){
-       event.preventDefault();
-       timetable.destroyTimetableItem($(this));
      });
 
      $('body').on('mouseenter', '.timetable__td--has-lec', function(event){
@@ -190,9 +188,14 @@
      });
 
      // timetable의 td의 X 클릭시,
-     $('body').on('click', '.timetable__span--del', function(event){
+     $('body').on('click', '.timetable__span--del, .cart__td--del', function(event){
        event.preventDefault();
-       // ajax로 삭제 요청
+       var t_item_id = $(this).data("t-item-id");
+       timetable.destroyTimetableItem(t_item_id);
+     });
+
+     $('body').on('click', '.search-blk', function(event){
+       event.stopPropagation();
      });
 
      timetable.getSchedulesOnTimetable();
@@ -429,8 +432,7 @@
       var l_data = data,
           // return : "v0_1300, v0_1350, v0_1400, v0_1430/v2_1300...,v2_1430
           schedule_str = timetable.makeIntervalThirtyMin(data.schDetails),
-          day_list_arr = schedule_str.split("/"),
-          color_idx = "td--c" + (timetable.colorIdx++) % 10;
+          day_list_arr = schedule_str.split("/");
 
       // 학점 누적하는 메서드(학점)
       timetable.updateCredits(data.credit);
@@ -439,86 +441,118 @@
       // fill 강의시간이 있는 강의
       if (day_list_arr[0].length > 0)
       {
-        for (var i = 0; day_list_arr[i]; i+=1 )
-        {
-          var time_list_arr = day_list_arr[i].split(","),
-            time_cell = $("#"+time_list_arr[0]),
-            subject_blk = "<span class=subject></span>",
-            professor_blk = "<span class=professor></span>",
-            place_blk = "<span class=place></span>",
-            delete_btn = "<span class=timetable__span--del></span>";
-            info_link_btn = "<span class=timetable__span--info></span>";
-
-          subject_blk = $(subject_blk).addClass("timetable__span").html(data.subject);
-          professor_blk = $(professor_blk).addClass("timetable__span").html(data.professor);
-          place_blk = $(place_blk).addClass("timetable__span").html(data.place);
-
-          //TODO : info_link_btn에 a 태그 (/강의id) 생성//
-
-          time_cell = $(time_cell).append(subject_blk).append(professor_blk).append(place_blk).append(delete_btn).append(info_link_btn);
-
-
-
-          $(time_cell).attr('rowspan', time_list_arr.length).addClass("timetable__td--has-lec");
-
-          $(time_cell).addClass("t"+data.timeitem_id);
-
-          // attr은 리턴값이 없다.... API좀 제대로 읽자..
-          $(time_cell).attr('data-t-item-id', data.timeitem_id);
-
-          // timetable의 인덱스를 기준으로 background color
-          $(time_cell).addClass(color_idx);
-
-
-          for(var j = 1; time_list_arr[j]; j+=1)
-          {
-            $("#"+time_list_arr[j]).addClass("timetable__td--has-lec");
-            $("#"+time_list_arr[j]).addClass("t"+data.timeitem_id);
-            $("#"+time_list_arr[j]).css('display','none');
-          }
-        }
+        // 강의 시간을 가진 강의 cell 만들기
+        timetable.makeCellOwnedSchedule(data, day_list_arr);
       }
       else
       {
-        var cyber_col = ["v5_800", "v5_850", "v5_900", "v5_950", "v5_1000", "v5_1050", "v5_1100", "v5_1150", "v5_1200",
-                         "v5_1250", "v5_1300", "v5_1350", "v5_1400", "v5_1450", "v5_1500", "v5_1550", "v5_1600", "v5_1650",
-                          "v5_1700", "v5_1750", "v5_1800", "v5_1850", "v5_1900", "v5_1950", "v5_2000", "v5_2050", "v5_2100"];
+        // 강의 시간이 없는 강의 cell 만들기
+        timetable.makeCellNoSchedule(data, day_list_arr);
+      }
+    },
 
-        // 반복문을 통해 사강 column에 빈 cell찾기.
-        // 찾으면 강의 정보 insert
-        for (var i = 0; cyber_col[i]; i+=1)
+    makeCellOwnedSchedule: function(data, day_list_arr)
+    {
+      var color_idx = "td--c" + (timetable.colorIdx++) % 10;
+
+      for (var i = 0; day_list_arr[i]; i+=1 )
+      {
+        var time_list_arr = day_list_arr[i].split(","),
+          time_cell = $("#"+time_list_arr[0]),
+
+          //
+          subject_blk = "<span class=subject></span>",
+          professor_blk = "<span class=professor></span>",
+          place_blk = "<span class=place></span>",
+          delete_btn = "<span class=timetable__span--del></span>",
+          info_link_btn = timetable.makeLinkToLecture(data.lecture_id, "timetable__span--info");
+
+
+        subject_blk = $(subject_blk).addClass("timetable__span").html(data.subject);
+        professor_blk = $(professor_blk).addClass("timetable__span").html(data.professor);
+        place_blk = $(place_blk).addClass("timetable__span").html(data.place);
+        delete_btn = $(delete_btn).attr('data-t-item-id', data.timeitem_id);
+
+
+        //TODO : info_link_btn에 a 태그 (/강의id) 생성//
+
+        time_cell = $(time_cell).append(subject_blk, professor_blk, place_blk, delete_btn, info_link_btn);
+
+        $(time_cell).attr('rowspan', time_list_arr.length).addClass("timetable__td--has-lec");
+
+        $(time_cell).addClass("t"+data.timeitem_id);
+
+        // timetable의 인덱스를 기준으로 background color
+        $(time_cell).addClass(color_idx);
+
+        for(var j = 1; time_list_arr[j]; j+=1)
         {
-          var $tempCell = $("#"+cyber_col[i]);
-          if ($tempCell.hasClass("timetable__td--has-lec"))
-          {
-            continue;
-          }
-          else
-          {
-
-            $($tempCell).attr('rowspan', 2).addClass("timetable__td--has-lec");
-            $($tempCell).html(""+data.subject+" "+data.professor);
-            $($tempCell).addClass("t"+data.timeitem_id);
-
-            $($tempCell).attr('data-t-item-id', data.timeitem_id);
-
-            $($tempCell).addClass(color_idx);
-
-
-
-            $("#"+cyber_col[i+1]).addClass("timetable__td--has-lec");
-            $("#"+cyber_col[i+1]).addClass("t"+data.timeitem_id);
-            $("#"+cyber_col[i+1]).css('display','none');
-
-
-            return;
-          }
+          $("#"+time_list_arr[j]).addClass("timetable__td--has-lec");
+          $("#"+time_list_arr[j]).addClass("t"+data.timeitem_id);
+          $("#"+time_list_arr[j]).css('display','none');
         }
       }
-
-
-
     },
+
+    makeCellNoSchedule: function(data, day_list_arr)
+    {
+      var cyber_col = ["v5_800", "v5_850", "v5_900", "v5_950", "v5_1000", "v5_1050", "v5_1100", "v5_1150", "v5_1200",
+                       "v5_1250", "v5_1300", "v5_1350", "v5_1400", "v5_1450", "v5_1500", "v5_1550", "v5_1600", "v5_1650",
+                        "v5_1700", "v5_1750", "v5_1800", "v5_1850", "v5_1900", "v5_1950", "v5_2000", "v5_2050", "v5_2100"],
+      color_idx = "td--c" + (timetable.colorIdx++) % 10;
+      // 반복문을 통해 사강 column에 빈 cell찾기.
+      // 찾으면 강의 정보 insert
+      for (var i = 0; cyber_col[i]; i+=1)
+      {
+        var $tempCell = $("#"+cyber_col[i]);
+        if ($tempCell.hasClass("timetable__td--has-lec"))
+        {
+          continue;
+        }
+        else
+        {
+
+          var subject_blk = "<span class=subject></span>",
+              professor_blk = "<span class=professor></span>",
+              place_blk = "<span class=place></span>",
+              delete_btn = timetable.makeBtnDeleteCell(data.timeitem_id),
+              info_link_btn = timetable.makeLinkToLecture(data.lecture_id, "timetable__span--info");
+
+              subject_blk = $(subject_blk).addClass("timetable__span").html(data.subject);
+              professor_blk = $(professor_blk).addClass("timetable__span").html(data.professor);
+              place_blk = $(place_blk).addClass("timetable__span").html(data.place);
+
+          $tempCell = $($tempCell).append(subject_blk, professor_blk, place_blk, delete_btn, info_link_btn);
+
+          $($tempCell).attr('rowspan', 2).addClass("timetable__td--has-lec");
+          $($tempCell).addClass("t"+data.timeitem_id).addClass(color_idx);
+
+          // tempCell의 아래 cell
+          var $nextTempCell = $("#"+cyber_col[i+1]);
+
+          $($nextTempCell).addClass("timetable__td--has-lec").addClass("t"+data.timeitem_id);
+          $($nextTempCell).css('display','none');
+
+          return;
+        }
+      }
+    },
+    makeBtnDeleteCell: function(timeitem_id)
+    {
+      var del_btn ="<span class=timetable__span--del></span>";
+      $(del_btn).attr('data-t-item-id', timeitem_id);
+      return del_btn;
+    },
+    // 강의 평가로 이동하는 a 태그(i 아이콘) 생성 메서드
+    makeLinkToLecture: function(lectureId, className)
+    {
+      // a 태그
+      // return tag string
+      var element_a = "<a target=_blank></a>",
+      element_a = $(element_a).attr("href", "/lectures/"+lectureId).addClass(className);
+      return element_a;
+    },
+
 
     // td생성 후, cart table에 담기
     // td에 들어갈 정보 : 강의명, 교수명, 학점, 이수, timeitem_id
@@ -535,8 +569,11 @@
       }
 
       // 삭제 td, data-t-item-id 추가 위해 따로 코드
-      var $destroyTd = "<td>" + "X" + "</td>";
-      $destroyTd = $($destroyTd).attr('data-t-item-id', data.timeitem_id);
+      var $destroyTd = "<td></td>",
+          $element_a = "<a></a>";
+
+      $element_a = $($element_a).attr('data-t-item-id', data.timeitem_id).addClass("cart__td--del");
+      $destroyTd = $($destroyTd).append($element_a);
 
       $temp_tr = $($temp_tr).addClass("c"+data.timeitem_id).attr('data-credit', data.credit);
       $($temp_tr).append($destroyTd);
@@ -555,10 +592,10 @@
 
     // TODO ajax 덩어리를 쪼개자.
     // 타임테이블의 cell에서 클릭시, cart 테이블에서 X 클릭시
-    destroyTimetableItem: function(timetableItem)
+    destroyTimetableItem: function(t_item_id)
     {
-      var time_item = $(timetableItem),
-          t_item_id = $(time_item).attr('data-t-item-id');
+      // var time_item = $(timetableItem),
+      //     t_item_id = $(time_item).attr('data-t-item-id');
 
           $.ajax({
     				url: "/timetable_items/" + t_item_id + ".json",

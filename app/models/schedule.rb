@@ -35,6 +35,8 @@ class Schedule < ActiveRecord::Base
   			sch = t_item.schedule
 
   			lecObj = sch.lecture.as_json(only: [:subject, :professor, :isu, :credit])
+
+        lecObj[:lecture_id] = sch.lecture_id
         lecObj[:timeitem_id] = t_item.id
   			lecObj[:schDetails] = sch.schedule_details.as_json(only: [:start_time, :end_time, :day])
   			lecObj[:place] = t_item.schedule.place
