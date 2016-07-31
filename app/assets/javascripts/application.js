@@ -13,19 +13,5 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
-//= require fancybox
-//= require bootstrap-sprockets
 //= require html2canvas.js
 //= require_tree ./
-
-
-  
-$(function() {
-$("#lecturetables").on("click", ".pagination a", function(){
-    $.getScript(this.href);
-    return false;
-  });
-});
-
-
-

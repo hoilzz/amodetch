@@ -62,8 +62,6 @@ GEM
     bcrypt (3.1.7)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
-    bootstrap-sass (3.2.0.0)
-      sass (~> 3.2)
     bootstrap-will_paginate (0.0.10)
       will_paginate
     bourbon (4.2.6)
@@ -109,8 +107,6 @@ GEM
       warden (~> 1.2.3)
     erubis (2.7.0)
     execjs (2.5.2)
-    fancybox-rails (0.2.1)
-      railties (>= 3.1.0)
     faraday (0.9.1)
       multipart-post (>= 1.2, < 3)
     figaro (1.1.1)
@@ -288,7 +284,6 @@ PLATFORMS
 DEPENDENCIES
   activeadmin!
   bcrypt (= 3.1.7)
-  bootstrap-sass
   bootstrap-will_paginate (= 0.0.10)
   byebug
   capistrano
@@ -299,7 +294,6 @@ DEPENDENCIES
   coffee-rails (~> 4.1.0)
   devise
   execjs
-  fancybox-rails
   figaro
   iconv
   jbuilder (~> 2.0)
