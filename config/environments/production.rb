@@ -25,17 +25,17 @@ Rails.application.configure do
   config.serve_static_files = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
   # Compress JavaScripts and CSS.
-  #config.assets.js_compressor = :uglifier
+  config.assets.js_compressor = :uglifier
   #config.assets.css_compressor = :sass
-  config.assets.compress = true
+  # config.assets.compress = true
 
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
-  config.assets.compile = false
+  config.assets.compile = true
 # config.assets.precompile =  ['*.js', '*.css', '*.css.erb']
   #config.assets.precompile += %w( *.css, *.js )
 
-  config.assets.precompile += %w( '*.js', '*.scss', '*.css')
+  #config.assets.precompile += %w( '*.js', '*.scss', '*.css')
                                  #specify CSS or JS files inside here! )
 
   config.assets.precompile += %w(*.svg *.eot *.woff *.ttf *.gif *.png *.ico)
