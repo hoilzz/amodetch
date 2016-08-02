@@ -4,7 +4,6 @@ class LecturesController < ApplicationController
 	before_action :fillnickname, only: [:show]
 	before_action :correct_user, only: [:timetable]
 	before_action :godaemoon, only:[:show]
-	before_action :goforcingwritting, only:[:show]
 
 	require 'roo'
 
@@ -62,14 +61,6 @@ class LecturesController < ApplicationController
 
 	private
 
-
-
-
-		def forcingwritting
-			if logged_in_user? && current_user.valuations.count < 4
-				redirect_to :controller => 'static_pages', :action => 'forcingwritting'
-			end
-		end
 
 
 		def lecture_params

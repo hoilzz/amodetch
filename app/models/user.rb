@@ -6,9 +6,9 @@ class User < ActiveRecord::Base
    # has_many :enrollments, dependent: :destroy
    has_many :timetables, dependent: :destroy
 
-   validates :nickname, presence: true, :length => { :minimum => 1, :maximum => 10 }, :uniqueness => true, :allow_nil => true 
-   
-   validates :email, presence: true, length: {maximum: 155}, 
+   validates :nickname, presence: true, :length => { :minimum => 1, :maximum => 10 }, :uniqueness => true, :allow_nil => true
+
+   validates :email, presence: true, length: {maximum: 155},
                     uniqueness: true
    validates :password, presence: true, length: { minimum: 6 }
    has_secure_password
@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-      user.provider = auth.provider 
+      user.provider = auth.provider
       user.uid      = auth.uid
       user.name     = auth.info.name
       user.token    = auth.token
@@ -28,10 +28,7 @@ class User < ActiveRecord::Base
 
   def evaluated_valuation(lec,t,c)
     valuations.create(lecture_id: lec.id,total: t, content: c)
-
   end
-  
-  private
-    
+
 
 end

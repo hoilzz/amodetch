@@ -1,7 +1,6 @@
 class StaticPagesController < ApplicationController
    before_action :fillnickname, only: [:home]
    before_action :gohome, only: [:daemoon]
-  #  before_action :goLog, only: [:forcingwritting, :newsfeed]
 
   def home
     if params[:search]
@@ -132,12 +131,6 @@ class StaticPagesController < ApplicationController
 
 
  private
-
-  def goforcingwritting
-      if current_user.valuations.count<1
-        redirect_to forcingwritting_path
-      end
-  end
 
   def fillnickname
      if logged_in_user? && current_user.nickname.nil?
