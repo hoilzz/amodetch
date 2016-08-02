@@ -157,7 +157,7 @@
      });
 
      // 검색 결과 강의 클릭시
-     $('body').on('click', '.collection-item', function(event){
+     $('body').on('touchstart click', '.collection-item', function(event){
        // 시간표에 강의 등록하기
        event.preventDefault();
        timetable.putLectureOnTimetable($(this));
@@ -641,7 +641,7 @@
 
   }
   $(document).ready(timetable.init);
-  // $(document).on('touchstart', '.collection', function(e) {
+  // $(document).on('touchstart', '.collection-item', function(e) {
   //   console.log("mobile touchstart");
   // });
   // $(document).on('touchstart', '.timetable__span--del, .cart__td--del', function(e) {
