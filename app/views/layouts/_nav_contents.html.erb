@@ -1,0 +1,17 @@
+<li><%= render 'layouts/timetable_dropdown'%></li>
+<li><a href="/newsfeed">강의평가열람</a></li>
+<li><a href="http://goo.gl/forms/f0PwUbUQIu">피드백</a></li>
+<% if current_user && current_user.nickname %>
+ <li>
+     <a class="dropdown-button" href="#" data-activates='dropdown2'>
+       <%=current_user.nickname%>님 <i class="material-icons right">arrow_drop_down</i>
+     </a>
+     <ul id='dropdown2' class='dropdown-content'>
+       <li><%=link_to "별명 바꾸기", edit_user_path(current_user), class: :droplist%></li>
+       <li role="separator" class="divider "></li>
+       <li><a href="/signout" class="droplist">Sign Out</a></li>
+     </ul>
+  </li>
+<% else %>
+  <li><a href="/login">로그인</a></li>
+<%end%>

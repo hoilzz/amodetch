@@ -1,27 +1,41 @@
 
 <% provide(:title, 'Sign up') %>
 
+<div class = "container">
+  <div class="row">
+    <div class="col m4 offset-m4 ">
 
-  <div class="col-sm-6 col-sm-offset-3 signUp">
-  <h1>가입하기</h1><br><br>
-
+      <div class = "section">
+        <h3>아뭐듣지 가입하기</h3>
+      </div>
 
     <%= form_for(@user) do |f| %>
       <%= render 'shared/error_messages' %>
 
-      <%= f.label :'별명' %> (강의평가시 사용할 별명입니다. 학번은 쓰지말아주세요!)
-      <%= f.text_field :nickname, class: 'form-control' %>
+      <div class = "input-field col m12">
+        <%= f.label :'별명 (학번 및 실명은 권하지 않습니다-)', for: "nickname" %>
+        <%= f.text_field :nickname, class: 'validate', id: "nickname" %>
+      </div>
 
-      <%= f.label :'아이디' %> (로그인시 사용됩니다)
-      <%= f.text_field :email, class: 'form-control' %>
+      <div class = "input-field col m12">
+        <%= f.label :'아이디', for: "email" %>
+        <%= f.text_field :email, class: 'validate', id: "email" %>
+      </div>
 
-      <%= f.label :'암호' %> (6자 이상)
-      <%= f.password_field :password, class: 'form-control' %>
+      <div class = "input-field col m12">
+        <%= f.label :'암호 (6자 이상)', for: "password" %>
+        <%= f.password_field :password, class: 'validate', id: "password" %>
+      </div>
 
-      <%= f.label :password_confirmation, "암호 한번 더" %> (똑같이)
-      <%= f.password_field :password_confirmation, class: 'form-control' %>
+      <div class = "input-field col m12">
+        <%= f.label :password_confirmation, "암호 한번 더 (똑같이)", for: "password_confirm" %>
+        <%= f.password_field :password_confirmation, class: 'validate', id: "password_confirm" %>
+      </div>
 
-      <%= f.submit "계정 만들기", class: "btn btn-primary btn_attr" %>
+      <div class = "row">
+        <%= f.submit "계정 만들기", class: "btn col m12" %>
+      </div>
     <% end %>
+    </div>
   </div>
 </div>

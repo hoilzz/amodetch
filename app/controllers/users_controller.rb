@@ -1,22 +1,11 @@
 class UsersController < ApplicationController
   before_action :correct_user, only: [:edit, :update]
   before_action :admin_user, only: :destroy
-  
+
   def new
     @user = User.new
-    render(:layout => "layouts/noheader") #헤더파일 포함 안함 !
   end
 
-  def timetable
-    if params[:search].nil?
-      @lectures=Lecture.paginate(:page => params[:page], :per_page => 10 )
-      @timetables=current_user.timetables
-    
-    else
-      @lectures=Lecture.search(params[:search]).paginate(:page => params[:page], :per_page => 10 )
-    end
-  end
-  
   def create
     @user = User.new(user_params)
     if @user.save
@@ -33,9 +22,9 @@ class UsersController < ApplicationController
     else
       redirect_to root_url
     end
-  end  
+  end
 
-  def edit 
+  def edit
   	@user = User.find_by(id: params[:id])
   end
 
@@ -47,16 +36,16 @@ class UsersController < ApplicationController
   		      redirect_to home_path
         else
             redirect_to :controller => 'static_pages', :action => 'forcingwritting'
-        end    
-  	else 
+        end
+  	else
     		flash.now[:danger]="닉네임을 빈칸으로 설정할 수 없습니다."
     		render 'edit'
     end
   end
 
 
-  
-private 
+
+private
     def user_params
       params.require(:user).permit(:nickname, :email, :password,
                                    :password_confirmation)
@@ -65,10 +54,10 @@ private
     def admin_user
       redirect_to(root_url) unless current_user.admin?
     end
-  
-    def correct_user 
+
+    def correct_user
       @user = User.find(params[:id])
-      unless current_user?(@user) 
+      unless current_user?(@user)
           flash[:danger]="Invalid access!"
           redirect_to root_path
       end
@@ -78,4 +67,3 @@ private
     	params.require(:user).permit(:nickname)
     end
 end
-

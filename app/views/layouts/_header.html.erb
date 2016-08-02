@@ -1,24 +1,27 @@
-<nav>
-    <div class="nav-wrapper navbar-fixed">
-      <a href="/home" class="brand-logo">아뭐듣지</a>
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><%= render 'layouts/header_timetable_dropdown'%></li>
-        <li><a href="/newsfeed">강의평가열람</a></li>
-        <li><a href="http://goo.gl/forms/f0PwUbUQIu">피드백</a></li>
-        <% if current_user && current_user.nickname %>
-              <!--% unless current_user.nickname.nil? %-->
-               <li>
-                 <a class="menuLink" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%=current_user.nickname%>님 <span class="caret"></span></a>
-                      <ul id="dropdown" class="dropdown-menu" style="left:auto; right:0">
-                          <li><%=link_to "별명 바꾸기", edit_user_path(current_user), class: :droplist%></li>
-                          <li role="separator" class="divider "></li>
-                          <li><a href="/signout" class="droplist">Sign Out</a></li>
-                      </ul>
-                </li>
-              <!--% end %-->
-       <% else %>
-             <li><a href="/login">로그인</a></li>
-       <%end%>
-      </ul>
-    </div>
-  </nav>
+
+
+<nav class = "blue lighten-2">
+  <div class="navbar-fixed">
+    <a href="/home" class="brand-logo left">아뭐듣지</a>
+
+    <ul class="right" style = "margin-right:100px">
+      <%= render 'layouts/nav_contents' %>
+    </ul>
+
+  </div>  <!-- nav-wrapper -->
+</nav>
+
+<script>
+  $('.dropdown-button').dropdown({
+      inDuration: 300,
+      outDuration: 225,
+      constrain_width: false, // Does not change width of dropdown to that of the activator
+      hover: true, // Activate on hover
+      gutter: 0, // Spacing from edge
+      belowOrigin: false, // Displays dropdown below the button
+      alignment: 'left' // Displays dropdown with edge aligned to the left of button
+    }
+  );
+
+
+</script>

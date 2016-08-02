@@ -540,7 +540,7 @@
     makeBtnDeleteCell: function(timeitem_id)
     {
       var del_btn ="<span class=timetable__span--del></span>";
-      $(del_btn).attr('data-t-item-id', timeitem_id);
+      del_btn = $(del_btn).attr('data-t-item-id', timeitem_id);
       return del_btn;
     },
     // 강의 평가로 이동하는 a 태그(i 아이콘) 생성 메서드
@@ -594,9 +594,6 @@
     // 타임테이블의 cell에서 클릭시, cart 테이블에서 X 클릭시
     destroyTimetableItem: function(t_item_id)
     {
-      // var time_item = $(timetableItem),
-      //     t_item_id = $(time_item).attr('data-t-item-id');
-
           $.ajax({
     				url: "/timetable_items/" + t_item_id + ".json",
     				dataType: "json",
@@ -625,7 +622,7 @@
 
       for (var i = 0; i < time_items_len; i+=1)
       {
-        $time_item_td = $($(time_item_tds)[i]);
+        var $time_item_td = $($(time_item_tds)[i]);
         $time_item_td.removeClass().html('').css('display','table-cell');
         $time_item_td.prop('rowspan', null).attr('data-t-item-id', null);
       }
