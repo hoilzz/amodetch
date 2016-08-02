@@ -149,7 +149,7 @@
        timetable.findLectures($form, null);
      });
      // 검색 결과 page 번호 클릭시
-     $('body').on('click', '.waves-effect', function(event){
+     $('body').on('click, tab', '.waves-effect', function(event){
        event.preventDefault();
        var $form = $('#searchForm');
        var pageNumber = $(this).find('a').html();
@@ -641,9 +641,12 @@
 
   }
   $(document).ready(timetable.init);
-  $(document).on('touchstart', '.collection', function(e) {
-    console.log("mobile touchstart");
-  });
+  // $(document).on('touchstart', '.collection', function(e) {
+  //   console.log("mobile touchstart");
+  // });
+  // $(document).on('touchstart', '.timetable__span--del, .cart__td--del', function(e) {
+  //   console.log("mobile touchstart");
+  // });
 })(jQuery,document,window);
 
 
