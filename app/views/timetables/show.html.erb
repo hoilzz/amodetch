@@ -199,9 +199,7 @@
        event.stopPropagation();
      });
 
-     jQuery(document).on('touchstart', '.collection', function(e) {
-       console.log("mobile touchstart");
-     });
+
 
      timetable.getSchedulesOnTimetable();
 
@@ -643,6 +641,9 @@
 
   }
   $(document).ready(timetable.init);
+  $(document).on('touchstart', '.collection', function(e) {
+    console.log("mobile touchstart");
+  });
 })(jQuery,document,window);
 
 
