@@ -1,34 +1,32 @@
 class StaticPagesController < ApplicationController
    before_action :fillnickname, only: [:home]
    before_action :gohome, only: [:daemoon]
-   before_action :goLog, only: [:forcingwritting, :newsfeed]
-   #before_action :goforcingwritting, only:[:home, :newsfeed]
-    #before_action :goLog, :only [:forcingwritting]
- 
+  #  before_action :goLog, only: [:forcingwritting, :newsfeed]
+
   def home
     if params[:search]
       if !params[:major].nil? && !params[:major].include?('모든학과')
         @lectures = Lecture.search_home(params[:search]).where(:major =>params[:major]).order("acc_total DESC").paginate(:page => params[:page], :per_page =>10)
-      else 
+      else
        @lectures = Lecture.search_home(params[:search]).order("acc_total DESC").paginate(:page => params[:page], :per_page => 10 )
-      end 
+      end
     elsif !params[:major].nil? && !params[:major].include?('모든학과')
       @lectures = Lecture.where(:major =>params[:major]).
       order("acc_total DESC").paginate(:page => params[:page], :per_page =>10)
-    end      
+    end
   end
 
   def newsfeed
     if params[:search]
       if !params[:major].nil? && !params[:major].include?('모든학과')
         @lectures = Lecture.search_home(params[:search]).where(:major =>params[:major]).order("acc_total DESC").paginate(:page => params[:page], :per_page =>10)
-      else 
+      else
        @lectures = Lecture.search_home(params[:search]).order("acc_total DESC").paginate(:page => params[:page], :per_page => 10 )
-      end 
+      end
     elsif !params[:major].nil? && !params[:major].include?('모든학과')
       @lectures = Lecture.where(:major =>params[:major]).
       order("acc_total DESC").paginate(:page => params[:page], :per_page =>10)
-    end 
+    end
 
 
 
@@ -37,9 +35,9 @@ class StaticPagesController < ApplicationController
     #   order("acc_total DESC").paginate(:page => params[:page], :per_page =>10)
     #   @major_name = params[:major]
     #   @count_of_today = 0
-      
+
     #   @valuations.each do |v|
-    #     difference = Time.zone.now - v.created_at 
+    #     difference = Time.zone.now - v.created_at
     #     if difference < 86400 && difference > 0
     #       @count_of_today += 1
     #     end
@@ -56,14 +54,14 @@ class StaticPagesController < ApplicationController
     #   @count_of_today = 0
     #   @major_name = '전체학과'
     #   @valuations.each do |v|
-    #     difference = Time.zone.now - v.created_at 
+    #     difference = Time.zone.now - v.created_at
     #     if difference < 86400 && difference > 0
-    #       @count_of_today += 1 
+    #       @count_of_today += 1
     #     end
     #   end
     # end
 
-  end 
+  end
 
   def goLog
     unless current_user
@@ -79,13 +77,13 @@ class StaticPagesController < ApplicationController
 
   def daemoon
     render(:layout => "layouts/noheader") #헤더파일 포함 안함 !
-  end 
+  end
 
   def first_login
     render(:layout => "layouts/noheader") #헤더파일 포함 안함 !
   end
 
-  def support 
+  def support
   end
   def forcingwritting
     if params[:search]
@@ -93,14 +91,14 @@ class StaticPagesController < ApplicationController
       if !params[:major].nil? && !params[:major].include?('모든학과')
 
       @lectures = Lecture.search_home(params[:search]).where(:major =>params[:major]).order("acc_total DESC").paginate(:page => params[:page], :per_page =>10)
-           
-      else 
+
+      else
        @lectures = Lecture.search_home(params[:search]).paginate(:page => params[:page], :per_page => 10 )
-      end 
+      end
     elsif !params[:major].nil? && !params[:major].include?('모든학과')
       @lectures = Lecture.where(:major =>params[:major]).
       order("acc_total DESC").paginate(:page => params[:page], :per_page =>10)
-    else 
+    else
 
      # @lectures=Lecture.all.order("acc_total DESC").paginate(:page => params[:page], :per_page => 10 )
        @lectures=Lecture.search_home('asgreagjergoierjiogjerigjeriogj').order("acc_total DESC").paginate(:page => params[:page], :per_page => 10 )
@@ -124,24 +122,24 @@ class StaticPagesController < ApplicationController
 
   end
 
-  
-  
+
+
   def search
     @lectures = Lecture.where('major = ?', params[:lecture_name])
-    render '_home_user'    
+    render '_home_user'
   end
 
 
 
- private 
+ private
 
   def goforcingwritting
       if current_user.valuations.count<1
         redirect_to forcingwritting_path
-      end 
+      end
   end
 
-  def fillnickname 
+  def fillnickname
      if logged_in_user? && current_user.nickname.nil?
         flash[:danger]= "닉네임을 설정하여 주세요. 익명성 보장을 위함입니다."
         redirect_to edit_user_url(current_user)
@@ -152,7 +150,7 @@ class StaticPagesController < ApplicationController
   def user_login?
     if session[:user_id].nil? && session[:user_name].nil?
         false
-    else 
+    else
         true
     end
   end
@@ -163,6 +161,6 @@ class StaticPagesController < ApplicationController
     end
   end
 
-  
-  
+
+
 end

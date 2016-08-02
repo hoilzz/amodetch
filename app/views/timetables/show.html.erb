@@ -2,29 +2,30 @@
 
   <!-- development -->
   <!-- 시간표 TABLE VIEW -->
-  <div class = "container" style = "width : 90%">
+  <div class = "container" style = "width : 10x30%">
     <div class = "col m8" id="timetable" data-t-id = "<%= @current_timetable.id%>">
     <div class = "timetable_container">
       <div class = "timetable_name_box">
-        <p class = "lead">
+        <p class = "light" style = "font-size:1.2em">
           <%=@current_timetable.name%>
+          <%= @current_timetable.getStrSemester%> / 총 <span class = "credits"></span> 학점
         </p>
       </div>
 
-      <div class = "name_edit_btn">
-        <%= link_to " ", edit_timetable_path(@current_timetable),
-                         class: 'glyphicon glyphicon-pencil' %>
-      </div>
+      <!-- <div class = "name_edit_btn"> -->
+        <!--%= link_to " ", edit_timetable_path(@current_timetable),
+                         class: 'glyphicon glyphicon-pencil' %-->
+      <!-- </div> -->
 
-      <div class = "timetable_semester">
-        <p class = "lead"> <%= @current_timetable.getStrSemester%> / </p>
-      </div>
+      <!-- <div class = "timetable_semester"> -->
 
-      <div class = "total_credits">
-        <span class = "lead"> 총 </span>
+      <!-- </div> -->
+
+      <!-- <div class = "total_credits"> -->
+        <!-- <span> 총 </span>
         <span class = "lead credits"></span>
-        <span class = "lead">학점</span>
-      </div>
+        <span>학점</span> -->
+      <!-- </div> -->
 
 
       <div class="lessons" style = "font-size:14px;">
@@ -198,6 +199,10 @@
        event.stopPropagation();
      });
 
+     jQuery(document).on('touchstart', 'body', function(e) {
+       console.log("mobile touchstart");
+     });
+
      timetable.getSchedulesOnTimetable();
 
     },
@@ -219,10 +224,11 @@
                   timetable.fillLecture(data.lectures[i]);
                   timetable.addNewLectureTD(data.lectures[i]);
                 }
+                Materialize.toast('강의를 불러왔습니다.', 2500);
               },
               error:function(jqXHR, textStatus, errorThrown)
               {
-                alert("강의 불러오기 실패했수다..")
+                Materialize.toast('강의 불러오기 실패했습니다.<br> 새로고침해주세요!', 2500);
               }
             });
     },
@@ -395,7 +401,7 @@
 
       if ($duplicateCellLen > 0)
       {
-        alert("중복된 강의 있다");
+        Materialize.toast('시간표에 등록된 시간과 겹치는 강의가 있습니다!', 2500);
       }
 
       else
@@ -408,7 +414,8 @@
                 data: {'timetable_item': {'timetable_id':timetable_id, 'schedule_id':sch_id}},
                 success:function(data)
                 {
-                  alert('성공했수다..');
+                  var str_subject = data.subject;
+                  Materialize.toast(str_subject+"시간표에 등록하였습니다.", 2500);
                   // timetable에 fill 해주기
                   timetable.fillLecture(data);
                   timetable.addNewLectureTD(data);

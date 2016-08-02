@@ -1,62 +1,63 @@
-<div class = "detail_lecture_box">
+<div class = "row">
+	<div class = "col m12">
+	<div class = "detail_lecture_box">
 
-	<div class="lec_average_row">
-		
-		<div class = "professor_section">
-			<h2 class="inline-blk"> <%= @lecture.subject %> </h2>
-			 <span><%= @lecture.professor %> 교수님</span>
+		<div class="lec_average_row">
 
-			<div style = "float : right; margin-top:30px">
-			 	<span style = "color :blue;">
-			 		총 <%= @valuations.count%>명 
-			 	</span>
-			 		평가
-	 		</div>
-		</div>
+			<div class = "professor_section">
+				<h2 class="inline-blk"> <%= @lecture.subject %> </h2>
+				 <span><%= @lecture.professor %> 교수님</span>
 
-		<!-- 1번째 줄 -->
-
-
-			<div class = "total_star_section" style = "float:left">
-				<div class = "left">
-					 총평
-				</div> 
-				
-				<div class = "right">
-					<span><%= @lecture.acc_total.round(2)%></span>
-				</div>
-
-				<div class = "valuation_star" >
-					<%= render 'shared/show_star', :var => @lecture.acc_total %>
-				</div>
-
+				<div style = "float : right; margin-top:30px">
+				 	<span style = "color :blue;">
+				 		총 <%= @valuations.count%>명
+				 	</span>
+				 		평가
+		 		</div>
 			</div>
 
-			
+			<!-- 1번째 줄 -->
 
-		<div style = "text-align : center">
-			<% if current_user.valuations.find_by(lecture_id: @lecture.id) %>
-				<div class = "btn btn-success"> 평가 하셨습니다. </div>
-			<% else %>
-				<div>
-					<%= link_to '평가하기',  writtingform_lecture_path(@lecture), class: "btn btn-danger"%>
+
+				<div class = "total_star_section" style = "float:left">
+					<div class = "left">
+						 총평
+					</div>
+
+					<div class = "right">
+						<span><%= @lecture.acc_total.round(2)%></span>
+					</div>
+
+					<div class = "valuation_star" >
+						<%= render 'shared/show_star', :var => @lecture.acc_total %>
+					</div>
+
 				</div>
+
+
+
+			<div style = "text-align : center">
+				<% if current_user.valuations.find_by(lecture_id: @lecture.id) %>
+					<div class = "btn btn-success"> 평가 하셨습니다. </div>
+				<% else %>
+					<div>
+						<%= link_to '평가하기',  writtingform_lecture_path(@lecture), class: "btn btn-danger"%>
+					</div>
+				<% end %>
+			</div>
+
+		</div> <!-- lec_average_row, 평균 수치 row -->
+
+
+		<div class = "valuations_row row_pd_top" style = "margin-top : 60px;">
+
+			<h3 class = "text_gray"> 이 강의에 대한 평가들 </h3>
+
+		  	<% @valuations.each do |v| %>
+					<%= render 'static_pages/display_lectures', :v => v %>
 			<% end %>
+
 		</div>
-
-	</div> <!-- lec_average_row, 평균 수치 row -->
-
-
-	<div class = "valuations_row row_pd_top" style = "margin-top : 60px;">
-		
-		<h3 class = "text_gray"> 이 강의에 대한 평가들 </h3>
-
-	  	<% @valuations.each do |v| %>
-				<%= render 'static_pages/display_lectures', :v => v %>
-		<% end %> 
-
+	</div>
 	</div>
 </div>
-
-
-
