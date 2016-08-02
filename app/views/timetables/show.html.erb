@@ -624,7 +624,7 @@
       {
         var $time_item_td = $($(time_item_tds)[i]);
         $time_item_td.removeClass().html('').css('display','table-cell');
-        $time_item_td.prop('rowspan', null).attr('data-t-item-id', null);
+        $time_item_td.removeAttr('rowspan').removeAttr('data-t-item-id');
       }
     },
 
