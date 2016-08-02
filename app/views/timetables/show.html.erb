@@ -149,7 +149,7 @@
        timetable.findLectures($form, null);
      });
      // 검색 결과 page 번호 클릭시
-     $('body').on('click, tab', '.waves-effect', function(event){
+     $('body').on('click', '.waves-effect', function(event){
        event.preventDefault();
        var $form = $('#searchForm');
        var pageNumber = $(this).find('a').html();
