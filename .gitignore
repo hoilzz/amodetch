@@ -21,7 +21,6 @@
 ./timetable_test_db
 /db/*.yml
 
-config/initializers/omniauth.rb
 /tmp
 
 # Ignore application configuration
