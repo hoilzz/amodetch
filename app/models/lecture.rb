@@ -88,10 +88,10 @@ class Lecture < ActiveRecord::Base
     end
   end
 
-  def self.search_home(search)
+  def self.searchForValuation(search)
       unless search.nil?
          where(['professor LIKE ? OR subject Like ? OR open_department = ?',
-        "#{search}%", "#{search}%", "#{search}"]).select('DISTINCT id, subject, professor, major, isu, credit')
+        "#{search}%", "#{search}%", "#{search}"])
       end
   end
 

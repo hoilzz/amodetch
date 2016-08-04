@@ -3,6 +3,12 @@ Rails.application.routes.draw do
  devise_for :admin_users, ActiveAdmin::Devise.config
  ActiveAdmin.routes(self)
 
+ resources :lectures do
+   collection { post :import }
+ end
+
+ resources :valuations, only: [:new, :create, :destroy, :edit, :update, :index]
+
  post 'search' => 'lectures#search'
 
  get 'load' => 'schedules#load'
@@ -19,20 +25,23 @@ Rails.application.routes.draw do
  # get 'users/new'
  get 'home_admin' => 'static_pages#home_admin'
  get 'lecture_search' => 'static_pages#search'
- get 'newsfeed' => 'static_pages#newsfeed'
- get 'rank' => 'static_pages#rank'
+
  get 'search_timetable' => 'enrollments#search_timetable'
- get 'propose' => 'static_pages#propose'
- get 'feedback' => 'static_pages#feedback'
+
  get 'usage' => 'static_pages#menual'
  get 'notice' => 'static_pages#notice'
  get 'detailsearch' =>'timetables#detailsearch'
  get 'login_form' => 'static_pages#login_form'
  get 'home' => 'static_pages#home'
+
  root 'static_pages#home'
+
  get 'support' =>'static_pages#support'
+
  get 'forcinglogin' => 'static_pages#forcinglogin'
- get 'forcingwritting' =>'static_pages#forcingwritting'
+
+ get 'forcingwritting' =>'valuation#forcingwritting'
+
  get 'first_login' => 'static_pages#first_login'
 
  get 'signup'  => 'users#new'
@@ -66,14 +75,10 @@ end
 match 'auth/:provider/callback', :controller => 'sessions', action: 'create_by_facebook', via: [:get, :post]
 match 'auth/failure', to: redirect('/'), via: [:get, :post]
 match 'signout', to: 'sessions#destroy', as: 'signout', via: [:get, :post]
-resources :lectures do
-  collection { post :import }
-
-  member { get :writtingform }
-end
 
 
-resources :valuations, only: [:create, :destroy, :edit, :update]
+
+
 resources :comments, only: [:create, :destroy, :edit, :update]
 resources :comment_valuations, only: [:create, :destroy]
 

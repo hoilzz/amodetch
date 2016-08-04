@@ -28,7 +28,32 @@ body
 }
 
 
+
+
 nav .brand-logo
   {
     margin-left : 100px;
   }
+
+
+
+  .row-margin-top
+  {
+    margin-top : 50px;
+  }
+
+
+
+
+
+
+
+/* shared/_error_messages.html.erb */
+#error_explanation {
+  width : 100%;
+  color: red;
+  ul {
+    color: red;
+    margin: 0 0 10px 0;
+  }
+}

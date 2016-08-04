@@ -45,11 +45,8 @@ class LecturesController < ApplicationController
 	def import
 		Lecture.import(params[:file])
 		redirect_to root_url, notice: "decorations imported."
-  	end
-
-	def writtingform
-		@lecture = Lecture.find_by(id: params[:id])
 	end
+
 
 	def search
 		 @dataTojson = Lecture.getLecturesBeSearched(params[:searchWord], params[:semester], params[:pageSelected])

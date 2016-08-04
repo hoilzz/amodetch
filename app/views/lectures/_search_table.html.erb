@@ -1,0 +1,39 @@
+<div class = "row">
+  <span class = "right-align"> 검색결과 총 <%= @lectures.count %> 개  </span>
+</div>
+
+<table class = "responsive-table striped">
+  <thead>
+        <tr>
+            <th data-field="subject">강의명</th>
+            <th data-field="professor">교수명</th>
+            <th data-field="open_department">학과</th>
+            <th data-field="acc_total">별점</th>
+            <th data-field="valuations_size">평가수</th>
+            <th data-field="new_valuation"> </th>
+        </tr>
+  </thead>
+
+  <tbody>
+      <% lectures.each do |lec| %>
+        <tr>
+          <td><%= lec.subject%></td>
+          <td><%= lec.professor%></td>
+          <td><%= lec.major%></td>
+          <td><%= lec.acc_total%></td>
+          <td><%= lec.valuations.count%></td>
+          <td>
+            <a class="modal-trigger waves-effect waves-light" href="#modal1">
+              <i class="material-icons">mode_edit</i>
+            </a>
+          </td>
+        </tr>
+      <% end %>
+  </tbody>
+</table>
+<%= will_paginate lectures %>
+
+
+<!-- Modal Trigger -->
+
+<%= render 'valuations/lecture_value_form', :valuation => valuation%>

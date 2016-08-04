@@ -9,12 +9,15 @@
 
         <%= form_for(:session, url: login_path) do |f| %>
 
+        <div class="input-field col s12">
           <%= f.label :"아이디" , for: "email"%>
           <%= f.text_field :email, class: 'validate', id: "email" %>
+        </div>
 
+        <div class="input-field col s12">
           <%= f.label :"비밀번호 ", for: "password" %>
           <%= f.password_field :password, class: 'validate', id: "password"%>
-
+        </div>
           <div class = "row">
             <%= f.submit "로그인", class: "btn waves-effect waves-light col m12" %>
           </div>

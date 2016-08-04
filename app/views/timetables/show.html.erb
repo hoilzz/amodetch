@@ -12,22 +12,6 @@
         </p>
       </div>
 
-      <!-- <div class = "name_edit_btn"> -->
-        <!--%= link_to " ", edit_timetable_path(@current_timetable),
-                         class: 'glyphicon glyphicon-pencil' %-->
-      <!-- </div> -->
-
-      <!-- <div class = "timetable_semester"> -->
-
-      <!-- </div> -->
-
-      <!-- <div class = "total_credits"> -->
-        <!-- <span> 총 </span>
-        <span class = "lead credits"></span>
-        <span>학점</span> -->
-      <!-- </div> -->
-
-
       <div class="lessons" style = "font-size:14px;">
         <%= render 'timetable_form' %>
       </div>
@@ -35,8 +19,6 @@
     </div>  <!-- col m8 -->
 
   <div class = "col m4">
-  <!-- 시간표 테이블 right_container  :  검색창, 내가 담은 강의 -->
-  <!--div class="right-container" style = "z-index : 999"-->
 
       <%= form_tag search_url, :method => 'get', id: 'searchForm' do %>
           <%= text_field_tag :searchWord, params[:search],
@@ -44,12 +26,8 @@
           <%= hidden_field_tag :semester, @current_timetable.semester %>
       <% end %>
 
-
-
     <%= render 'search_table'%>
        <!-- 검색 결과 -->
-
-
 
     <div class = "my_cart_container">
         <span class = "lead"> 내가 담은 과목 </span>
@@ -137,6 +115,11 @@
         }
 
         timetable.fillSearchPagination(data.pageSelected, data.finalPageNum);
+
+      });
+
+      posting.error(function (data){
+        console.log(data);
 
       });
     },
@@ -650,4 +633,14 @@
 })(jQuery,document,window);
 
 
+</script>
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-72706618-1', 'auto');
+ga('send', 'pageview');
 </script>

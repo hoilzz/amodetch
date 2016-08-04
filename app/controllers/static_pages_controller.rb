@@ -26,40 +26,6 @@ class StaticPagesController < ApplicationController
       @lectures = Lecture.where(:major =>params[:major]).
       order("acc_total DESC").paginate(:page => params[:page], :per_page =>10)
     end
-
-
-
-    # if !params[:major].nil? && !params[:major].include?('모든학과')
-    #   @valuations = Valuation.join_major.where("major = ?", params[:major]).
-    #   order("acc_total DESC").paginate(:page => params[:page], :per_page =>10)
-    #   @major_name = params[:major]
-    #   @count_of_today = 0
-
-    #   @valuations.each do |v|
-    #     difference = Time.zone.now - v.created_at
-    #     if difference < 86400 && difference > 0
-    #       @count_of_today += 1
-    #     end
-    #   end
-
-
-    #   respond_to do |format|
-    #     format.js
-    #     format.html {redirect_to newsfeed_path}
-    #   end
-    # else
-    #   @valuations=Valuation.join_major.where("major = ?", '전체학과')
-    #   .order("created_at DESC").paginate(:page => params[:page], :per_page =>10)
-    #   @count_of_today = 0
-    #   @major_name = '전체학과'
-    #   @valuations.each do |v|
-    #     difference = Time.zone.now - v.created_at
-    #     if difference < 86400 && difference > 0
-    #       @count_of_today += 1
-    #     end
-    #   end
-    # end
-
   end
 
   def goLog
@@ -84,26 +50,7 @@ class StaticPagesController < ApplicationController
 
   def support
   end
-  def forcingwritting
-    if params[:search]
-
-      if !params[:major].nil? && !params[:major].include?('모든학과')
-
-      @lectures = Lecture.search_home(params[:search]).where(:major =>params[:major]).order("acc_total DESC").paginate(:page => params[:page], :per_page =>10)
-
-      else
-       @lectures = Lecture.search_home(params[:search]).paginate(:page => params[:page], :per_page => 10 )
-      end
-    elsif !params[:major].nil? && !params[:major].include?('모든학과')
-      @lectures = Lecture.where(:major =>params[:major]).
-      order("acc_total DESC").paginate(:page => params[:page], :per_page =>10)
-    else
-
-     # @lectures=Lecture.all.order("acc_total DESC").paginate(:page => params[:page], :per_page => 10 )
-       @lectures=Lecture.search_home('asgreagjergoierjiogjerigjeriogj').order("acc_total DESC").paginate(:page => params[:page], :per_page => 10 )
-
-    end
-  end
+  
 
   def forcinglogin
     render(:layout => "layouts/noheader") #헤더파일 포함 안함 !
