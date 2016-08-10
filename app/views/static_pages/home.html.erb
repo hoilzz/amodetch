@@ -1,41 +1,43 @@
-<div class = "container">
-  <div class = "responsive-img main_blk">
-  </div>
-</div>
+	<div>
+    <%= image_tag "main_row.png", class: "responsive-img, main_image_blk"%>
+  </div> <!--background image-->
 
-<div class = "row title_blk">
-  <h3 class="col s12 light center header">아뭐듣지</h3>
-  <p class="light center">세종대 시간표를 가장 간단하게 작성할 수 있습니다-</p>
-</div>
-  <div class = "container info_blk">
-    <div class = "row">
-      <div class = "col m8 offset-m2">
-    <div class="row">
-      <div class="col m4">
-        <div class="center promo">
-          <p class="promo-caption"><%= Valuation.all.count %></p>
-          <p class="promo-caption">강의평가</p>
-          <!-- <p class="light center">저희는 여러분들에게 사용자 지정 구성요소를 포함하는 기본적인 스타일을 제공해줍니다. 또한, 저희는 애니메이션과 움직이는 요소들을 다듬어 개발자들에게 좀 더 원활한 경험을 재공해줍니다.</p> -->
-        </div>
-      </div>
-      <div class="col m4">
-        <div class="center promo">
-          <p class="promo-caption"><%= Timetable.all.count %></p>
-          <p class="promo-caption">시간표</p>
-          <!-- <p class="light center">저희는 여러분들에게 사용자 지정 구성요소를 포함하는 기본적인 스타일을 제공해줍니다. 또한, 저희는 애니메이션과 움직이는 요소들을 다듬어 개발자들에게 좀 더 원활한 경험을 재공해줍니다.</p> -->
-        </div>
-      </div>
-      <div class="col m4">
-        <div class="center promo">
-          <p class="promo-caption"><%=User.all.count%></p>
-          <p class="promo-caption">학생</p>
-          <!-- <p class="light center">저희는 여러분들에게 사용자 지정 구성요소를 포함하는 기본적인 스타일을 제공해줍니다. 또한, 저희는 애니메이션과 움직이는 요소들을 다듬어 개발자들에게 좀 더 원활한 경험을 재공해줍니다.</p> -->
-        </div>
+	 <div class="row"> <!--background image와 바로가기-->
+			<div class="col m4 offset-m4 main_image__text" align="center">
+  					<div>클릭만으로 간편하게,</div>
+  					<div>시간표를 짜는 가장 쉬운 방법</div>
+  					<div class = "main_image__btn">
+                <a href="#">
+                  <%= link_to new_timetable_path do %>
+                      <%= image_tag "write_timetable_btn.png", align: "center"%>
+                  <% end %>
+                </a>
+            </div>
+			</div>
+	</div>
+
+<div class = "container">
+  <div class="row">
+  		<div class="col s8 offset-s2" align="center">
+      			<div class="col s4 promo_school_box">
+              <%= image_tag "school.png", id: "main_img" %>
+      				<div>
+                <p class = "light" style="font-size:18pt">세종대학교</span>에서
+              </div>
+      			</div>
+
+      			<div class="col s4 promo_box">
+      				<div class = "light promo_box__count"><%=User.all.count%></div>
+      				<p class = "light">참여한 학생</p>
+      			</div>
+
+      			<div class="col s4 promo_box">
+      				<div class="light promo_box__count"><%=Valuation.all.count%></div>
+      				<p class = "light">등록된 강의평가수</p>
+      			</div>
       </div>
     </div>
-</div>
-  </div>
-  </div>
+	</div>
 
 
 <script>

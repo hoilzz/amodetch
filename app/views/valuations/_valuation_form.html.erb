@@ -1,0 +1,54 @@
+
+<div id="l<%= lecture.id %>" class="modal modal-fixed-footer">
+  <div class="modal-content">
+    <%= render 'shared/error_messages_valuation'%>
+    <h5 class = "lec-info-blk"><%= lecture.subject%> <%=lecture.professor%></h5>
+    <div class="divider"></div>
+
+    <%= form_for (valuation) do |v| %>
+
+        <div class = "valuation_blk container">
+          <div class = "row">
+            <div class = "col m12">
+                  <%= v.hidden_field :lecture_id, value: lecture.id %>
+                  <div class = "row row-margin-top">
+                        <div class="col m2">
+                          <label for="valuation_star">별점 평가</label>
+                        </div>
+                  </div>
+
+                  <div class = "row">
+                    <div class="col m12 center-align">
+                      <span class = "valuation__star" data-value="1"></span>
+                      <span class = "valuation__star" data-value="2"></span>
+                      <span class = "valuation__star" data-value="3"></span>
+                      <span class = "valuation__star" data-value="4"></span>
+                      <span class = "valuation__star" data-value="5"></span>
+                      <p class = "valuation__info center-align">
+                          별점 평가해주세요!
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class = "row">
+                       <div class="input-field col m12">
+                         <%= v.text_area(:content, size: "24x12", class: "materialize-textarea validate",
+                                          placeholder: "시험난이도, 수업방식 꿀팁 등을 입력해주세요!", data_id: lecture.id ,
+                                          minlength: "10") %>
+                         <%= v.label :content %>
+                       </div>
+                  </div>
+                  <div class = "row">
+                        <%= v.submit "평가 등록", class: "btn col m12 valuation__submit", data_id: lecture.id %>
+                  </div>
+            </div>
+          </div>
+       </div>
+
+    <% end %>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">닫기</a>
+  </div>
+
+</div>

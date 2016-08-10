@@ -2,7 +2,13 @@ class Valuation < ActiveRecord::Base
 	belongs_to :user
 	belongs_to :lecture
 
-  	scope :join_major, -> { joins(:lecture)}
+  scope :join_major, -> { joins(:lecture)}
+
+	validates :content, presence:true
+	validates :rating, presence:true
+	validates :lecture_id, presence:true, uniqueness: {scope: [:user_id] }
+	validates :user_id, presence:true
+
 
 	def timestamp_division
 		difference = Time.zone.now - created_at
@@ -18,7 +24,7 @@ class Valuation < ActiveRecord::Base
 		# 하루 전
 		elsif difference > 86400 && difference < 172800
 			"어제"
-		#과거 
+		#과거
 		else
 			created_at.strftime("%m/%d %H:%M")
 		end

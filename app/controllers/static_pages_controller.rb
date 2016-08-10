@@ -1,7 +1,7 @@
 class StaticPagesController < ApplicationController
    before_action :fillnickname, only: [:home]
    before_action :gohome, only: [:daemoon]
-
+   skip_before_action :require_login, only: [:home]
   def home
     if params[:search]
       if !params[:major].nil? && !params[:major].include?('모든학과')
@@ -50,7 +50,7 @@ class StaticPagesController < ApplicationController
 
   def support
   end
-  
+
 
   def forcinglogin
     render(:layout => "layouts/noheader") #헤더파일 포함 안함 !

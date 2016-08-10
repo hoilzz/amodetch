@@ -30,5 +30,9 @@ class User < ActiveRecord::Base
     valuations.create(lecture_id: lec.id,total: t, content: c)
   end
 
+	def has_not_valuation? (lecture_id)
+		valuation = self.valuations.find_by(lecture_id: lecture_id)
+		return valuation.nil?
+	end
 
 end

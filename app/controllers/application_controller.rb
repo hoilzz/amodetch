@@ -3,6 +3,8 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  before_action :require_login
+
 
 
   include SessionsHelper
@@ -16,5 +18,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def require_login
+    unless is_logged_in?
+      flash[:error] = "로그인 후 이용가능합니다!"
+      redirect_to login_path # halts request cycle
+    end
+  end
 
 end

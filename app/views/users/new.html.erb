@@ -10,7 +10,7 @@
       </div>
 
     <%= form_for(@user) do |f| %>
-      <%= render 'shared/error_messages' %>
+      <%= render 'shared/error_messages_user' %>
 
       <div class = "input-field col m12">
         <%= f.label :'별명 (학번 및 실명은 권하지 않습니다-)', for: "nickname" %>

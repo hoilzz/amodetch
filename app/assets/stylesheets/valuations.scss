@@ -1,3 +1,22 @@
 // Place all the styles related to the valuations controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+/*
+  BEM
+*/
+
+.valuation__star
+{
+    background : url(asset-path('unactivated_star.png'));
+    width:27px;
+    height:26px;
+    display:inline-block;
+    margin-right :20px;
+}
+
+.valuation__star-temp, .valuation__star-active
+{
+  background: url(asset-path('activated_star.png'));
+}

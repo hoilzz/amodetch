@@ -1,35 +1,31 @@
 
-<div class = "valuation_contents"  id = "lecture_<%= v.lecture_id%>" >
-	<%if current_page? controller: 'static_pages', action:'newsfeed' %>
-		<div class = "user_section">
-			<h3 class = "nickname_attr" style = "font-size:22px;"><%= v.lecture.subject %> </h3> <span class = "nickname_mgn"><%= v.lecture.professor %> 교수님</span>
-		</div>
-	<% end %>
+<div class = "valuation_contents"  id = "lecture_<%= valuation.lecture_id%>" >
+
 
 		<!-- border-bottom 아래 -->
 		<div class = "row_pd_top"
-         onclick="showLecture(<%=v.lecture.id%>)"
+         onclick="showLecture(<%=valuation.lecture.id%>)"
           >
 
 			<div class = "row_half_star">
 
 					<span style = "width : 150px; display: inline; color : #57ad68;
-                      font-weight:120"><%= v.user.nickname %></span>
+                      font-weight:120"><%= valuation.user.nickname %></span>
 					<span class = "name_sentence">님의 평가</span>
-				<div class = "timestamp" style = "width : 150px; display: inline; margin-left:5px"><%= v.timestamp_division %></div>
+				<div class = "timestamp" style = "width : 150px; display: inline; margin-left:5px"><%= valuation.timestamp_division %></div>
 			</div>
 
 			<div class = "valuation_text_section">
 					<!-- 만약 현재페이지가 staticpages#home  -->
-					<% if current_page? controller: 'static_pages', action: 'newsfeed'%>
-						<%= simple_format(truncate v.content, length: 50)%>..
-						<a onclick="showLecture(<%=v.lecture.id%>)">자세히 보기</a>
-					<% else %>
-						<%= simple_format(v.content) %>
-					<% end %>
+
+						<!--%= simple_format(truncate valuationcontent, length: 50)%-->
+						<!-- <a onclick="showLecture()">자세히 보기</a> -->
+
+						<%= simple_format(valuation.content) %>
+
 			</div>
 
-			<div class = "lec_<%= v.lecture.id %> valuation_progress_section" >
+			<div class = "lec_<%= valuation.lecture.id %> valuation_progress_section" >
 
 				<!-- total : 총평 -->
 				<div class = "valuation_box">
@@ -40,8 +36,8 @@
 
 					</div>
 					<!-- show_star의 재사용성을 위해 div .valuation_star 끄집어냄 -->
-					<div class = "valuation_star total" value = "<%= v.total %>">
-						<%= render 'shared/show_star', :var => v.total %>
+					<div class = "valuation_star total" value = "<%= valuation.rating %>">
+						<%= render 'shared/show_star', :var => valuation.rating %>
 					</div>
 				</div>
 
@@ -50,7 +46,7 @@
 		</div>  <!-- row, row_pd_top -->
 
     <div class = "edit_section">
-       <% if current_user == v.user %>
+       <% if current_user == valuation.user %>
           <span><%= link_to "수정"%> <%= link_to "삭제", v, method: :delete, data: { confirm: "지우시겠습니까?"}%></span>
        <% end %>
     </div>
@@ -89,7 +85,7 @@
     <% end %>
   }
 
-  $('div.valuation_contents').hover(function(){
+  $('divaluationvaluation_contents').hover(function(){
 	// 난이도 text
   	var level_value = $(this).find('.level').attr('value');
   	classify_level_text(this, level_value);
@@ -111,7 +107,7 @@
   });
 
   // mouseout 대신 mouseleave
-  $('div.valuation_contents').mouseleave(function(){
+  $('divaluationvaluation_contents').mouseleave(function(){
   	console.log("valuation_contents is mouseout");
   	$(this).find('#level').html(' ');
   	$(this).find('#grade').html(' ');

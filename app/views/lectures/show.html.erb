@@ -25,11 +25,11 @@
 					</div>
 
 					<div class = "right">
-						<span><%= @lecture.acc_total.round(2)%></span>
+						<span><%= @lecture.avr_rating.round(2)%></span>
 					</div>
 
 					<div class = "valuation_star" >
-						<%= render 'shared/show_star', :var => @lecture.acc_total %>
+						<%= render 'shared/show_star', :var => @lecture.avr_rating %>
 					</div>
 
 				</div>
@@ -55,7 +55,7 @@
 			<h3 class = "text_gray"> 이 강의에 대한 평가들 </h3>
 
 		  	<% @valuations.each do |v| %>
-					<%= render 'static_pages/display_lectures', :v => v %>
+					<%= render 'static_pages/display_lectures', :valuation => v %>
 			<% end %>
 
 		</div>

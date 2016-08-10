@@ -1,0 +1,13 @@
+<% if @valuation.errors.any? %>
+  <div id="error_explanation">
+    <ul>
+      <% @valuation.errors.full_messages.each do |msg| %>
+          <% if msg.include?("Rating can't be blank") %>
+            <li> 별점을 평가하지 않았습니다. </li>
+          <% elsif msg.include?("Content can't be blank") %>
+            <li> 강의평가를 작성해주세요. </li>
+          <% end %>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

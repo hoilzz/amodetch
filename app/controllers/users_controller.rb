@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :correct_user, only: [:edit, :update]
   before_action :admin_user, only: :destroy
-
+  skip_before_action :require_login, only: [:new, :create]
   def new
     @user = User.new
   end
@@ -32,11 +32,7 @@ class UsersController < ApplicationController
   	@user=User.find(params[:id])
   	if !params[:user][:nickname].nil?
         @user.update_attribute(:nickname, params[:user][:nickname])
-        if @user.valuations.count > 2
-  		      redirect_to home_path
-        else
-            redirect_to :controller => 'static_pages', :action => 'forcingwritting'
-        end
+  		  redirect_to home_path
   	else
     		flash.now[:danger]="닉네임을 빈칸으로 설정할 수 없습니다."
     		render 'edit'

@@ -70,14 +70,17 @@ class Lecture < ActiveRecord::Base
   end
 
 
-  def lec_valuation(counts,t)
-    if self.acc_grade.nil?
-        total = t.to_i
+  def update_avr_rating(rating)
+    int_rating = rating.to_i
+
+    # 강의의 별점이 처음 등록된 경우
+    if self.avr_rating.nil?
+        sum_rating = int_rating
     else
-        total = self.acc_total*counts + t.to_i
+        sum_rating = self.avr_rating * self.valuations.count + int_rating
     end
-    counts+=1
-    self.acc_total = total/counts
+    self.avr_rating = sum_rating/(self.valuations.count+1)
+    self.save
   end
 
 
