@@ -1,0 +1,18 @@
+<!-- 총 5개 생산  -->
+<!-- 점수만큼 노란별 생산 -->
+<!-- 나머지는 회색별 생산  -->
+
+<!-- STAR_TOTAL = 5  -->
+<!-- i = 0 -->
+<!-- i < rating -->
+<!-- 노란별 그리기 -->
+<!-- i > rating -->
+<!-- 회색별 그리기 -->
+
+<% (1..rating).each do %>
+  <%= image_tag "activated_star.png", class: "valuation__star-auto-resize"%>
+<% end %>
+
+<% ((rating.to_i)..4).each do %>
+  <%= image_tag "unactivated_star.png", class: "valuation__star-auto-resize"%>
+<% end %>

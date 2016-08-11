@@ -33,13 +33,13 @@
                   <div class = "row">
                        <div class="input-field col m12">
                          <%= v.text_area(:content, size: "24x12", class: "materialize-textarea validate",
-                                          placeholder: "시험난이도, 수업방식 꿀팁 등을 입력해주세요!", data_id: lecture.id ,
+                                          placeholder: "시험난이도, 수업방식 꿀팁 등을 입력해주세요!", :"data-id" => lecture.id ,
                                           minlength: "10") %>
-                         <%= v.label :content %>
+                         <%= v.label :content, :"data-error" => "10자 이상 입력해주세요.", :'data-success' => "GOOD!" %>
                        </div>
                   </div>
                   <div class = "row">
-                        <%= v.submit "평가 등록", class: "btn col m12 valuation__submit", data_id: lecture.id %>
+                        <%= v.submit "평가 등록", class: "btn col m12 valuation__submit", :"data-id" => lecture.id %>
                   </div>
             </div>
           </div>

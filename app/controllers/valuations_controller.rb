@@ -2,7 +2,14 @@ class ValuationsController < ApplicationController
 	before_action :check_user_valuations, only: [:index]
 
 	def index
+		@is_search = false
 
+		if params[:search]
+			@lectures = Lecture.searchForValuation(params[:search])
+			@lectures = @lectures.paginate(:page => params[:page], :per_page => 15)
+
+			@is_search = true
+		end
 	end
 
 	# 강의평가를 2번 이상 하지 않은 사용자에게 보여주는 VIEW

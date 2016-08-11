@@ -1,0 +1,7 @@
+<% if current_user.has_not_valuation? (lec.id) %>
+      <a class="valign-wrapper modal-trigger waves-effect waves-light btn blue lighten-2" href="#l<%=lec.id%>">
+          <span class = "valign">강의평가</span>
+      </a>
+<% else %>
+      <i class="material-icons">done</i>
+<% end %>

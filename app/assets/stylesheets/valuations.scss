@@ -20,3 +20,11 @@
 {
   background: url(asset-path('activated_star.png'));
 }
+
+.valuation__star-auto-resize
+{
+  height: auto;
+  width: auto;
+  max-width: 20px;
+  max-height: 20px;
+}

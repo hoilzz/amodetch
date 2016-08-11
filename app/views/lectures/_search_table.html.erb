@@ -6,12 +6,12 @@
 <table class = "striped">
   <thead>
         <tr>
-            <th data-field="subject">강의명</th>
-            <th data-field="professor">교수명</th>
-            <th data-field="open_department">학과</th>
-            <th data-field="acc_total">별점</th>
-            <th data-field="valuations_size">평가수</th>
-            <th data-field="new_valuation"> </th>
+            <th class = "center-align" data-field="subject">강의명</th>
+            <th class = "center-align" data-field="professor">교수명</th>
+            <th class = "center-align" data-field="open_department">학과</th>
+            <th class = "center-align" data-field="acc_total">별점</th>
+            <th class = "center-align" data-field="valuations_size">평가수</th>
+            <th class = "center-align" data-field="new_valuation"> </th>
         </tr>
   </thead>
 
@@ -19,17 +19,21 @@
       <% lectures.each do |lec| %>
         <tr class = "l<%= lec.id %>">
           <td class = "subject"><%= lec.subject%></td>
-          <td class = "professor"><%= lec.professor%></td>
-          <td class = "open_department"><%= lec.open_department%></td>
-          <td class = "avr_rating"><%= lec.avr_rating%></td>
-          <td class = "count"><%= lec.valuations.count%></td>
-          <td class = "td__modal--a">
-            <% if current_user.has_not_valuation? (lec.id) %>
-                <a class="modal-trigger waves-effect waves-light" href="#l<%=lec.id%>">
-                  <i class="material-icons">mode_edit</i>
-                </a>
-            <% else %>
-                  <i class="material-icons">done</i>
+          <td class = "professor center-align"><%= lec.professor%></td>
+          <td class = "open_department center-align"><%= lec.open_department%></td>
+          <td class = "avr_rating center-align">
+            <div>
+              <%= render 'valuations/show_star_by_rating', :rating => lec.avr_rating %>
+              <%= lec.avr_rating.round(2)%>
+            </div>
+          </td>
+          <td class = "count center-align"><%= lec.valuations.count%></td>
+          <td class = "td__modal--a center-align">
+            <% if current_page? (url_for(controller: 'valuations', action: 'new'))%>
+              <%= render "valuation_btn", :lec => lec%>
+            <% elsif current_page? (url_for(controller: 'valuations', action: 'index'))%>
+              <!-- 조회하기 -->
+              <%= render 'lecture_show_btn', :lec => lec %>
             <% end %>
           </td>
         </tr>
@@ -38,216 +42,3 @@
 </table>
 </div>
 <%= will_paginate lectures %>
-
-
-<!-- Modal Trigger -->
-<!-- collection으로 만들자  -->
-<% lectures.each do |lec| %>
-    <%= render 'valuations/valuation_form', :valuation => valuation, :lecture => lec%>
-<% end %>
-
-<script>
-    (function($,document,window,undefined){
-        var valuation = {
-
-            active_value: 0,
-
-            init: function()
-            {
-
-              $(document).ready(function(){
-                $('select').material_select();
-                // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-                $('.modal-trigger').leanModal({
-                   dismissible: true, // Modal can be dismissed by clicking outside of the modal
-                   opacity: .5, // Opacity of modal background
-                   in_duration: 300, // Transition in duration
-                   out_duration: 200, // Transition out duration
-                   starting_top: '4%', // Starting top style attribute
-                   ending_top: '10%', // Ending top style attribute
-                   ready: function() { //alert('Ready');
-                                     }, // Callback for Modal open
-                   complete: function()
-                   {
-                     valuation.active_value = 0;
-                   } // Callback for Modal close
-                 }
-                );
-                $('#valuation_content').trigger('autoresize');
-
-              });
-
-              $('body').on('mouseenter', '.valuation__star', function(event){
-                event.preventDefault();
-                var rating_value = $(this).data('value'),
-                    valuation_blk = $(this).parent(),
-                    info_element = $(valuation_blk).find(".valuation__info");
-
-                valuation.fillOutActiveInStar($(valuation_blk));
-                valuation.fillStarByValue($(this), "valuation__star-temp", rating_value);
-                valuation.writeValuationText(rating_value, info_element);
-
-              });
-
-
-              $('body').on('mouseout', '.valuation__star', function(event){
-                event.preventDefault();
-
-                var info_element = $(this).parent().find(".valuation__info");
-
-                $(".valuation__star").removeClass('valuation__star-temp');
-                valuation.fillStarByValue($(this), "valuation__star-active", valuation.active_value);
-                valuation.writeValuationText(valuation.active_value, info_element);
-              });
-
-              $('body').on('touchstart click', '.valuation__star', function(event){
-                event.preventDefault();
-                valuation.active_value = $(this).data('value');
-                valuation.fillStarByValue($(this), "valuation__star-active", valuation.active_value);
-              });
-
-              $('body').on('click', '.valuation__submit', function(event){
-                event.preventDefault();
-                console.log("valuation__submit");
-                // form element 찾아서 인자값으로 넘겨주기
-                var lecture_id = $(this).attr('data_id');
-                $form_element = valuation.findParentForm(lecture_id);
-
-                valuation.sendValuation($form_element);
-              })
-            },
-
-            fillOutActiveInStar: function(valuation_blk)
-            {
-              $(valuation_blk).find(".valuation__star").removeClass("valuation__star-active");
-            },
-
-            fillStarByValue: function(element_hovered, class_value, rating_value)
-            {
-              // .valuation_star 다 들고오기
-              // this의 data-value를 개수로 설정
-              // 그 개수만큼 클래스 추가
-              var parent_element = $(element_hovered).parent(),
-                  star_element = $(parent_element).find(".valuation__star");
-              for (var i = 0; i < rating_value; i+=1)
-              {
-                $(star_element[i]).addClass(class_value);
-              }
-            },
-
-            writeValuationText: function(rating_value, info_element)
-            {
-              var text_by_valuation = "";
-
-              if (rating_value == 1) {
-                text_by_valuation = "최악이에요."
-              }
-              else if (rating_value == 2) {
-                text_by_valuation = "별로에요."
-              }
-              else if (rating_value == 3) {
-                text_by_valuation = "보통이요."
-              }
-              else if (rating_value == 4) {
-                text_by_valuation = "좋아요!"
-              }
-              else if (rating_value == 5) {
-                text_by_valuation = "넘나 최고요!"
-              }
-              else {
-                text_by_valuation = "별점 평가해주세요!"
-              }
-              $(info_element).html(text_by_valuation);
-            },
-
-            sendValuation: function(form_element)
-            {
-              var $form = $(form_element),
-                  url = $form.attr("action"),
-                  content = $form.find("textarea[name='valuation[content]']").val(),
-                  lecture_id = $form.find("input[name='valuation[lecture_id]']").val(),
-                  rating;
-
-              rating = $form.find('.valuation__star-active').last().data('value');
-
-              // 컨텐츠 10자 이상 입력했는지 return bool
-              var isContent = valuation.isTenStringContent(content),
-                  isRating  = valuation.isExistRating(rating);
-
-                console.log("ajax요청");
-              // 별점 평가 했는지 검사 return bool
-              if (isContent && isRating)
-              {
-                  $.ajax({
-                          url: url + '.json',
-                          dataType: "json", // response type
-                          type:'POST',
-                          beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-                          data: {'valuation': {'content':content, 'rating':rating, 'lecture_id': lecture_id}},
-                          success:function(data)
-                          {
-                            window.location.reload();
-                            var str_subject = data.subject;
-                            Materialize.toast(str_subject+"강의평가 완료하였습니다.", 2500);
-                          },
-                          error:function(jqXHR, textStatus, errorThrown)
-                          {
-                            console.log(JSON.stringify(jqXHR));
-                            console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
-                            alert("실패했수다..");
-                          }
-                        });
-              }
-              else
-              {
-                  if (!isContent)
-                  {
-                    valuation.makeContentErrMsg($form);
-                    // 10자 이상 입력해주세요.
-                  }
-                  if (!isRating)
-                  {
-                    //별점 평가해주세요 빨간색으로 바꾸기
-                    valuation.makeRatingErrMsg($form)
-                  }
-              }
-            },
-
-            // 10자 이상 체크
-            isTenStringContent: function(content)
-            {
-              var isExist = (content.length >= 10) ? true : false;
-              return isExist;
-            },
-
-            isExistRating: function(rating)
-            {
-              var isExist = (rating > 0) ? true : false;
-              return isExist;
-            },
-
-            makeContentErrMsg: function(form_element)
-            {
-              $(form_element).find("textarea[name='valuation[content]']").addClass("validate invalid");;
-              // $(form_element).find("label[for='valuation_content']").attr('data-error', "10자 이상 입력해주세요.").attr('data-success', "GOOD!")
-            },
-
-            makeRatingErrMsg: function(form_element)
-            {
-              $(form_element).find(".valuation__info").css('color', 'red');
-            },
-
-            findParentForm: function(lecture_id)
-            {
-              $form_element = $("#l"+lecture_id).find('.new_valuation');
-              return $form_element;
-            }
-
-
-      }
-
-      $(document).ready(valuation.init);
-
-    })(jQuery,document,window);
-
-</script>

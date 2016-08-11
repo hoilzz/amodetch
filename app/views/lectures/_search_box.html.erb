@@ -1,18 +1,12 @@
+
+
+
 <div class = "container">
   <div class = "section">
         <div class = "row">
           <div class = "col m8 offset-m2 center-align">
-            <ul class="collection">
-                <li class="collection-item">
-                  강의평가 2번 작성 후, 강의평가 열람 가능합니다.
-                </li>
-          </div>
-        </div>
-  </div>
-  <div class = "section">
-        <div class = "row">
-          <div class = "col m8 offset-m2 center-align">
-              <%= form_tag new_valuation_path, method: "get" do %>
+
+              <%= form_tag action_url, method: :get do %>
               <div class = "row">
                   <div class="input-field col m10">
                     <%= text_field_tag :"search"%>
@@ -34,7 +28,7 @@
                 <h5> 검색 결과가 없습니다. </h5>
                 <% end %>
           <% else %>
-                <%= render "lectures/search_table", :lectures => lectures, :valuation => valuation %>
+                <%= render "lectures/search_table", :lectures => lectures %>
           <% end %>
     </div>
   </div>
