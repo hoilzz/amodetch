@@ -172,3 +172,21 @@
 /*
 BEM
 */
+.lecture_blk
+{
+  height : 200px;
+}
+
+.lecture__card
+{
+  height: 200px;
+  width: auto;
+  // max-width: 20px;
+  // max-height: 20px;
+}
+
+.card__valuation-text
+{
+  font-size : 1.1em;
+  font-style : italic;
+}

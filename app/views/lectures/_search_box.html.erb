@@ -6,7 +6,7 @@
         <div class = "row">
           <div class = "col m8 offset-m2 center-align">
 
-              <%= form_tag action_url, method: :get do %>
+              <%= form_tag url_for(controller: 'valuations', action: action_url), method: :get do %>
               <div class = "row">
                   <div class="input-field col m10">
                     <%= text_field_tag :"search"%>

@@ -1,0 +1,29 @@
+<div class = "row" style = "background : white">
+    <div class = "col m8">
+      <div class = "card lecture__card z-depth-0 row-margin-top valign-wrapper">
+          <div class = "card-content valign">
+            <span class="card-title"><%= valuation.user.nickname%> 님</span>
+            <%= valuation.timestamp_division %>
+            <p>
+              <%= simple_format(valuation.content) %>
+            </p>
+          </div>
+      </div>
+    </div>
+
+
+    <div class = "col m4">
+      <div class = "card lecture__card z-depth-0 valign-wrapper">
+            <div class = "card-content valign">
+                <span class="card-title">
+
+                  <%= render "valuations/show_star_lg_by_user", :rating => valuation.rating %>
+                  <%= valuation.rating.round(1) %>
+                </span>
+                <!-- 큰별 넣기 -->
+                <p class = "card__valuation-text center-align"><%= valuation_text_by_rating(valuation.rating) %>
+                </p>
+            </div>
+          </div>
+      </div>
+</div>
