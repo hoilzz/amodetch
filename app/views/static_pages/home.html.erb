@@ -16,25 +16,25 @@
 			</div>
 	</div>
 
-<div class = "container">
-  <div class="row">
-  		<div class="col s8 offset-s2" align="center">
-      			<div class="col s4 promo_school_box">
-              <%= image_tag "school.png", id: "main_img" %>
-      				<div>
-                <p class = "light" style="font-size:18pt">세종대학교</span>에서
-              </div>
-      			</div>
+	<div class = "container">
+	  <div class="row" style="position: absolute; top: 510px; width: 80%; margin-left:-120px;" >
+	  		<div class="col s8 offset-s2" align="center">
+	      			<div class="col s4 promo_school_box">
+	              <%= image_tag "school.png", id: "main_img" %>
+	      				<div>
+	                <p class = "light" style="font-size:18pt; margin-top:-10px; padding-bottom:130px;">세종대학교</span>에서
+	              </div>
+	      			</div>
 
-      			<div class="col s4 promo_box">
-      				<div class = "light promo_box__count"><%=User.all.count%></div>
-      				<p class = "light">참여한 학생</p>
-      			</div>
+	      			<div class="col s4 promo_box">
+	      				<div class = "light promo_box__count" style="padding-top:64px; font-weight:400; font-size:50pt;"><%=User.all.count%></div>
+	      				<p class = "light" style="margin-top:-20px; padding-bottom:80px;" >참여한 학생</p>
+	      			</div>
 
-      			<div class="col s4 promo_box">
-      				<div class="light promo_box__count"><%=Valuation.all.count%></div>
-      				<p class = "light">등록된 강의평가수</p>
-      			</div>
-      </div>
-    </div>
-	</div>
+	      			<div class="col s4 promo_box" style="background-color:#009ce6;">
+	      				<div class="light promo_box__count" style="padding-top:64px; font-weight:400; font-size:50pt;"><%=Valuation.all.count%></div>
+	      				<p class = "light" style="margin-top:-20px; padding-bottom:80px; ">등록된 강의평가수</p>
+	      			</div>
+	      </div>
+	    </div>
+		</div>

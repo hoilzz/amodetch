@@ -67,8 +67,10 @@
 
               $('body').on('touchstart click', '.valuation__star', function(event){
                 event.preventDefault();
+                var info_element = $(this).parent().find('.valuation__info');
                 valuation.active_value = $(this).data('value');
                 valuation.fillStarByValue($(this), "valuation__star-active", valuation.active_value);
+                valuation.writeValuationText(valuation.active_value, info_element);
               });
 
               $('body').on('touchstart click', '.valuation__submit', function(event){
@@ -93,7 +95,7 @@
               // this의 data-value를 개수로 설정
               // 그 개수만큼 클래스 추가
               var parent_element = $(element_hovered).parent(),
-                  star_element = $(parent_element).find(".valuation__star");
+                  star_element = $(parent_element).find(".valuation__star").removeClass(class_value);
               for (var i = 0; i < rating_value; i+=1)
               {
                 $(star_element[i]).addClass(class_value);
