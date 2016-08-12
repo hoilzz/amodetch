@@ -30,6 +30,11 @@
           <%= link_to "Facebook으로 로그인","/auth/facebook", target: "_parent", class: "btn waves-effect waves-light col m12 fb_btn"%>
         </div>
 
+        <div class = "row">
+          <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+          </fb:login-button>
+        </div>
+
       </div>
     <!-- </div> -->
   </div>

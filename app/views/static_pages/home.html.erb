@@ -38,30 +38,3 @@
       </div>
     </div>
 	</div>
-
-
-<script>
-  <% if !@lecture_name.nil? %>
-    $('.dropdown-toggle').dropdown().html('<%=@lecture_name%>');
-  <% end %>
-
-  $(function(){
-    $(".dropdown-menu").on('click', 'li a', function(){
-      $("#border-none:first-child").text($(this).text());
-      $("#border-none:first-child").val($(this).text());
-  });
-
-});
-function showLecture(lec_num)
-  {
-      <% if user_login? %>
-        <% if current_user.valuations.count>=2 %>
-          window.location="/lectures/"+lec_num.toString()
-         <% else %>
-         window.location="<%=forcingwritting_url%>"
-         <% end %>
-       <% else %>
-          window.location="<%=root_url%>"
-      <% end %>
-  }
-</script>

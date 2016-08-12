@@ -13,36 +13,13 @@ Rails.application.routes.draw do
 
  get 'load' => 'schedules#load'
 
-
-
-
-
-
-
-
-
-
- # get 'users/new'
  get 'home_admin' => 'static_pages#home_admin'
- get 'lecture_search' => 'static_pages#search'
 
  get 'search_timetable' => 'enrollments#search_timetable'
 
- get 'usage' => 'static_pages#menual'
- get 'notice' => 'static_pages#notice'
- get 'detailsearch' =>'timetables#detailsearch'
- get 'login_form' => 'static_pages#login_form'
  get 'home' => 'static_pages#home'
 
  root 'static_pages#home'
-
- get 'support' =>'static_pages#support'
-
- get 'forcinglogin' => 'static_pages#forcinglogin'
-
- get 'forcingwritting' =>'valuation#forcingwritting'
-
- get 'first_login' => 'static_pages#first_login'
 
  get 'signup'  => 'users#new'
 
@@ -50,27 +27,18 @@ Rails.application.routes.draw do
  post   'login'   => 'sessions#create'
  delete 'logout'  => 'sessions#destroy'
 
- post 'enrollments/make_a_change' => 'enrollments#make_a_change'
- delete 'delete_enrollment' => 'enrollments#destroy'
- post 'add_enrollment' => 'enrollments#create'
-
-
 
 delete '/delete_timetable/:id' => 'timetables#destroy', as: 'delete_timetable'
 
 resources :timetables
 resources :timetable_items, only: [:create, :destroy]
 
-
 get 'copy'   => 'timetables#copy'
 post 'paste' => 'timetables#paste'
-
-
 
 resources :users do
    member { get :timetable }
 end
-
 
 match 'auth/:provider/callback', :controller => 'sessions', action: 'create_by_facebook', via: [:get, :post]
 match 'auth/failure', to: redirect('/'), via: [:get, :post]

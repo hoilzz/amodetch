@@ -1,19 +1,15 @@
 class SessionsController < ApplicationController
-  skip_before_action :require_login, only: [:new, :create]
+  skip_before_action :require_login, only: [:new, :create, :create_by_facebook]
 
   def new
-
   end
 
   def create
     user = User.find_by(email: params[:session][:email])
-
     if user && user.authenticate(params[:session][:password])
       log_in user
       current_user
-
       redirect_to home_path
-
     else
       flash[:danger] = '아이디 혹은 비밀번호가 잘못 되었습니다.' # Not quite right!
       redirect_to login_path
@@ -21,19 +17,22 @@ class SessionsController < ApplicationController
   end
 
   def create_by_facebook
+    # user 새로 만들기
     @user = User.from_omniauth(env["omniauth.auth"])
+    # @user = User.find_or_create_from_auth_hash(auth_hash)
+
+    # self.current_user = @user
+
     session[:user_id] = @user.id
     session[:user_name] = @user.name
 
     if @user.nickname.nil?
       redirect_to edit_user_path(@user)
-      #redirect_to :controller => 'users', :action => 'edit', :id => user.id
     else
       redirect_to home_path
     end
-
-
   end
+
 
   def destroy
     log_out
@@ -48,5 +47,8 @@ class SessionsController < ApplicationController
   private
     def user_params
       params.require(:user).permit(:provider, :uid, :name, :oauth_token, :oauth_expires_at)
+    end
+    def auth_hash
+      request.env['omniauth.auth']
     end
   end
