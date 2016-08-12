@@ -35,10 +35,14 @@ $hover_gray   : #f9f9f9;
 ////
 ////////////////////////
 */
+.timetable_tbody
+{
+  font-size:0.9em;
+}
 
 .timetable--td
 {
-
+  width:100px;
 }
 
 .timetable__td--active
@@ -178,6 +182,7 @@ $hover_gray   : #f9f9f9;
 .cart
 {
   border-top : 1px solid #d0d0d0;
+  font-size : 0.8em;
 }
 
 .cart__td

@@ -19,8 +19,8 @@ class User < ActiveRecord::Base
       user.uid      = auth.uid
       user.name     = auth.info.name
       user.token    = auth.token
-      user.email = "#{user.uid}@facebook.com"
-      user.password = "qwoieqwiurqrqwpqwruqefoqeofqqfqfqieqr"
+      user.email 		= auth.info.email
+      user.password = Devise.friendly_token[0,20]
       user.save
     end
   end
