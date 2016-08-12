@@ -2,7 +2,6 @@ class LecturesController < ApplicationController
 
 	before_action :admin_user, only: [:destroy, :edit, :create, :update, :new, :import]
 	before_action :fillnickname, only: [:show]
-	before_action :correct_user, only: [:timetable]
 
 	require 'roo'
 
@@ -21,9 +20,10 @@ class LecturesController < ApplicationController
 	end
 
 	def create
-		Lecture.create(subject: params[:lecture][:subject],
-					   professor: params[:lecture][:professor],
-					   major: params[:lecture][:major])
+		# lecture 생성
+		# lecture.schedule 생성
+		# schedule.schedule_detail생성
+
 		redirect_to root_url
 	end
 
@@ -58,13 +58,7 @@ class LecturesController < ApplicationController
 
 	private
 
-
-
-		def lecture_params
-			params.require(:lecture).permit(:subject,
-											 :professor, :major, :lecture_time)
-		end
-
+	
 
 		def admin_user
 			redirect_to(root_url) unless current_user.admin?
@@ -79,17 +73,6 @@ class LecturesController < ApplicationController
 		end
 
 
-		def correct_user
-			if logged_in_user? && current_user.nickname.nil?
-				flash[:danger]= "닉네임을 설정하여 주세요. 익명성 보장을 위함입니다."
-				redirect_to edit_user_url(current_user)
-			end
-		end
 
-    def goforcingwritting
-    	if current_user.valuations.count<2
-      	redirect_to forcingwritting_path
-    end
-  end
 
 end

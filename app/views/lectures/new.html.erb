@@ -1,26 +1,37 @@
 
 
 <div class="row">
-	<div class="col-md-1"></div>
-	<div class="col-md-10">
-<h1>New Lecture</h1>
-<%= form_for @lecture do |f|%>
 
-<%= f.label :"강의" %>
-<%= f.text_field :subject %> <br>
+<h5>New Lecture</h5>
 
-<%= f.label :"교수" %>
-<%= f.text_field :professor %><br>
+		<%= form_for @lecture do |f|%>
 
-<%= f.label :"개설학과" %>
-<%= f.text_field :major %><br>
+		<%= f.label :"강의명" %>
+		<%= f.text_field :subject %>
 
-<%= f.submit :submit %>
-<% end %>
+		<%= f.label :"교수명" %>
+		<%= f.text_field :professor %>
+
+		<%= f.label :"주관학과" %>
+		<%= f.text_field :major %>
+
+		<%= f.label :"이수" %>
+		<%= f.text_field :isu %>
+
+		<%= f.label :"학점" %>
+		<%= f.text_field :credit %>
+
+		<%= f.label :"개설학과" %>
+		<%= f.text_field :open_department %>
+
+<!-- schedule  -->
+	
 
 
-	</div>
+		<%= f.submit :submit %>
 
-	<div class="col-md-1"></div>
-	</div>
 
+		<% end %>
+
+
+</div>

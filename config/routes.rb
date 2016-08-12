@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
  resources :lectures do
    collection { post :import }
+   resources :schedules
  end
 
  resources :valuations, only: [:new, :create, :destroy, :edit, :update, :index]
