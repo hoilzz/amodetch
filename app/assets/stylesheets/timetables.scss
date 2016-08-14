@@ -172,10 +172,39 @@ $hover_gray   : #f9f9f9;
   display : none;
 }
 
-.collection .collection-item
+
+.search_collection
+{
+  min-height:600px;
+}
+
+.collection__total
+{
+  font-size : 0.8em;
+}
+
+.collection-item
 {
   position :relative;
 }
+.collection li:hover
+{
+  background-color: #e0e0e0;
+  cursor: pointer;
+}
+.collection__extra_info
+{
+  display:inline-block;
+}
+.collection-font
+{
+  font-size : 0.9em;
+}
+.collection__professor
+{
+  padding-right:15px;
+}
+
 
 
 

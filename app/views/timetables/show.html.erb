@@ -18,7 +18,7 @@
       </div>
     </div>  <!-- col m8 -->
 
-  <div class = "col m4">
+  <div class = "col m4" style = "padding-top : 50px">
 
       <%= form_tag search_url, :method => 'get', id: 'searchForm' do %>
           <%= text_field_tag :searchWord, params[:search],
@@ -26,10 +26,11 @@
           <%= hidden_field_tag :semester, @current_timetable.semester %>
       <% end %>
 
-    <%= render 'search_table'%>
-       <!-- 검색 결과 -->
+    <div class = "search_collection">
+        <%= render 'search_table'%>
+    </div>
 
-    <div class = "my_cart_container">
+    <div class = "my_cart">
         <span class = "lead"> 내가 담은 과목 </span>
         <table class="cart striped">
           <thead>
@@ -66,6 +67,7 @@
 
 
     findLectures: function(formElement, pageNumClicked){
+      $('.preloader').addClass('hide');
        // Get some values from elements on the page:
       var $form = $( formElement ),
         word = $form.find( "input[name='searchWord']" ).val(),
@@ -77,51 +79,65 @@
       var posting = $.post( url, { searchWord: word, semester: semester, pageSelected: pageNum});
 
       posting.success(function( data ) {
-        var collectionUl = $('ul.collection');
-        var paginationUl = $('ul.pagination');
-        var dataLecture_len = data.lectures.length;
-
-        collectionUl.html('');
-        paginationUl.html('');
-
-        // 강의 검색 결과인 강의정보 row 생성
-        // 강의명, 교수명, 강의시간, 개설학과
-        // data-hover : 강의시간을 시간표 cell id로 변환 한것을 저장
-        for (var i = 0; i < dataLecture_len; i++)
+        // 검색 결과 없으면
+        if (data.totalSearched == 0)
         {
-          var lec_title          = "<div class=title></div>",
-              lec_professor      = "<span class=professor></span>",
-              lec_time           = "<span class=lecturetime></span>",
-              lec_openDepartment = "<span style=float:right></span>",
-              collectionLi = "<li class=collection-item></li>",
-              lec_info_btn = timetable.makeLinkToLecture(data.lectures[i].lecture_id, "search-blk")
-
-
-          // 강의명, 교수명, 강의시간, 개설학과 순서대로 html 값 삽입
-          lec_title = $(lec_title).html(data.lectures[i].subject);
-          lec_professor = $(lec_professor).html(data.lectures[i].professor);
-          lec_time = $(lec_time).html(data.lectures[i].lecture_time);
-          lec_openDepartment = $(lec_openDepartment).html(data.lectures[i].open_department);
-
-
-
-          // li 태그 안에 순서대로 삽입.
-          collectionLi = timetable.insertLecTime(collectionLi, data.lectures[i].schDetails);
-
-          collectionLi = $(collectionLi).attr('data-sch-id', data.lectures[i].schedule_id);
-
-          collectionLi = $(collectionLi).append(lec_title, lec_professor, lec_time, lec_openDepartment, lec_info_btn);
-          $(collectionUl).append(collectionLi);
+          $(".collection__total").html("총 0개의 검색 결과");
+          $("ul.collection").html('');
+          $('ul.pagination').html('');
         }
 
-        timetable.fillSearchPagination(data.pageSelected, data.finalPageNum);
+        else {
+            var collectionUl = $('ul.collection');
+            var paginationUl = $('ul.pagination');
+            $(".collection__total").html("총 "+ data.totalSearched + "개의 검색 결과");
+            var dataLecture_len = data.lectures.length;
 
+            collectionUl.html('');
+            paginationUl.html('');
+            // div class = "collection__total right-align">총 0개의 검색 결과</div
+            // 강의 검색 결과인 강의정보 row 생성
+            // 강의명, 교수명, 강의시간, 개설학과
+            // data-hover : 강의시간을 시간표 cell id로 변환 한것을 저장
+            for (var i = 0; i < dataLecture_len; i++)
+            {
+              var lec_title          = "<div class=title></div>",
+                  // 교수명, 강의시간, 개설학과명을 wrapping 하는 div
+                  lec_info_blk       = "<div class=collection__extra_info></div>"
+                  lec_professor      = "<span class=collection__professor></span>",
+                  lec_time           = "<span class=lecturetime></span>",
+                  lec_openDepartment = "<div class=right-align></div>",
+                  collectionLi = "<li class=collection-item></li>",
+                  lec_info_btn = timetable.makeLinkToLecture(data.lectures[i].lecture_id, "search-blk")
+
+
+              // 강의명, 교수명, 강의시간, 개설학과 순서대로 html 값 삽입
+              lec_title = $(lec_title).html(data.lectures[i].subject);
+              lec_professor = $(lec_professor).html(data.lectures[i].professor);
+              lec_time = $(lec_time).html(data.lectures[i].lecture_time);
+              lec_openDepartment = $(lec_openDepartment).html(data.lectures[i].open_department);
+              lec_info_blk  = $(lec_info_blk).append(lec_professor, lec_time);
+
+
+              // li 태그 안에 순서대로 삽입.
+              collectionLi = timetable.insertLecTime(collectionLi, data.lectures[i].schDetails);
+
+              collectionLi = $(collectionLi).attr('data-sch-id', data.lectures[i].schedule_id);
+
+              collectionLi = $(collectionLi).append(lec_title,lec_info_blk, lec_openDepartment, lec_info_btn);
+              $(collectionUl).append(collectionLi);
+            }
+
+            timetable.fillSearchPagination(data.pageSelected, data.finalPageNum);
+        }
       });
 
       posting.error(function (data){
         console.log(data);
-
       });
+      posting.beforeSend(function (data){
+        $('.preloader').removeClass('hide');
+      })
     },
     init: function()
     {
