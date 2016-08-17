@@ -114,7 +114,7 @@
                   lec_openDepartment = "<div class=right-align></div>",
                   collectionLi = "<li class=collection-item></li>",
                   lec_info_btn = timetable.makeLinkToLecture(data.lectures[i].lecture_id, "search-blk")
-                  add_timetable_item_btn = timetable.makeBtnCreateTimetableItem(data.lectures[i].schedule_id);
+                  // add_timetable_item_btn = timetable.makeBtnCreateTimetableItem(data.lectures[i].schedule_id);
 
 
               // 강의명, 교수명, 강의시간, 개설학과 순서대로 html 값 삽입
@@ -564,7 +564,7 @@
       var element_btn = "<a href=# class=><i class=material-icons>library_add</i></a>"
       element_btn = element_btn.attr('data-sch-id', schedule_id);
       return element_btn;
-    }
+    },
 
 
     // td생성 후, cart table에 담기
