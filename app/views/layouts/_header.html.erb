@@ -3,9 +3,9 @@
   <nav class = "blue lighten-2">
     <div class="nav-wrapper">
       <div class = "container">
-        <a href="/" class="brand-logo">아뭐듣지</a>
+        <a href="/" class="brand-logo left">아뭐듣지</a>
         <!-- <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a> -->
-        <ul class="hide-on-med-and-down right">
+        <ul class="right">
           <%= render 'layouts/nav_contents' %>
         </ul>
         <!-- <ul class="side-nav" id="mobile-demo"> -->
@@ -31,9 +31,10 @@
         alignment: 'left' // Displays dropdown with edge aligned to the left of button
       }
     );
-    // $(".button-collapse").sideNav();
+    $(".button-collapse").sideNav();
 
   });
+
 
 
 
