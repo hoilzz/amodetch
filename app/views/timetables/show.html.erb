@@ -130,7 +130,7 @@
 
               collectionLi = $(collectionLi).attr('data-sch-id', data.lectures[i].schedule_id);
 
-              collectionLi = $(collectionLi).append(lec_title, lec_info_blk, lec_openDepartment, lec_info_btn, add_timetable_item_btn);
+              collectionLi = $(collectionLi).append(lec_title, lec_info_blk, lec_openDepartment, lec_info_btn);
               $(collectionUl).append(collectionLi);
             }
             timetable.fillSearchPagination(data.pageSelected, data.finalPageNum);
