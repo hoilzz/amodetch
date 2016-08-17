@@ -7,7 +7,6 @@
 body
 {
   background-color : #fcfcfc;
-  font-size : 14pt;
 }
 .container
 {
@@ -15,15 +14,6 @@ body
   width:100%;
 }
 
-// @media only screen and (min-width: 990px) {
-//   .row .col.l4{
-//
-//   }
-// }
-// @media only screen and (min-width: 600px) {
-//   font-size:3.5rem;
-// }
-//
 
 
 
@@ -42,7 +32,6 @@ body
 .main_blk
 {
   background : url(asset-path('main_view.png')) no-repeat center center;
-  height:500px;
 }
 .title_blk
 {
@@ -93,7 +82,7 @@ body
   }
   color: white;
   position:absolute;
-  top:30%;
+  // top:30%;
   left:0;
   width:100%;
 }

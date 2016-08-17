@@ -171,6 +171,18 @@ $hover_gray   : #f9f9f9;
   position:absolute;
   display : none;
 }
+.add-blk
+{
+  background : url(asset-path('ic_info_outline_black_24dp_1x.png'));
+  width : 24px;
+  height : 24px;
+  cursor : pointer;
+  top: 5px;
+  right: 5px;
+  cursor:pointer;
+  position:absolute;
+  display : none;
+}
 
 
 .search_collection

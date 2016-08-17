@@ -3,20 +3,23 @@
 <% end %>
 
 
-	<div class = "valign-wrapper" style = "width : 100%">
-    <%= image_tag "main_row.png", class: "responsive-img, main_image_blk"%>
-    <div class="main_image__text valign" align="center">
-          <strong>클릭만으로 간편하게,</strong>
-          <strong>시간표를 짜는 가장 쉬운 방법</strong>
-          <div class = "main_image__btn">
+	<div class = "row">
+    <div class = "col s12 valign-wrapper" style = "padding :0">
+        <%= image_tag "main_row.png", class: "responsive-img, main_image_blk"%>
+        <div class="main_image__text valign" align="center">
+              <strong>클릭만으로 간편하게,</strong>
+              <strong>시간표를 짜는 가장 쉬운 방법</strong>
+              <div class = "main_image__btn">
 
-                <%= link_to new_timetable_path do %>
-                    <%= image_tag "write_timetable_btn.png", align: "center responsive-img", alt: "시간표 작성하기 버튼"%>
-                <% end %>
+                    <%= link_to new_timetable_path do %>
+                        <%= image_tag "write_timetable_btn.png", align: "center responsive-img", alt: "시간표 작성하기 버튼"%>
+                    <% end %>
 
-          </div>
+              </div>
+        </div>
     </div>
   </div> <!--background image-->
+
 
   <div class="container">
     	 <div class="row row-margin-top center"> <!--background image와 바로가기-->
