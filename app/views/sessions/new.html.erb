@@ -1,11 +1,20 @@
 <% provide(:title, "로그인") %>
 <div class = "container">
-  <div class="row">
+  <div class="row row-margin-top">
       <div class="col m4 offset-m4 ">
 
         <div>
           <h5 class = "center-align">로그인-</h5>
         </div>
+
+        <% if flash[:danger] %>
+        <div class="collection">
+          <span class="collection-item"><%= flash[:danger] %></span>
+        </div>
+          <div class="notice">
+
+          </div>
+        <% end %>
 
         <%= form_for(:session, url: login_path) do |f| %>
 

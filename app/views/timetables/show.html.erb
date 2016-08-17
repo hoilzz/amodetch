@@ -113,8 +113,8 @@
                   lec_time           = "<span class=lecturetime></span>",
                   lec_openDepartment = "<div class=right-align></div>",
                   collectionLi = "<li class=collection-item></li>",
-                  lec_info_btn = timetable.makeLinkToLecture(data.lectures[i].lecture_id, "search-blk")
-                  // add_timetable_item_btn = timetable.makeBtnCreateTimetableItem(data.lectures[i].schedule_id);
+                  lec_info_btn = timetable.makeLinkToLecture(data.lectures[i].lecture_id, "search-blk"),
+                  add_timetable_item_btn = timetable.makeBtnCreateTimetableItem(data.lectures[i].schedule_id);
 
 
               // 강의명, 교수명, 강의시간, 개설학과 순서대로 html 값 삽입
@@ -130,7 +130,7 @@
 
               collectionLi = $(collectionLi).attr('data-sch-id', data.lectures[i].schedule_id);
 
-              collectionLi = $(collectionLi).append(lec_title, lec_info_blk, lec_openDepartment, lec_info_btn);
+              collectionLi = $(collectionLi).append(lec_title, lec_info_blk, lec_openDepartment, lec_info_btn, add_timetable_item_btn);
               $(collectionUl).append(collectionLi);
             }
             timetable.fillSearchPagination(data.pageSelected, data.finalPageNum);
@@ -165,6 +165,14 @@
        timetable.putLectureOnTimetable($(this));
      });
 
+     // + 터치 했을 때 강의 추가
+     $('body').on('touchstart', '.add-blk', function(event){
+       event.preventDefault();
+       event.stopPropagation();
+       timetable.putLectureOnTimetable($(this));
+
+     });
+
      // 검색 결과 강의에 마우스 커서 올렸을 때
      $('body').on('mouseenter touchstart', '.collection-item', function(event){
        event.preventDefault();
@@ -172,6 +180,7 @@
        timetable.fillPreviewLecture($(this));
 
      });
+
      $('body').on('mouseleave', '.collection-item', function(event){
        event.preventDefault();
        $(this).find(".search-blk").removeAttr('style');
@@ -200,8 +209,6 @@
      $('body').on('click', '.search-blk', function(event){
        event.stopPropagation();
      });
-
-
 
      timetable.getSchedulesOnTimetable();
 
@@ -561,8 +568,8 @@
 
     makeBtnCreateTimetableItem: function(schedule_id)
     {
-      var element_btn = "<a href=# class=><i class=material-icons>library_add</i></a>"
-      element_btn = element_btn.attr('data-sch-id', schedule_id);
+      var element_btn = "<a href=# class=btn>+</a>"
+      element_btn = $(element_btn).attr('data-sch-id', schedule_id).addClass("add-blk blue lighten-2");
       return element_btn;
     },
 
@@ -652,14 +659,4 @@
 })(jQuery,document,window);
 
 
-</script>
-
-<script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-ga('create', 'UA-72706618-1', 'auto');
-ga('send', 'pageview');
 </script>
