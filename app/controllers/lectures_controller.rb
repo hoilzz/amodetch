@@ -2,6 +2,7 @@ class LecturesController < ApplicationController
 
 	before_action :admin_user, only: [:destroy, :edit, :create, :update, :new, :import]
 	before_action :fillnickname, only: [:show]
+	before_action :check_user_valuations, only: [:show]
 
 	require 'roo'
 
@@ -57,8 +58,12 @@ class LecturesController < ApplicationController
 
 
 	private
+	def check_user_valuations
+		if current_user.valuations.count < 2
+			redirect_to new_valuation_path
+		end
+	end
 
-	
 
 		def admin_user
 			redirect_to(root_url) unless current_user.admin?

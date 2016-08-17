@@ -1,40 +1,58 @@
-	<div>
+<% content_for :head do %>
+  <title>아뭐듣지</title>
+<% end %>
+
+
+	<div class = "valign-wrapper" style = "width : 100%">
     <%= image_tag "main_row.png", class: "responsive-img, main_image_blk"%>
+    <div class="main_image__text valign" align="center">
+          <strong>클릭만으로 간편하게,</strong>
+          <strong>시간표를 짜는 가장 쉬운 방법</strong>
+          <div class = "main_image__btn">
+
+                <%= link_to new_timetable_path do %>
+                    <%= image_tag "write_timetable_btn.png", align: "center responsive-img", alt: "시간표 작성하기 버튼"%>
+                <% end %>
+
+          </div>
+    </div>
   </div> <!--background image-->
 
-	 <div class="row"> <!--background image와 바로가기-->
-			<div class="col m4 offset-m4 main_image__text" align="center">
-  					<div>클릭만으로 간편하게,</div>
-  					<div>시간표를 짜는 가장 쉬운 방법</div>
-  					<div class = "main_image__btn">
-                <a href="#">
-                  <%= link_to new_timetable_path do %>
-                      <%= image_tag "write_timetable_btn.png", align: "center"%>
-                  <% end %>
-                </a>
-            </div>
-			</div>
-	</div>
+  <div class="container">
+    	 <div class="row row-margin-top center"> <!--background image와 바로가기-->
+         <h4><strong class = "center"> 숫자로 보는 아뭐듣지 </strong></h4>
+    	</div>
+  </div>
 
 	<div class = "container">
-	  <div class="row" style="position: absolute; top: 510px; width: 80%; margin-left:-120px;" >
-	  		<div class="col s8 offset-s2" align="center">
-	      			<div class="col s4 promo_school_box">
-	              <%= image_tag "school.png", id: "main_img" %>
+	  <div class="row home_number_blk">
+	  		<!-- <div class="col s8 offset-s2" align="center"> -->
+	      			<div class="col l4 m4 s12 promo_school_box center">
 	      				<div>
-	                <p class = "light" style="font-size:18pt; margin-top:-10px; padding-bottom:130px;">세종대학교</span>에서
+                  <div>
+                    <strong class = "light home__number_int"><%=User.all.count%></strong> <strong class = "home__number_text">명</strong>
+                  </div>
+	                <strong class = "light home__info" style="font-size:18pt;">세종대학교 학생</strong>
+                  <p class = "light home__detail_info" style = "font-size : 11pt"> 아뭐듣지를 이용하는 학생 수가 이렇게 많습니다. 어서 가입해서 시간표도 편하게 짜고 강의평가 보고 꿀강의를 찾아보세요</p>
+
 	              </div>
 	      			</div>
 
-	      			<div class="col s4 promo_box">
-	      				<div class = "light promo_box__count" style="padding-top:64px; font-weight:400; font-size:50pt;"><%=User.all.count%></div>
-	      				<p class = "light" style="margin-top:-20px; padding-bottom:80px;" >참여한 학생</p>
+	      			<div class="col l4 m4 s12 promo_box center">
+                <div>
+                  <strong class = "light home__number_int"><%= Timetable.all.count %></strong> <strong class = "home__number_text">개</strong>
+                </div>
+                <strong class = "light" style="font-size:18pt;">시간표</strong>
+                <p class = "light home__detail_info" style = "font-size : 11pt"> 노트에 시간표 정리해 놓으면 자꾸 잃어버리죠. 시간표 힘들게 손으로 쓰지말고 아뭐듣지에 접속만 하세요!  </p>
 	      			</div>
 
-	      			<div class="col s4 promo_box" style="background-color:#009ce6;">
-	      				<div class="light promo_box__count" style="padding-top:64px; font-weight:400; font-size:50pt;"><%=Valuation.all.count%></div>
-	      				<p class = "light" style="margin-top:-20px; padding-bottom:80px; ">등록된 강의평가수</p>
+	      			<div class="col l4 m4 s12 promo_box center">
+                <div>
+                  <strong class = "light home__number_int"><%= Valuation.all.count %></strong> <strong class = "home__number_text">개</strong>
+                </div>
+                <strong class = "light" style="font-size:18pt;">강의평가</strong>
+                <p class = "light home__detail_info" style = "font-size : 11pt"> 수강신청 때마다 선배 후배 동기에게 눈치보며 연락하지 마세요. 아뭐듣지가 강의에 대한 모든 정보 알려드립니다.</p>
 	      			</div>
-	      </div>
+	      <!-- </div> -->
 	    </div>
 		</div>

@@ -1,7 +1,7 @@
 <% (1..rating).each do %>
-  <%= image_tag "activated_star_lg.png", class: "valuation__star-auto-resize"%>
+  <%= image_tag "activated_star_lg.png", class: "valuation__star-auto-resize", alt: "노란별"%>
 <% end %>
 
 <% ((rating.to_i)..4).each do %>
-  <%= image_tag "unactivated_star_lg.png", class: "valuation__star-auto-resize"%>
+  <%= image_tag "unactivated_star_lg.png", class: "valuation__star-auto-resize", alt: "회색별"%>
 <% end %>

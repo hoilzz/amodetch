@@ -1,3 +1,8 @@
+<% content_for :head do %>
+  <title><%= @current_timetable.name %></title>
+<% end %>
+
+
 <div class = "row">
 
   <!-- development -->
@@ -67,7 +72,7 @@
 
 
     findLectures: function(formElement, pageNumClicked){
-      $('.preloader').addClass('hide');
+      // $('.preloader').addClass('hide');
        // Get some values from elements on the page:
       var $form = $( formElement ),
         word = $form.find( "input[name='searchWord']" ).val(),
@@ -127,7 +132,6 @@
               collectionLi = $(collectionLi).append(lec_title,lec_info_blk, lec_openDepartment, lec_info_btn);
               $(collectionUl).append(collectionLi);
             }
-
             timetable.fillSearchPagination(data.pageSelected, data.finalPageNum);
         }
       });
@@ -135,9 +139,7 @@
       posting.error(function (data){
         console.log(data);
       });
-      posting.beforeSend(function (data){
-        $('.preloader').removeClass('hide');
-      })
+
     },
     init: function()
     {

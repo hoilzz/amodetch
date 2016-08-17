@@ -5,7 +5,7 @@
             <span class="card-title"><%= valuation.user.nickname%> 님</span>
             <%= valuation.timestamp_division %>
             <p>
-              <%= simple_format(valuation.content) %>
+              <%= replace_new_line(valuation.content).html_safe %>
             </p>
           </div>
       </div>

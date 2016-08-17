@@ -1,4 +1,5 @@
 module ValuationsHelper
+
   def valuation_text_by_rating(rating)
     if rating < 2
       "별로에요"
@@ -10,4 +11,9 @@ module ValuationsHelper
       "최고에요!"
     end
   end
+
+  def replace_new_line(content)
+    content.gsub(/\n/, "<br>").split("<br>").join("<br>")
+  end
+
 end

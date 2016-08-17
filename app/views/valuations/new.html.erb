@@ -1,3 +1,8 @@
+<% content_for :head do %>
+  <title>강의평가 하기</title>
+<% end %>
+
+
 <%= render 'valuations/valuation_count_msg'%>
 <%= render 'lectures/search_box', :lectures => @lectures, :isSearch => @isSearch, :action_url => "new"%>
 

@@ -1,3 +1,6 @@
+<% content_for :head do %>
+  <title>별명 설정하기</title>
+<% end %>
 
 <div class = "container">
   <div class="row">
@@ -6,7 +9,7 @@
 		<div class = "section">
 			<h4> 강의평가할 때 사용할 별명 정하기 </h4>
 		</div>
-		
+
 		<%= form_for @user do |f|%>
 
 			<%= f.label :"별명" %>

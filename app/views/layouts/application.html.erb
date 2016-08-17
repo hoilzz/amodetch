@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html >
+<html lang="ko">
 <head >
 
  <meta http-equiv="contentType" type="text/html" charset="euc-kr" />
   <%= favicon_link_tag 'favicon.ico'%>
   <%= favicon_link_tag 'favicon.ico', rel: 'apple-touch-icon', type: 'image/png'%>
-  <title >아뭐듣지</title>
+  <%= yield :head %>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -37,9 +37,10 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
 
+
   <%= render 'layouts/header' %>
-  <div class = "alert-container" style = "z-index : 9999"></div>
-  <div style = "min-height : 800px;">
+
+  <div id="content" style = "min-height : 800px;">
      <%= yield %>
   </div>
 
