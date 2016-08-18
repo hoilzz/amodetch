@@ -3,21 +3,30 @@
 <% end %>
 
 
-<div class = "row">
+<div class = "row" style = "margin-top:20px">
 
   <!-- development -->
   <!-- 시간표 TABLE VIEW -->
   <div class = "container" style = "width : 10x30%">
     <div class = "col m8" id="timetable" data-t-id = "<%= @current_timetable.id%>">
     <div class = "timetable_container">
-      <div class = "timetable_name_box">
-        <p class = "light" style = "font-size:1.2em">
-          <%=@current_timetable.name%>
-          <%= @current_timetable.getStrSemester%> / 총 <span class = "credits"></span> 학점
-        </p>
+      <div class = "row timetable_name_box" style = "margin-bottom : 0">
+        <div class = "col m6 l6">
+          <p class = "light" style = "font-size:1.2em;">
+            <%=@current_timetable.name%>
+            <%= @current_timetable.getStrSemester%> / 총 <span class = "credits"></span> 학점
+          </p>
+        </div>
+        <div class = "col m6 l6">
+
+            <p class = "right-align">
+              <a class = "timetable__download_btn btn blue lighten-2" href = "#" class="btn">다운로드</a>
+            </p>
+
+        </div>
       </div>
 
-      <div class="timetable_form" style = "font-size:14px;">
+      <div id = "my_timetable" class="timetable_form" style = "font-size:14px;">
         <%= render 'timetable_form' %>
       </div>
       </div>
@@ -64,6 +73,7 @@
 </div>  <!-- row -->
 
 <script>
+
 
 (function($,document,window,undefined){
     var timetable = {
@@ -142,8 +152,27 @@
       });
 
     },
+
     init: function()
     {
+      $('body').on('click touchstart', ".timetable__download_btn", function (event){
+          event.preventDefault();
+          html2canvas($("#my_timetable"), {
+              letterRendering: true,
+              logging: true,
+              background: "white",
+
+              onrendered: function(canvas) {
+                  // canvas is the final rendered <canvas> element
+                  var a = document.createElement('a');
+                  a.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
+                  a.download = '아뭐듣지시간표.jpg';
+                  a.click();
+
+              }
+          });
+      });
+
       $( "#searchForm" ).submit(function( event ) {
        // Stop form from submitting normally
        event.preventDefault();
