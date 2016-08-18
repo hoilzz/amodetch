@@ -1,8 +1,8 @@
 class User < ActiveRecord::Base
    # scope :count_of_timetable, -> { joins(:timetables).select() }
-	 has_many :comments, dependent: :destroy
+
 	 has_many :valuations, dependent: :destroy
-   has_many :comment_valuations, dependent: :destroy
+
    has_many :timetables, dependent: :destroy
 
    validates :nickname, presence: true, :length => { :minimum => 1, :maximum => 10 }, :uniqueness => true, :allow_nil => true

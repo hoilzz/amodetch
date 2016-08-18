@@ -6,6 +6,17 @@ class LecturesController < ApplicationController
 
 	require 'roo'
 
+	def index
+		@is_search = false
+
+		if params[:search]
+			@lectures = Lecture.searchForValuation(params[:search])
+			@lectures = @lectures.paginate(:page => params[:page], :per_page => 15)
+
+			@is_search = true
+		end
+	end
+
 	def show
 		@lecture = Lecture.find_by(id: params[:id])
 		@valuations = Valuation.where("lecture_id = ?", @lecture.id).order("created_at DESC")
@@ -21,17 +32,13 @@ class LecturesController < ApplicationController
 	end
 
 	def create
-		# lecture 생성
-		# lecture.schedule 생성
-		# schedule.schedule_detail생성
-
 		redirect_to root_url
 	end
 
 	def update
 		@lecture = Lecture.find_by(id: params[:id])
 		if @lecture.update_attributes(lecture_params)
-			redirect_to home_admin_url
+			redirect_to :back
 		else
 			render 'edit'
 		end
@@ -58,26 +65,26 @@ class LecturesController < ApplicationController
 
 
 	private
+
+	def lecture_params
+		params.require(:lecture).permit(:subject, :professor, :major,
+																 :isu, :credit, :open_department)
+	end
+
 	def check_user_valuations
 		if current_user.valuations.count < 2
 			redirect_to new_valuation_path
 		end
 	end
 
+	def admin_user
+		redirect_to(root_url) unless current_user.admin?
+	end
 
-		def admin_user
-			redirect_to(root_url) unless current_user.admin?
+	def fillnickname
+		if logged_in_user? && current_user.nickname.nil?
+			flash[:danger]= "닉네임을 설정하여 주세요. 익명성 보장을 위함입니다."
+			redirect_to edit_user_url(current_user)
 		end
-
-
-		def fillnickname
-			if logged_in_user? && current_user.nickname.nil?
-				flash[:danger]= "닉네임을 설정하여 주세요. 익명성 보장을 위함입니다."
-				redirect_to edit_user_url(current_user)
-			end
-		end
-
-
-
-
+	end
 end

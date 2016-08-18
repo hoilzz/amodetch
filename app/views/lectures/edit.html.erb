@@ -2,30 +2,36 @@
   <title>강의 편집하기</title>
 <% end %>
 
+<div class = "container">
+  <div class="row">
 
-<div class="row">
-	<div class="col-md-1"></div>
-	<div class="col-md-10">
-<h1>Edit Lecture</h1>
-<%= form_for @lecture do |f|%>
+    <div class = "col m10 row-margin-top">
 
-<%= f.label :"강의" %>
-<%= f.text_field :subject %> <br>
+      <h5 class = "light">Edit Lecture</h5>
+        <%= form_for @lecture do |f|%>
 
-<%= f.label :"교수" %>
-<%= f.text_field :professor %><br>
+            <%= f.label :"강의" %>
+            <%= f.text_field :subject %> <br>
 
-<%= f.label :"개설학과" %>
-<%= f.text_field :major %><br>
+            <%= f.label :"교수" %>
+            <%= f.text_field :professor %><br>
 
-<%= f.label :"강의시간" %>
-<%= f.text_field :lecturetime %><br>
+            <%= f.label :"major" %>
+            <%= f.text_field :major %><br>
 
-<%= f.submit :submit %>
-<% end %>
+            <%= f.label :"이수" %>
+            <%= f.text_field :isu %><br>
 
+            <%= f.label :"credit" %>
+            <%= f.text_field :credit %>
 
-	</div>
+            <%= f.label :"open_department" %>
+            <%= f.text_field :open_department %><br>
 
-	<div class="col-md-1"></div>
-	</div>
+            <%= f.submit :submit, class: "btn" %>
+
+        <% end %>
+
+    </div>
+  </div>
+</div>

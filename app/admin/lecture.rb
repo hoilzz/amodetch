@@ -13,4 +13,5 @@ ActiveAdmin.register Lecture do
 #   permitted
 # end
 
+
 end

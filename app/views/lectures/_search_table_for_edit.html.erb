@@ -1,0 +1,32 @@
+<div class = "row">
+<table class = "striped">
+  <thead>
+        <tr>
+            <th class = "center-align" data-field="subject">강의명</th>
+            <th class = "center-align" data-field="professor">교수명</th>
+            <th class = "center-align" data-field="open_department">open_department</th>
+            <th class = "center-align" data-field="major">major</th>
+            <th class = "center-align" data-field="edit_lecture">강의 편집</th>
+            <th class = "center-align" data-field="edit_schedule">스케줄 생성</th>
+        </tr>
+  </thead>
+
+  <tbody>
+      <% lectures.each do |lec| %>
+        <tr class = "l<%= lec.id %>">
+          <td class = "subject"><%= lec.subject%></td>
+          <td class = "professor center-align"><%= lec.professor%></td>
+          <td class = "open_department center-align"><%= lec.open_department%></td>
+          <td class = "major center-align"><%= lec.major%></td>
+          <td class = "edit_lecture center-align">
+            <%= link_to "강의 수정", edit_lecture_path(lec.id), class: "btn", target: "_blank"  %>
+          </td>
+          <td class = "edit_schedule center-align">
+            <%= link_to "스케줄 생성", new_schedule_path(lecture_id: lec.id), class: "btn", target: "_blank" %>
+          </td>
+        </tr>
+      <% end %>
+  </tbody>
+</table>
+</div>
+<%= will_paginate lectures %>

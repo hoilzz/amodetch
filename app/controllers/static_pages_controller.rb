@@ -2,9 +2,14 @@ class StaticPagesController < ApplicationController
    before_action :fillnickname, only: [:home]
    before_action :gohome, only: [:daemoon]
    skip_before_action :require_login, only: [:home]
+   before_action :admin_user, only: [:home_admin]
 
 
   def home
+  end
+
+  def home_admin
+    
   end
 
 
@@ -29,6 +34,10 @@ class StaticPagesController < ApplicationController
     if user_login?
       redirect_to home_path
     end
+  end
+
+  def admin_user
+    redirect_to(root_url) unless current_user.admin?
   end
 
 

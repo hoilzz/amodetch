@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160805024913) do
+ActiveRecord::Schema.define(version: 20160817130158) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace",     limit: 255
@@ -91,17 +91,6 @@ ActiveRecord::Schema.define(version: 20160805024913) do
   add_index "comments", ["user_id", "created_at"], name: "index_comments_on_user_id_and_created_at", using: :btree
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
-  create_table "enrollments", force: :cascade do |t|
-    t.string   "begin_time",   limit: 255
-    t.string   "end_time",     limit: 255
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
-    t.integer  "lecture_id",   limit: 4
-    t.integer  "user_id",      limit: 4
-    t.string   "days",         limit: 255
-    t.integer  "timetable_id", limit: 4
-  end
-
   create_table "lectures", force: :cascade do |t|
     t.string   "subject",         limit: 255
     t.string   "professor",       limit: 255
@@ -110,7 +99,6 @@ ActiveRecord::Schema.define(version: 20160805024913) do
     t.datetime "updated_at",                                null: false
     t.float    "avr_rating",      limit: 24,  default: 0.0
     t.string   "isu",             limit: 255
-    t.string   "semester",        limit: 255
     t.float    "credit",          limit: 24
     t.string   "open_department", limit: 255
   end
@@ -125,25 +113,6 @@ ActiveRecord::Schema.define(version: 20160805024913) do
 
   add_index "microposts", ["user_id", "created_at"], name: "index_microposts_on_user_id_and_created_at", using: :btree
   add_index "microposts", ["user_id"], name: "index_microposts_on_user_id", using: :btree
-
-  create_table "plural_attrs", force: :cascade do |t|
-    t.string   "lectureTime", limit: 255
-    t.string   "place",       limit: 255
-    t.integer  "lecture_id",  limit: 4
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-  end
-
-  create_table "relationships", force: :cascade do |t|
-    t.integer  "follower_id", limit: 4
-    t.integer  "followed_id", limit: 4
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
-  end
-
-  add_index "relationships", ["followed_id"], name: "index_relationships_on_followed_id", using: :btree
-  add_index "relationships", ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true, using: :btree
-  add_index "relationships", ["follower_id"], name: "index_relationships_on_follower_id", using: :btree
 
   create_table "schedule_details", force: :cascade do |t|
     t.integer  "schedule_id", limit: 4

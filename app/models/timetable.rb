@@ -1,6 +1,5 @@
 class Timetable < ActiveRecord::Base
 	belongs_to :user
-	has_many :enrollments, dependent: :destroy
 	has_many :schedules, through: :timetable_items
 	has_many :timetable_items
 

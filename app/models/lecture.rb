@@ -6,13 +6,14 @@ class Lecture < ActiveRecord::Base
   validates :professor, length: {maximum: 40}
   validates :major, presence:true
 
-
-  has_many :comments
   has_many :valuations, dependent: :destroy
-  has_many :comment_valuations, dependent: :destroy
   has_many :schedules, -> {where recent: true}
 
+  accepts_nested_attributes_for :schedules
+
   belongs_to :timetable
+
+  accepts_nested_attributes_for :schedules
 
   scope :order_by_comments, -> { joins(:comments).order("comments.created_at DESC") }
   scope :group_by_id, ->  { group(:lecture_id)}
@@ -142,5 +143,6 @@ class Lecture < ActiveRecord::Base
     return @dataTojson
 
   end
+
 
 end

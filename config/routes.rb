@@ -5,9 +5,9 @@ Rails.application.routes.draw do
 
  resources :lectures do
    collection { post :import }
-   resources :schedules
  end
 
+ resources :schedules
  resources :valuations, only: [:new, :create, :destroy, :edit, :update, :index]
 
  post 'search' => 'lectures#search'

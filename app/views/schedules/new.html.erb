@@ -1,0 +1,39 @@
+
+<% provide(:title, 'schedule 편집하기') %>
+
+<div class = "container">
+  <div class="row">
+    <div class="col m4 offset-m4 ">
+
+      <div class = "section">
+        <h5><%= @lecture.subject%> - <%= @lecture.professor%> </h5>
+      </div>
+
+    <%= form_for(@schedule) do |f| %>
+      <%#= render 'shared/error_messages_user' %>
+
+      <div class = "input-field col m12">
+        <%= f.label :'강의시간, format주의', for: "lecture_time" %>
+        <%= f.text_field :lecture_time, class: 'validate', id: "lecture_time" %>
+      </div>
+
+      <div class = "input-field col m12">
+        <%= f.label :'학기, format주의', for: "semester" %>
+        <%= f.text_field :semester, class: 'validate', id: "semester" %>
+      </div>
+
+      <div class = "input-field col m12">
+        <%= f.label :'강의실', for: "place" %>
+        <%= f.text_field :place, class: 'validate', id: "place" %>
+      </div>
+
+      <%= f.hidden_field :lecture_id, {:value => @lecture.id} %>
+      <%= f.hidden_field :recent, {:value => "true" } %>
+
+      <div class = "row">
+        <%= f.submit "스케줄 만들기", class: "btn col m12" %>
+      </div>
+    <% end %>
+    </div>
+  </div>
+</div>
