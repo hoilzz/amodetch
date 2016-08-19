@@ -1,5 +1,5 @@
 ActiveAdmin.register User do
-	permit_params :nickname, :email, :admin, :uid, :name, :provider
+	permit_params :email, :admin, :uid, :name, :provider
 # See permitted parameters documentation:
 # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
 #
@@ -16,6 +16,17 @@ ActiveAdmin.register User do
 # 	def scoped_collection
 # 		super.includes
 # end
+
+controller do
+    # This code is evaluated within the controller class
+
+    def update
+			user = User.find(params[:id])
+			user.update_attribute(:admin, true)
+      # Instance method
+			redirect_to admin_user_path(user)
+    end
+  end
 
 show do
 	h3 user.timetables.count
