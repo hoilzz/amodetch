@@ -1,6 +1,6 @@
 class LecturesController < ApplicationController
 
-	before_action :admin_user, only: [:destroy, :edit, :create, :update, :new, :import]
+	before_action :admin_user, only: [:destroy, :edit, :create, :update, :new, :import, :index]
 	before_action :fillnickname, only: [:show]
 	before_action :check_user_valuations, only: [:show]
 

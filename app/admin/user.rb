@@ -1,5 +1,5 @@
 ActiveAdmin.register User do
-
+	permit_params :nickname, :email, :admin, :uid, :name, :provider
 # See permitted parameters documentation:
 # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
 #
@@ -12,18 +12,18 @@ ActiveAdmin.register User do
 #   permitted << :other if resource.something?
 #   permitted
 # end
-# controller do 
+# controller do
 # 	def scoped_collection
-# 		super.includes 
+# 		super.includes
 # end
 
 show do
 	h3 user.timetables.count
-	div do 
-		tabs do 
+	div do
+		tabs do
 			tab 'timetable' do
 				panel "Table of Contents" do
-					table_for user.timetables do 
+					table_for user.timetables do
 						column :name
 					end
 
