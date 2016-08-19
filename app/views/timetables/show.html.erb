@@ -20,7 +20,8 @@
         <div class = "col m6 l6">
 
             <p class = "right-align">
-              <a class = "timetable__download_btn btn blue lighten-2" href = "#" class="btn">다운로드</a>
+              <a id = "timetable__download_btn" class = "btn blue lighten-2" href = "#" class="btn">다운로드</a>
+              <%= link_to "삭제", timetable_path(@current_timetable), :method => 'delete', id: "timetable__del_btn", class: "btn grey lighten-2"%>
             </p>
 
         </div>

@@ -28,9 +28,6 @@ Rails.application.routes.draw do
  post   'login'   => 'sessions#create'
  delete 'logout'  => 'sessions#destroy'
 
-
-delete '/delete_timetable/:id' => 'timetables#destroy', as: 'delete_timetable'
-
 resources :timetables
 resources :timetable_items, only: [:create, :destroy]
 

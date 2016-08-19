@@ -59,3 +59,10 @@
 	      <!-- </div> -->
 	    </div>
 		</div>
+
+
+<% if flash[:notice] %>
+  <script>
+    Materialize.toast('<%= flash[:notice] %>', 4000)
+  </script>
+<% end %>

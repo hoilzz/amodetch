@@ -43,10 +43,17 @@ class TimetablesController < ApplicationController
 	end
 
 	def destroy
-		timetable = current_user.timetables.find(params[:id])
-		timetable.destroy
+		@timetable = current_user.timetables.find(params[:id])
 
-		redirect_to home_path
+		if @timetable.destroy
+			flash.now[:notice] = @timetable.name+'시간표를 삭제 하였습니다.'
+			redirect_to home_path
+		else
+			flash.now[:notice] = '삭제 실패하였습니다. 다시 시도해주세요'
+			render 'show'
+		end
+
+
 	end
 
 

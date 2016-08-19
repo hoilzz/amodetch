@@ -27,7 +27,7 @@ controller do
         redirect_to admin_lecture_path(lecture)
       end
     end
-  end
+end
 
 
 
