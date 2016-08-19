@@ -11,10 +11,6 @@ class Lecture < ActiveRecord::Base
 
   accepts_nested_attributes_for :schedules
 
-  belongs_to :timetable
-
-  accepts_nested_attributes_for :schedules
-
   scope :order_by_comments, -> { joins(:comments).order("comments.created_at DESC") }
   scope :group_by_id, ->  { group(:lecture_id)}
   scope :schedules_by_seme, -> (semester) { joins(:schedules).where("schedules.semester" => semester).select("schedules.*") }
@@ -60,6 +56,26 @@ class Lecture < ActiveRecord::Base
 
     end
   end
+
+
+  # 강의 변경 및 추가
+  # 목표 명확히
+  # 요구사항 1 : 새로 강의 추가됨 -> 새로운 첫번째 schedule 추가
+  # =>                      -> 두번째 schedule 추가
+  def self.import(file)
+    # 새로운 강의니?
+      # T : 새로 생성해.
+      # F : 만들지 말고 기존 lecture 변수에 저장해
+
+    # schedule = lecture.schedule.new로 스케줄 새로 생성해서 변수에 저장해
+
+    # schedule.valid?
+      # T : 그럼 스케줄 새로 만들어.
+
+
+
+  end
+
 
   def self.open_spreadsheet(file)
     case File.extname(file.original_filename)

@@ -17,16 +17,16 @@ ActiveAdmin.register User do
 # 		super.includes
 # end
 
-controller do
-    # This code is evaluated within the controller class
-
-    def update
-			user = User.find(params[:id])
-			user.update_attribute(:admin, true)
-      # Instance method
-			redirect_to admin_user_path(user)
-    end
-  end
+# controller do
+#     # This code is evaluated within the controller class
+#
+#     def update
+# 			user = User.find(params[:id])
+# 			user.update_attribute(:admin, true)
+#       # Instance method
+# 			redirect_to admin_user_path(user)
+#     end
+#   end
 
 show do
 	h3 user.timetables.count

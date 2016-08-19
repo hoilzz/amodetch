@@ -2,36 +2,37 @@
   <title>강의 추가하기</title>
 <% end %>
 
+<div class = "container">
+  <div class="row">
+    <div class= "col m8 offset-m2">
+      <h5>New Lecture</h5>
 
-<div class="row">
+    		<%= form_for @lecture do |f|%>
 
-<h5>New Lecture</h5>
+    		<%= f.label :"강의명" %>
+    		<%= f.text_field :subject %>
 
-		<%= form_for @lecture do |f|%>
+    		<%= f.label :"교수명" %>
+    		<%= f.text_field :professor %>
 
-		<%= f.label :"강의명" %>
-		<%= f.text_field :subject %>
+    		<%= f.label :"major" %>
+    		<%= f.text_field :major %>
 
-		<%= f.label :"교수명" %>
-		<%= f.text_field :professor %>
+    		<%= f.label :"이수" %>
+    		<%= f.text_field :isu %>
 
-		<%= f.label :"major" %>
-		<%= f.text_field :major %>
+    		<%= f.label :"학점" %>
+    		<%= f.text_field :credit %>
 
-		<%= f.label :"이수" %>
-		<%= f.text_field :isu %>
-
-		<%= f.label :"학점" %>
-		<%= f.text_field :credit %>
-
-		<%= f.label :"개설학과" %>
-		<%= f.text_field :open_department %>
-
-
-		<%= f.submit :submit %>
+    		<%= f.label :"개설학과" %>
+    		<%= f.text_field :open_department %>
 
 
-		<% end %>
+    		<%= f.submit :submit, class: "btn" %>
 
 
+  		  <% end %>
+
+    </div>
+  </div>
 </div>

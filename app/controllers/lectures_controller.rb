@@ -32,7 +32,13 @@ class LecturesController < ApplicationController
 	end
 
 	def create
-		redirect_to root_url
+		@lecture = Lecture.new(lecture_params)
+		if @lecture.save
+			redirect_to lectures_path
+		else
+			render 'new'
+		end
+
 	end
 
 	def update
