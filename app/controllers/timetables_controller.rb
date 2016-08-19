@@ -4,7 +4,6 @@ class TimetablesController < ApplicationController
 	def show
     @current_timetable = current_user.timetables.find(params[:id])
 		@timetables = current_user.timetables
-
 	end
 
 	def goLog
@@ -46,10 +45,10 @@ class TimetablesController < ApplicationController
 		@timetable = current_user.timetables.find(params[:id])
 
 		if @timetable.destroy
-			flash.now[:notice] = @timetable.name+'시간표를 삭제 하였습니다.'
+			flash[:notice] = @timetable.name+'시간표를 삭제 하였습니다.'
 			redirect_to home_path
 		else
-			flash.now[:notice] = '삭제 실패하였습니다. 다시 시도해주세요'
+			flash[:notice] = '삭제 실패하였습니다. 다시 시도해주세요'
 			render 'show'
 		end
 
