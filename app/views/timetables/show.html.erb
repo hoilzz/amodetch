@@ -156,7 +156,7 @@
 
     init: function()
     {
-      $('body').on('click touchstart', ".timetable__download_btn", function (event){
+      $('body').on('click touchstart', "#timetable__download_btn", function (event){
           event.preventDefault();
           html2canvas($("#my_timetable"), {
               letterRendering: true,
@@ -169,7 +169,6 @@
                   a.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
                   a.download = '아뭐듣지시간표.jpg';
                   a.click();
-
               }
           });
       });
