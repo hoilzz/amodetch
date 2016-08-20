@@ -207,12 +207,15 @@
      // 검색 결과 강의에 마우스 커서 올렸을 때
      $('body').on('mouseenter touchstart', '.collection-item', function(event){
        event.preventDefault();
+       $(this).find(".search-blk").removeAttr('style');
+       timetable.erasePreviewLecture();
+
        $(this).find(".search-blk").css('display','inline');
        timetable.fillPreviewLecture($(this));
 
      });
 
-     $('body').on('mouseleave', '.collection-item', function(event){
+     $('body').on('mouseleave touchcancel', '.collection-item', function(event){
        event.preventDefault();
        $(this).find(".search-blk").removeAttr('style');
        timetable.erasePreviewLecture();
