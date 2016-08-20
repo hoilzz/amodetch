@@ -189,9 +189,10 @@
      });
 
      // 검색 결과 강의 클릭시
-     $('body').on('touchstart click', '.collection-item', function(event){
+     $('body').on('click', '.collection-item', function(event){
        // 시간표에 강의 등록하기
        event.preventDefault();
+       event.stopPropagation();
        timetable.putLectureOnTimetable($(this));
      });
 
