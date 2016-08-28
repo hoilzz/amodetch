@@ -17,11 +17,7 @@ class SessionsController < ApplicationController
   end
 
   def create_by_facebook
-    # user 새로 만들기
     @user = User.from_omniauth(env["omniauth.auth"])
-    # @user = User.find_or_create_from_auth_hash(auth_hash)
-
-    # self.current_user = @user
 
     session[:user_id] = @user.id
     session[:user_name] = @user.name

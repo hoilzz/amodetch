@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160817130158) do
+ActiveRecord::Schema.define(version: 20160828114131) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace",     limit: 255
@@ -123,6 +123,8 @@ ActiveRecord::Schema.define(version: 20160817130158) do
     t.datetime "updated_at",              null: false
   end
 
+  add_index "schedule_details", ["schedule_id"], name: "index_schedule_details_on_schedule_id", using: :btree
+
   create_table "schedules", force: :cascade do |t|
     t.string   "lecture_time",      limit: 255
     t.string   "semester",          limit: 255
@@ -141,6 +143,8 @@ ActiveRecord::Schema.define(version: 20160817130158) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
+
+  add_index "timetable_items", ["timetable_id"], name: "index_timetable_items_on_timetable_id", using: :btree
 
   create_table "timetables", force: :cascade do |t|
     t.integer  "user_id",    limit: 4
@@ -175,5 +179,7 @@ ActiveRecord::Schema.define(version: 20160817130158) do
     t.integer  "rating",     limit: 4
     t.text     "content",    limit: 65535
   end
+
+  add_index "valuations", ["lecture_id"], name: "index_valuations_on_lecture_id", using: :btree
 
 end

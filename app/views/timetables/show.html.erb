@@ -11,13 +11,13 @@
     <div class = "col m8" id="timetable" data-t-id = "<%= @current_timetable.id%>">
     <div class = "timetable_container">
       <div class = "row timetable_name_box" style = "margin-bottom : 0">
-        <div class = "col m6 l6">
+        <div class = "col m8 l6">
           <p class = "light" style = "font-size:1.2em;">
             <%=@current_timetable.name%>
             <%= @current_timetable.getStrSemester%> / 총 <span class = "credits"></span> 학점
           </p>
         </div>
-        <div class = "col m6 l6">
+        <div class = "col m4 l6">
 
             <p class = "right-align">
               <a id = "timetable__download_btn" class = "btn blue lighten-2" href = "#" class="btn">다운로드</a>

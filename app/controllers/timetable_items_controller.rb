@@ -17,7 +17,7 @@ class TimetableItemsController < ApplicationController
       # 이 때, validate 때문에 실패하는데 이에 대한 장치를 json or anything 필요..
     else
         respond_to do |format|
-          format.json {render json: "저장 실패하였습니다.."}
+          format.json {render json: "강의 담기 실패하였습니다. 다시 시도해주세요ㅠㅡㅠ"}
         end
     end
 
@@ -25,10 +25,14 @@ class TimetableItemsController < ApplicationController
 
   def destroy
     @t_id = @timetable_item.id
-    @timetable_item.destroy
+
 
     respond_to do |format|
-      format.json {render json: @t_id}
+      if @timetable_item.destroy
+        format.json {render json: @t_id}
+      else
+        format.json {render json: "강의 삭제 실패하였습니다. 다시 시도해주세요ㅠㅡㅠ"}
+      end
     end
   end
 

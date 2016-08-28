@@ -18,20 +18,14 @@ class SchedulesController < ApplicationController
 
 
   def new
-    # @lecture = Lecture.new
-    # @schedule = Schedule.new
+
     @schedule = Schedule.new
     @lecture = Lecture.find(params[:lecture_id])
 
   end
 
   def create
-		# lecture = Lecture.create(lecture_params)
-		# schedule = lecture.schedules.create(schedule_params)
-    #
-		# ScheduleDetail.makeScheduleDetails(schedule.id, schedule.lecture_time)
     schedules = Schedule.where("semester = ? AND lecture_id = ?", params[:schedule][:semester], params[:schedule][:lecture_id]).update_all(recent: false)
-    # Schedule.where("semester = ? ", currentSemester).update_all(recent: false)
     @schedule = Schedule.new(schedule_params)
 
     if @schedule.save

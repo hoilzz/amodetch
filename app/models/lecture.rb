@@ -40,18 +40,21 @@ class Lecture < ActiveRecord::Base
         lecture.update_attributes(isu: row["isu"], credit: row["credit"],
                                          open_department: row["open_department"], major: row["major"])
       end
-      schedule = lecture.schedules.new( lecture_time: row["lecturetime"], place: row["place"],
+      schedule = lecture.schedules.new( lecture_time: row["lecture_time"], place: row["place"],
                                         semester: row["semester"], recent: true)
       # 이번학기 데이터를 선 구축후, 조건문 해석
       # 지금 등록하려는 강의 스케줄이 새로 변경 or 추가됨
       if schedule.valid?
         schedule.save
         ScheduleDetail.makeScheduleDetails(schedule.id, schedule.lecture_time)
+
       # 지금 등록하려는 강의 스케줄이 기존에 등록한 적 있음
       else
-        schedule = Schedule.find_by(lecture_id: lecture.id, lecture_time: row["lecturetime"], semester: row["semester"], recent: "false")
-        schedule.toggle(:recent)
-        schedule.save
+        schedule = Schedule.find_by(lecture_id: lecture.id, lecture_time: row["lecture_time"], semester: row["semester"], recent: "false")
+        if !schedule.nil?
+          schedule.toggle(:recent)
+          schedule.save
+        end
       end
 
     end
@@ -62,7 +65,7 @@ class Lecture < ActiveRecord::Base
   # 목표 명확히
   # 요구사항 1 : 새로 강의 추가됨 -> 새로운 첫번째 schedule 추가
   # =>                      -> 두번째 schedule 추가
-  def self.import(file)
+  # def self.import(file)
     # 새로운 강의니?
       # T : 새로 생성해.
       # F : 만들지 말고 기존 lecture 변수에 저장해
@@ -74,7 +77,7 @@ class Lecture < ActiveRecord::Base
 
 
 
-  end
+  # end
 
 
   def self.open_spreadsheet(file)
@@ -100,23 +103,18 @@ class Lecture < ActiveRecord::Base
     self.save
   end
 
+  def self.searchForValuation(search)
+        unless search.nil?
+           where(['professor LIKE ? OR subject Like ? OR open_department = ?',
+          "#{search}%", "#{search}%", "#{search}"])
+        end
+  end
 
   def self.searchOnTimetable(search, semester)
     unless search.nil?
       where(['(professor LIKE ? OR subject LIKE ? OR open_department LIKE ?)',
          "#{search}%","%#{search}%","#{search}%"])
     end
-  end
-
-  def self.searchForValuation(search)
-      unless search.nil?
-         where(['professor LIKE ? OR subject Like ? OR open_department = ?',
-        "#{search}%", "#{search}%", "#{search}"])
-      end
-  end
-
-  def self.detailSearch(major, isu)
-      where(['major LIKE ? OR isu Like ?', "#{major}%","#{isu}%"]).order('acc_total DESC')
   end
 
   def self.getLecturesBeSearched(searchWord, semester, pageSelected)

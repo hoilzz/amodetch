@@ -4,6 +4,7 @@ class Timetable < ActiveRecord::Base
 	has_many :timetable_items
 
 	validates :name, presence: true, length: {maximum: 20}
+	validates :semester, presence: true
 
 	scope :countMore1, -> {having('count(user_id) > 1').order('user_id DESC')}
 	scope :countMore2, -> {having('count(user_id) > 2').order('user_id DESC')}
