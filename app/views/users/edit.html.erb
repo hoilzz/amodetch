@@ -10,21 +10,17 @@
 			<h4> 강의평가할 때 사용할 별명 정하기 </h4>
 		</div>
 
-		<%= form_for @user do |f|%>
+  		<%= form_for @user do |f|%>
 
-			<%= f.label :"별명" %>
-			<%= f.text_field :nickname %> <br><br>
+  			<%= f.label :"별명" %>
+  			<%= f.text_field :nickname %> <br><br>
 
+  		<%= f.submit :"확인" , class: "btn"%>
 
-		<%= f.submit :"확인" , class: "btn"%>
-
-
-		<!--<div><a href="/signout" class ="btn btn-default" id ="navbar_logout"> 로그아웃 </a></div>-->
-
-<% end %>
+      <% end %>
 
 
 
+    </div>
+  </div>
 </div>
-
-	</div>
