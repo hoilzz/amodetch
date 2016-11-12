@@ -11,6 +11,7 @@
 - AWS Ubuntu
 - Sass
 - matarialize-css
+- deploy via capistrano
 
 ## 이용하기
 
