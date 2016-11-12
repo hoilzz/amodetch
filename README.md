@@ -14,4 +14,4 @@
 
 ## 이용하기
 
-[아뭐듣지 이용해보기](xn--oy1bw5jn8ijte.com)
+[아뭐듣지 이용해보기](http://xn--oy1bw5jn8ijte.com)
